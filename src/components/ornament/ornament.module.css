@@ -1,0 +1,9 @@
+.glow {
+  overflow: visible;
+  fill: #fff;
+  filter: var(--orn-glow);
+}
+
+.flip {
+  scale: 1 -1;
+}

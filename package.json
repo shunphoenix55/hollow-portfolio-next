@@ -9,7 +9,9 @@
     "build": "next build",
     "start": "next start",
     "ornaments": "node scripts/ornaments/build.mjs",
+    "prelint": "npm run ornaments",
     "lint": "eslint",
+    "pretypecheck": "npm run ornaments",
     "typecheck": "next typegen && tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
