@@ -42,3 +42,27 @@
     transition: none !important;
   }
 }
+
+[data-offscreen] *,
+[data-offscreen] *::before,
+[data-offscreen] *::after {
+  animation-play-state: paused !important;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both !important;
+      animation-play-state: running !important;
+      animation-timeline: view() !important;
+      animation-range: entry 0% entry 70% !important;
+    }
+  }
+}

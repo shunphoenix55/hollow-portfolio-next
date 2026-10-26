@@ -1,0 +1,29 @@
+.corner {
+  position: absolute;
+  width: var(--corner-size, 18px);
+  height: var(--corner-size, 18px);
+  pointer-events: none;
+}
+
+.tl {
+  top: var(--corner-inset, 3px);
+  left: var(--corner-inset, 3px);
+}
+
+.tr {
+  top: var(--corner-inset, 3px);
+  right: var(--corner-inset, 3px);
+  transform: scaleX(-1);
+}
+
+.bl {
+  bottom: var(--corner-inset, 3px);
+  left: var(--corner-inset, 3px);
+  transform: scaleY(-1);
+}
+
+.br {
+  right: var(--corner-inset, 3px);
+  bottom: var(--corner-inset, 3px);
+  transform: scale(-1, -1);
+}
