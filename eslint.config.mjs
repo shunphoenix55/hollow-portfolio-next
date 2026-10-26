@@ -7,5 +7,9 @@ export default defineConfig([
   ...nextVitals,
   ...nextTs,
   prettier,
+  {
+    files: ['src/app/opengraph-image.tsx'],
+    rules: { '@next/next/no-img-element': 'off' },
+  },
   globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),
 ]);
