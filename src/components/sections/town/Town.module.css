@@ -1,0 +1,121 @@
+.town {
+  position: relative;
+  z-index: 2;
+  height: 100vh;
+  min-height: 680px;
+  overflow: hidden;
+  container-type: size;
+  background: #000;
+}
+
+.scene {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(100cqw, 100cqh * 1672 / 941);
+  aspect-ratio: 1672 / 941;
+  transform: translate(-50%, -50%);
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.layer img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.front img {
+  mask-image: linear-gradient(90deg, #000 0%, #000 62%, transparent 78%);
+}
+
+.fog {
+  position: absolute;
+  inset: 0 -20%;
+  pointer-events: none;
+  background:
+    radial-gradient(30% 20% at 35% 80%, rgb(200 205 212 / 0.12), transparent 70%),
+    radial-gradient(28% 16% at 70% 86%, rgb(200 205 212 / 0.1), transparent 70%);
+  mix-blend-mode: screen;
+  animation: town-fog 46s ease-in-out infinite alternate;
+}
+
+@keyframes town-fog {
+  from {
+    translate: -4% 0;
+  }
+  to {
+    translate: 4% -1%;
+  }
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      #000 0%,
+      #000 6%,
+      rgb(0 0 0 / 0.7) 14%,
+      transparent 30%,
+      transparent 70%,
+      rgb(0 0 0 / 0.7) 86%,
+      #000 94%,
+      #000 100%
+    ),
+    linear-gradient(
+      180deg,
+      #000 0%,
+      rgb(0 0 0 / 0.6) 6%,
+      transparent 18%,
+      transparent 80%,
+      rgb(0 0 0 / 0.7) 93%,
+      #000 100%
+    );
+}
+
+.ui {
+  --scene-h: min(100cqh, 100cqw * 941 / 1672);
+  position: absolute;
+  top: calc(50cqh - var(--scene-h) / 2 + var(--scene-h) * 0.07);
+  right: 0;
+  left: 0;
+  display: grid;
+  justify-items: center;
+  padding: 0 24px;
+}
+
+.orn {
+  width: 330px;
+  aspect-ratio: 1140 / 105;
+}
+
+@media (max-width: 640px) {
+  .town {
+    height: 100svh;
+    min-height: 600px;
+  }
+
+  .scene {
+    top: auto;
+    bottom: max(220px, 28cqh);
+    width: 230cqw;
+    transform: translateX(-52%);
+    mask-image: linear-gradient(180deg, transparent, #000 22%, #000 80%, transparent);
+  }
+
+  .ui {
+    top: auto;
+    bottom: max(28px, 6svh);
+    padding: 0 20px;
+  }
+
+  .orn {
+    width: 200px;
+  }
+}
