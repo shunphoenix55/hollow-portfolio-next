@@ -1,0 +1,140 @@
+.projects {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 30%) minmax(0, 1fr);
+  margin-top: 12vh;
+}
+
+.backdrop {
+  position: absolute;
+  z-index: -1;
+  top: 5vw;
+  left: 8vw;
+  width: min(64%, 980px);
+  pointer-events: none;
+}
+
+.backdrop img {
+  width: 100%;
+  height: auto;
+  mask-image:
+    linear-gradient(90deg, transparent 0%, #000 12%, #000 55%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 6%, #000 66%, transparent 96%);
+  mask-composite: intersect;
+}
+
+.aside {
+  position: relative;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  padding: 20px clamp(20px, 3vw, 48px) 0;
+}
+
+.heading {
+  margin-top: calc(70px + 3vh);
+  translate: 3vw 0;
+}
+
+.main {
+  display: grid;
+  justify-items: center;
+  gap: 56px;
+  padding: calc(3vh + 150px) clamp(16px, 2vw, 32px) 16vh 4vw;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 380px));
+  align-items: start;
+  justify-content: center;
+  gap: 96px 72px;
+  width: 100%;
+}
+
+.grid > :nth-child(odd) {
+  translate: 28px 0;
+}
+
+.all {
+  --band-inset: 0 38px;
+  padding-inline: 8px;
+  font-size: clamp(21px, 1.7vw, 26px);
+}
+
+@media (max-width: 900px) {
+  .projects {
+    grid-template-columns: 1fr;
+  }
+
+  .aside {
+    height: 56vh;
+    padding-top: 24px;
+  }
+
+  .backdrop {
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .heading {
+    translate: none;
+  }
+
+  .main {
+    padding: 24px 24px 14vh;
+  }
+}
+
+@media (max-width: 640px) {
+  .projects {
+    margin-top: 6vh;
+  }
+
+  .aside {
+    height: auto;
+    padding: 120px 20px 0;
+  }
+
+  .backdrop {
+    left: 50%;
+    width: min(100%, 420px);
+    translate: -50% 0;
+  }
+
+  .heading {
+    margin-top: 0;
+  }
+
+  .main {
+    gap: 36px;
+    padding: 28px 0 12vh;
+  }
+
+  .grid {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 8px 20px 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: 20px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .grid > * {
+    flex: 0 0 min(80vw, 320px);
+    scroll-snap-align: center;
+  }
+
+  .grid > :nth-child(odd) {
+    translate: none;
+  }
+}

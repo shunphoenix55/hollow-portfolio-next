@@ -1,0 +1,170 @@
+.card {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  container-type: inline-size;
+  transition: translate 0.4s var(--ease-hk);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 18cqw 1cqw 0;
+  pointer-events: none;
+  background: radial-gradient(120% 80% at 50% 35%, rgb(0 1 7 / 0.97) 55%, rgb(0 1 7 / 0.88));
+  mask-image:
+    linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent),
+    linear-gradient(180deg, transparent, #000 6%, #000 92%, transparent);
+  mask-composite: intersect;
+}
+
+.cap {
+  width: 108%;
+  margin-left: -4%;
+  aspect-ratio: 1060 / 290;
+  transition: filter 0.35s;
+}
+
+.card:hover .cap,
+.card:focus-within .cap {
+  filter: var(--orn-glow-strong);
+}
+
+.body {
+  display: grid;
+  justify-items: center;
+  padding: 0 9% 28px;
+}
+
+.shot {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 55% at 50% 38%, var(--glow), transparent 70%),
+    linear-gradient(180deg, var(--a), var(--b));
+  mask-image:
+    linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent),
+    linear-gradient(180deg, transparent, #000 10%, #000 66%, transparent);
+  mask-composite: intersect;
+}
+
+.shot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(2px 2px at 20% 30%, rgb(255 255 255 / 0.7), transparent),
+    radial-gradient(1.5px 1.5px at 70% 20%, rgb(255 255 255 / 0.6), transparent),
+    radial-gradient(2px 2px at 85% 65%, rgb(255 255 255 / 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 35% 75%, rgb(255 255 255 / 0.5), transparent),
+    linear-gradient(180deg, transparent 60%, rgb(0 0 0 / 0.55));
+}
+
+.shot svg {
+  position: absolute;
+  bottom: -6%;
+  left: 50%;
+  width: auto;
+  height: 78%;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 0 18px var(--glow));
+  transition: transform 0.5s var(--ease-hk);
+}
+
+.card:hover .shot svg {
+  transform: translateX(-50%) translateY(-4%);
+}
+
+.frost {
+  --a: #26344a;
+  --b: #070b12;
+  --glow: rgb(170 205 255 / 0.5);
+}
+
+.ash {
+  --a: #3a3d42;
+  --b: #0b0c0e;
+  --glow: rgb(230 235 240 / 0.45);
+}
+
+.sea {
+  --a: #193247;
+  --b: #050b11;
+  --glow: rgb(120 200 255 / 0.45);
+}
+
+.night {
+  --a: #1d1d2b;
+  --b: #040408;
+  --glow: rgb(190 190 255 / 0.4);
+}
+
+.title {
+  margin: 4px 0 12px;
+  font: 600 clamp(17px, 1.3vw, 21px) / 1.15 var(--font-title);
+  letter-spacing: 0.03em;
+  text-align: center;
+  text-shadow: 0 0 14px rgb(255 255 255 / 0.3);
+}
+
+.points {
+  display: grid;
+  gap: 6px;
+  max-height: 5.4em;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+  color: #dfe5eb;
+  font: 500 clamp(13px, 0.9vw, 14px) / 1.6 var(--font-dialogue);
+  mask-image: linear-gradient(180deg, #000 45%, transparent);
+  transition: max-height 0.45s var(--ease-hk);
+}
+
+.points[data-open] {
+  mask-image: none;
+}
+
+.points li {
+  position: relative;
+  padding-left: 16px;
+}
+
+.points li::before {
+  content: '';
+  position: absolute;
+  top: 0.66em;
+  left: 2px;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  box-shadow: 0 0 6px rgb(190 215 240 / 0.7);
+  transform: rotate(45deg);
+}
+
+.more {
+  margin-top: 8px;
+}
+
+@media (max-width: 640px) {
+  .cap {
+    width: 84%;
+    margin-inline: auto;
+  }
+
+  .card::before {
+    inset: 14cqw 1cqw 0;
+  }
+
+  .title {
+    margin: 4px 0 12px;
+    font-size: 18px;
+  }
+
+  .more {
+    font-size: 16px;
+  }
+}
