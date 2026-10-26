@@ -1,10 +1,9 @@
 'use client';
 
 import { type RefObject, useEffect } from 'react';
-import { clamp, smoothstep } from '@/lib/math';
+import { clamp } from '@/lib/math';
 import { rafScheduler } from '@/lib/raf';
-
-type Point = { x: number; y: number };
+import { chase, HOLD, journeyTarget, knightPose, type Point } from './journey-math';
 
 type JourneyRefs = {
   track: RefObject<HTMLElement | null>;
@@ -18,13 +17,6 @@ type JourneyOptions = {
   classes: { jumping: string; facingRight: string; landing: string };
   onRest: (stop: number) => void;
 };
-
-const HOLD = 0.6;
-const MAX_SPEED = 1.1;
-const EASE = 0.14;
-const HOP_START = 0.3;
-const HOP_LENGTH = 0.45;
-const HOP_HEIGHT = 12;
 
 export function journeyScrollTarget(track: HTMLElement, stop: number, hops: number) {
   const r = track.getBoundingClientRect();
@@ -61,19 +53,9 @@ export function useKnightJourney(
     const { request, cancel } = rafScheduler((now) => {
       const dt = Math.min(0.05, lastTime ? (now - lastTime) / 1000 : 0.016);
       lastTime = now;
-      const target = Math.min(hops, progress() * (hops + HOLD));
-      const step = (target - shown) * EASE;
-      shown += Math.sign(step) * Math.min(Math.abs(step), MAX_SPEED * dt);
-      if (Math.abs(target - shown) < 0.002) shown = target;
-
-      const i = Math.min(hops - 1, Math.floor(shown));
-      const t = shown >= hops ? 1 : clamp((shown - i - HOP_START) / HOP_LENGTH);
-      const a = stops[i];
-      const b = stops[i + 1];
-      const ease = smoothstep(t);
-      const x = a.x + (b.x - a.x) * ease;
-      const y = a.y + (b.y - a.y) * ease - HOP_HEIGHT * 4 * t * (1 - t);
-      const jumping = t > 0 && t < 1;
+      const target = journeyTarget(progress(), hops);
+      shown = chase(shown, target, dt);
+      const { x, y, jumping, landedOn } = knightPose(shown, stops);
 
       if (x > lastX + 0.01) knight.classList.add(classes.facingRight);
       if (x < lastX - 0.01) knight.classList.remove(classes.facingRight);
@@ -84,9 +66,8 @@ export function useKnightJourney(
       if (wasJumping && !jumping) land();
       wasJumping = jumping;
 
-      const rest = jumping ? current : t >= 1 ? i + 1 : i;
-      if (rest !== current) {
-        current = rest;
+      if (landedOn !== null && landedOn !== current) {
+        current = landedOn;
         onRest(current);
       }
       entries.forEach((el, k) => {
