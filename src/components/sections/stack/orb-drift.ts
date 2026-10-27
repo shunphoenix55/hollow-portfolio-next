@@ -13,11 +13,11 @@ type Mover = {
 
 export type DriftStart = { x: number; y: number; heading: number };
 
-const MIN_SPEED = 140;
-const MAX_SPEED = 240;
-const MAX_TURN = 1.4;
+const MIN_SPEED = 50;
+const MAX_SPEED = 90;
+const MAX_TURN = 0.9;
 const GAP = 22;
-const PUSH = 260;
+const PUSH = 120;
 const REGION = { left: 0.04, right: 0.96, top: 0.08, bottom: 0.8 };
 
 export function startOrbDrift(
@@ -77,7 +77,7 @@ export function startOrbDrift(
   };
 
   const move = (m: Mover, dt: number) => {
-    m.turn += (Math.random() - 0.5) * 4 * dt;
+    m.turn += (Math.random() - 0.5) * 2 * dt;
     m.turn = Math.max(-MAX_TURN, Math.min(MAX_TURN, m.turn));
     m.heading += m.turn * dt;
     let px = m.cx + m.x + Math.cos(m.heading) * m.speed * dt;

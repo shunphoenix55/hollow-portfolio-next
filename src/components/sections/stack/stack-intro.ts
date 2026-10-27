@@ -24,7 +24,7 @@ const SHARD_FLIGHT = [
 
 const ORB_STAGGER_MS = 170;
 const CLUSTER_CENTER_Y = 0.4;
-const CLUSTER_SPACING = 58;
+const CLUSTER_SPACING = 80;
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
 const CLUSTER_HOLD_MS = 700;
 const OUT = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
@@ -104,7 +104,7 @@ function releaseOrbs({ section, rock, orbs }: IntroActors) {
   const oy = origin.top + origin.height * 0.6;
   const cx = stage.left + stage.width / 2;
   const cy = stage.top + stage.height * CLUSTER_CENTER_Y;
-  const spacing = Math.min(CLUSTER_SPACING, stage.width / 9);
+  const spacing = Math.min(CLUSTER_SPACING, stage.width / 11);
   return orbs.map((orb, i) => {
     const box = orb.getBoundingClientRect();
     const bx = box.left + box.width / 2;
@@ -112,8 +112,8 @@ function releaseOrbs({ section, rock, orbs }: IntroActors) {
     const heading = i * GOLDEN_ANGLE;
     const distance = spacing * Math.sqrt(i + 0.5);
     const start: OrbStart = {
-      x: cx + Math.cos(heading) * distance * 1.6 - bx,
-      y: cy + Math.sin(heading) * distance * 0.9 - by,
+      x: cx + Math.cos(heading) * distance * 1.35 - bx,
+      y: cy + Math.sin(heading) * distance - by,
       heading,
     };
     orb.dataset.shown = '';
