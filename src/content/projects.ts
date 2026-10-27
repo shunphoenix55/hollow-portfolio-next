@@ -10,7 +10,7 @@ export const projectsHeading = {
   title: 'Projects, Hackathons and Game Jams',
   count: 12,
   masks: 5,
-  viewAllHref: '#all-projects',
+  viewAllHref: '/projects',
 };
 
 export const projects: Project[] = [
