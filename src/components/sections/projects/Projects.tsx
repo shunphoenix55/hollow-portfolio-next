@@ -3,7 +3,7 @@ import cave from '@/assets/projects-cave.webp';
 import { HkChoice } from '@/components/ui/HkChoice';
 import { MotionSection } from '@/components/ui/MotionSection';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { projects, projectsHeading } from '@/content/projects';
+import { featuredProjects, projectsHeading } from '@/content/projects';
 import { Hud } from './Hud';
 import { ProjectCard } from './ProjectCard';
 import styles from './Projects.module.css';
@@ -26,8 +26,8 @@ export function Projects() {
       </div>
       <div className={styles.main}>
         <div className={styles.grid}>
-          {projects.map((project) => (
-            <ProjectCard key={project.title} project={project} />
+          {featuredProjects.map((project) => (
+            <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
         <HkChoice selected href={projectsHeading.viewAllHref} className={styles.all}>
