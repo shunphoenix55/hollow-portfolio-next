@@ -55,18 +55,32 @@
 
 .sm {
   justify-content: center;
-  gap: 8px;
+  gap: 6px 16px;
 }
 
 .sm .link {
-  gap: 7px;
-  min-height: 36px;
-  padding: 7px 13px;
+  gap: 5px;
+  min-height: 0;
+  padding: 2px 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--color-mist);
   font-size: 15px;
+  text-decoration: underline;
+  text-decoration-color: rgb(255 255 255 / 0.25);
+  text-underline-offset: 4px;
+}
+
+.sm .link:hover,
+.sm .link:focus-visible {
+  color: #fff;
+  text-decoration-color: rgb(255 255 255 / 0.8);
+  box-shadow: none;
 }
 
 .sm .icon,
 .sm .arrow {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
 }

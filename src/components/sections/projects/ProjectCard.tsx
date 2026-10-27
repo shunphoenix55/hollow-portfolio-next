@@ -24,8 +24,9 @@ export function ProjectCard({ project }: { project: PortfolioProject }) {
             {project.title}
           </Link>
         </h3>
-        <ProjectPoints points={points} />
-        <ProjectLinks links={project.links} size="sm" className={styles.links} />
+        <ProjectPoints points={points}>
+          <ProjectLinks links={project.links} size="sm" className={styles.links} />
+        </ProjectPoints>
       </div>
     </article>
   );

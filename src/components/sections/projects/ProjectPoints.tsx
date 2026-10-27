@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useId, useRef, useState } from 'react';
+import { type ReactNode, useEffect, useId, useRef, useState } from 'react';
 import { HkChoice } from '@/components/ui/HkChoice';
 import styles from './ProjectCard.module.css';
 
 const COLLAPSED_EM = 5.4;
 
-export function ProjectPoints({ points }: { points: string[] }) {
+export function ProjectPoints({ points, children }: { points: string[]; children?: ReactNode }) {
   const id = useId();
   const listRef = useRef<HTMLUListElement>(null);
   const [open, setOpen] = useState(false);
@@ -40,6 +40,7 @@ export function ProjectPoints({ points }: { points: string[] }) {
           <li key={point}>{point}</li>
         ))}
       </ul>
+      {children}
       <HkChoice
         className={styles.more}
         aria-expanded={open}
