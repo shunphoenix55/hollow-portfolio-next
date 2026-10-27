@@ -71,4 +71,4 @@ Test matrix: 360×800, 375×667, 390×844, 430×932, 844×390, 768×1024, 820×1
 
 ## Deploy
 
-Not deployed yet. See the knowledge base, Deploy.
+Live at https://wahhaj-xr.vercel.app (Wahhaj's Vercel). Auto-deploy on push waits on the GitHub connection; see the knowledge base, Deploy.

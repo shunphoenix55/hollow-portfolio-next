@@ -5,7 +5,7 @@ Everything needed to work on Wahhaj Mustafa's Hollow Knight–styled portfolio. 
 ## People and repo
 
 - **Owner of the portfolio:** Wahhaj Mustafa (game and XR developer, GitHub `shunphoenix55`, collaborator on the repo). Content comes from his old site, shunphoenix55.github.io.
-- **Repo:** `Saad07Khan/hollow-portfolio-next`, private, single branch `main`.
+- **Repo:** `shunphoenix55/hollow-portfolio-next` (transferred from `Saad07Khan`), public, single branch `main`. Saad has write access.
 
 ## Stack
 
@@ -44,7 +44,7 @@ Everything is statically prerendered. `new Date()` in a server component breaks 
 
 ## Home page, top to bottom
 
-`<Abyss revealOnHero />` (fixed WebGL motes behind everything) and `<SiteMenu>` (in the layout) wrap these:
+`<Abyss revealOnHero />` (fixed WebGL motes behind everything) sits behind these; `<SiteMenu>` and `<SiteFooter>` come from the root layout, so every page gets them:
 
 1. **Hero** `sections/hero`. Sticky scene of four parallax layers (`hero-back`, `hero-stage` + `hero-knight`, `hero-mid`, `hero-front`) plus two fog layers, a vignette and the name. `useHeroMotion` maps scroll progress `p` (0 → 1 over the sticky phase) to layer lift and zoom, title opacity `1 - p * 1.8`, cue opacity and a dark overlay `clamp((p - 0.5) / 0.5) * 0.7`, and publishes `p` on `lib/hero-progress` (the abyss fades in from `p` 0.55). Track height 170vh, 140vh on phones. Mouse parallax only on fine pointers.
 2. **Town** `sections/town`. Lamp-lit town scene with a typed welcome dialogue (`site.dialogue`). Images mount only when near (`useOnceInView` with 50% root margin); typing starts at 40% visibility. Characters are revealed by CSS `transition-delay` 34 ms each.
@@ -57,7 +57,7 @@ Everything is statically prerendered. `new Date()` in a server component breaks 
    - Farewell (`town-farewell`): typed goodbye (`farewellLine`), then the knight turns and walks off right and fades. `TYPE_PER_CHAR_MS = 34` in `Farewell.tsx` must match the dialogue CSS delay.
    - Credits cave (`credits-cave`): a knight walk-cycle sprite (`knight-walk`, 6 frames) and a looping credits roll from `creditRoll`.
    - Each scene starts when in view via `PlayOnView` (`data-playing`).
-8. **SiteFooter** `sections/footer`, `id="contact"`. 100vh black, pulled up 8vh, content at the bottom. WebGL smoke (`ui/smoke`, colour `#8c929b`, half resolution, pauses off-screen) along the bottom half. Contact mailto + round GitHub and LinkedIn icons (`site.socials`) top right; name, short role, copyright, page links and email at the bottom.
+8. **SiteFooter** `sections/footer`, `id="contact"`, rendered by `src/app/layout.tsx` after every page. 100vh black, pulled up 8vh, content at the bottom. WebGL smoke (`ui/smoke`, colour `#8c929b`, half resolution, pauses off-screen) along the bottom half. Contact mailto + round GitHub and LinkedIn icons (`site.socials`) top right; name, short role, copyright, page links and email at the bottom.
 
 ## Archive pages (`/projects`, `/experience`)
 
@@ -186,9 +186,10 @@ Metadata API on every page, generated OG image, sitemap (home, projects, experie
 
 ## Deploy (Vercel)
 
-The site is a plain Next.js app: Vercel detects the framework with no config and every route is static. The project is set up on Wahhaj's Vercel account, not the repo owner's.
+Live at **https://wahhaj-xr.vercel.app**: Vercel project `wahhaj-xr` in Wahhaj's Hobby team `MEOW`, framework preset Next.js, Node 24, every route static.
 
-- **Environment variable:** `NEXT_PUBLIC_SITE_URL` = the production origin (e.g. `https://<project>.vercel.app` or the custom domain), set for Production before the first deploy. It is inlined at build time, so redeploy after changing it.
-- **Git access:** a Vercel Hobby account only builds pushes to a private repo when the commit author is that account's owner. With the repo private under `Saad07Khan`, pushes by anyone other than Wahhaj would be blocked. Either transfer the repo to `shunphoenix55` and make it public (any collaborator's push then deploys), or use Vercel Pro and add both people to the team.
-- **Build settings:** defaults (`npm install`, `npm run build`; `prebuild` generates the ornament sprite). Node 20+.
+- **Environment variable:** `NEXT_PUBLIC_SITE_URL=https://wahhaj-xr.vercel.app` for Production and Preview. It is inlined at build time, so redeploy after changing it. An empty value breaks the build (`new URL('')` in the layout metadata).
+- **Git access:** the repo is public, so pushes to `main` by any collaborator can deploy. A private repo on a Hobby account only builds commits authored by the account owner.
+- **Git connection:** needs Vercel's GitHub app installed on `shunphoenix55` with access to the repo, and the Vercel account's GitHub login connection set to `shunphoenix55`. Then `vercel git connect https://github.com/shunphoenix55/hollow-portfolio-next.git`.
+- **Manual deploy:** `vercel --prod` from the repo root with the CLI logged in to Wahhaj's account (`.vercel/` links the folder to the project and is gitignored).
 - **Domain:** add it under Project → Domains, then update `NEXT_PUBLIC_SITE_URL` and redeploy.
