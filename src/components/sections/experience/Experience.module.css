@@ -366,10 +366,11 @@ button.entry:focus-visible {
 .dialogue {
   position: absolute;
   z-index: 3;
-  bottom: 5%;
+  bottom: 10%;
   left: 3%;
   width: clamp(340px, calc(var(--u) * 33), 500px);
-  padding: clamp(26px, calc(var(--u) * 2.4), 38px) clamp(30px, calc(var(--u) * 2.8), 44px);
+  padding: clamp(26px, calc(var(--u) * 2.4), 38px) clamp(30px, calc(var(--u) * 2.8), 44px)
+    clamp(40px, calc(var(--u) * 3.6), 56px);
   text-shadow: var(--text-shadow-deep);
   transition:
     opacity 0.35s,
