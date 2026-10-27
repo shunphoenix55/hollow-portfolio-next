@@ -1,12 +1,11 @@
 import Image from 'next/image';
 import type { CSSProperties } from 'react';
-import knight from '@/assets/stack-knight.webp';
+import ruins from '@/assets/stack-ruins.webp';
 import { Ornament } from '@/components/ornament/Ornament';
-import { FrameCorners } from '@/components/ui/FrameCorners';
 import { MotionSection } from '@/components/ui/MotionSection';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import type { Tech } from '@/content/stack';
-import { Swords } from './Swords';
+import { StackIntro } from './StackIntro';
 import styles from './TechStack.module.css';
 
 const ARC_FROM = 150;
@@ -15,11 +14,16 @@ const ARC_SPAN = 120;
 export function TechStack({ items }: { items: Tech[] }) {
   const step = ARC_SPAN / Math.max(1, items.length - 1);
   return (
-    <MotionSection id="skills" className={styles.stack} aria-labelledby="stack-title">
-      <div className={styles.backdrop} data-stack-backdrop aria-hidden="true">
-        <Image src={knight} alt="" fill sizes="(max-width: 640px) 150vw, 150vh" />
+    <MotionSection
+      id="skills"
+      className={styles.stack}
+      aria-labelledby="stack-title"
+      data-intro="final"
+    >
+      <div className={styles.backdrop} aria-hidden="true">
+        <Image src={ruins} alt="" fill sizes="(max-width: 640px) 150vw, 150vh" />
+        <StackIntro />
       </div>
-      <Swords />
       <SectionHeading id="stack-title" title="Tech Stack" rule="medium" className={styles.head} />
       <ul className={styles.arc}>
         {items.map((tech, i) => (
@@ -33,12 +37,11 @@ export function TechStack({ items }: { items: Tech[] }) {
               } as CSSProperties
             }
           >
-            <div className={styles.chip} data-stack-chip>
-              <FrameCorners />
-              <span className={styles.mono}>
+            <div className={styles.orb} data-stack-orb>
+              <span className={styles.ball}>
                 <Ornament name={tech.icon} glow={false} />
               </span>
-              <span className={styles.name}>{tech.name}</span>
+              <span className={styles.label}>{tech.name}</span>
             </div>
           </li>
         ))}
