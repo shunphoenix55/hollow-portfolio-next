@@ -4,7 +4,7 @@
 
 .row {
   display: grid;
-  grid-template-columns: auto minmax(0, min(620px, 54vh)) auto;
+  grid-template-columns: auto minmax(0, var(--wheel-size, min(620px, 54vh))) auto;
   align-items: center;
   justify-content: center;
   gap: clamp(4px, 2vw, 32px);

@@ -17,7 +17,6 @@ type FerrisWheelProps = {
   items: FerrisWheelItem[];
   active: number;
   onActiveChange: (index: number) => void;
-  onPick?: (index: number) => void;
   label: string;
   controlsId?: string;
   direction?: 'cw' | 'ccw';
@@ -37,7 +36,6 @@ export function FerrisWheel({
   items,
   active,
   onActiveChange,
-  onPick,
   label,
   controlsId,
   direction = 'cw',
@@ -187,7 +185,6 @@ export function FerrisWheel({
                             onClick={() => {
                               if (performance.now() < suppressClickUntil.current) return;
                               request(index);
-                              onPick?.(index);
                             }}
                           >
                             <span className={styles.window}>

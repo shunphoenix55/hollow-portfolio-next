@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 import { FerrisWheel } from '@/components/ui/ferris-wheel/FerrisWheel';
 import { wrap } from '@/components/ui/ferris-wheel/wheel-math';
 import type { PortfolioProject } from '@/content/portfolio-projects';
@@ -10,14 +10,10 @@ import styles from './ProjectBrowser.module.css';
 
 const DETAIL_ID = 'project-detail';
 
-const scrollToId = (id: string) => {
-  const element = document.getElementById(id);
-  if (element) slowScrollTo(element);
-};
+type ProjectBrowserProps = { projects: PortfolioProject[]; intro?: ReactNode };
 
-export function ProjectBrowser({ projects }: { projects: PortfolioProject[] }) {
+export function ProjectBrowser({ projects, intro }: ProjectBrowserProps) {
   const [active, setActive] = useState(0);
-  const scrollPending = useRef(false);
   const project = projects[wrap(active, projects.length)];
   const items = projects.map((p) => ({
     id: p.slug,
@@ -36,47 +32,41 @@ export function ProjectBrowser({ projects }: { projects: PortfolioProject[] }) {
     return () => removeEventListener('hashchange', fromHash);
   }, [projects]);
 
-  useEffect(() => {
-    if (!scrollPending.current) return;
-    scrollPending.current = false;
-    scrollToId(`${project.slug}-title`);
-  }, [project.slug]);
-
   const select = (index: number) => {
     const next = wrap(index, projects.length);
-    scrollPending.current = true;
     setActive(next);
     history.replaceState(null, '', `#${projects[next].slug}`);
   };
 
-  const pick = (index: number) => {
-    if (wrap(index, projects.length) === active) scrollToId(`${project.slug}-title`);
-  };
-
   return (
     <>
-      <section className={styles.wheel} aria-label="Project wheel">
-        <FerrisWheel
-          items={items}
-          active={active}
-          onActiveChange={select}
-          onPick={pick}
-          label="Projects ferris wheel"
-          controlsId={DETAIL_ID}
-        />
-        <a
-          className={styles.cue}
-          href={`#${DETAIL_ID}`}
-          onClick={(event) => {
-            event.preventDefault();
-            scrollToId(`${project.slug}-title`);
-          }}
-        >
-          <span className={styles.current}>{project.title}</span>
-          <span className={styles.hint}>Read about it below</span>
-          <i className={styles.line} aria-hidden="true" />
-        </a>
-      </section>
+      <div className={styles.hero}>
+        {intro}
+        <section className={styles.wheel} aria-label="Project wheel">
+          <div className={styles.wheelArea}>
+            <FerrisWheel
+              items={items}
+              active={active}
+              onActiveChange={select}
+              label="Projects ferris wheel"
+              controlsId={DETAIL_ID}
+            />
+          </div>
+          <a
+            className={styles.cue}
+            href={`#${DETAIL_ID}`}
+            onClick={(event) => {
+              event.preventDefault();
+              const title = document.getElementById(`${project.slug}-title`);
+              if (title) slowScrollTo(title);
+            }}
+          >
+            <span className={styles.current}>{project.title}</span>
+            <span className={styles.hint}>Read about it below</span>
+            <i className={styles.line} aria-hidden="true" />
+          </a>
+        </section>
+      </div>
       <ProjectDetail key={project.slug} id={DETAIL_ID} project={project} />
     </>
   );

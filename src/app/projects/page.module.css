@@ -26,16 +26,18 @@
 }
 
 .nav {
-  width: min(1240px, 100% - 48px);
-  margin: 0 auto;
-  padding-top: 28px;
+  position: absolute;
+  z-index: 2;
+  top: 24px;
+  left: max(24px, (100% - 1240px) / 2);
 }
 
 .header {
   display: grid;
+  flex: none;
   justify-items: center;
-  gap: 6px;
-  padding: clamp(4px, 2vh, 28px) 24px clamp(8px, 2vh, 20px);
+  gap: 4px;
+  padding: clamp(20px, 4svh, 40px) 24px clamp(4px, 1svh, 12px);
   text-align: center;
 }
 
@@ -49,7 +51,11 @@
 
 @media (max-width: 640px) {
   .nav {
-    width: calc(100% - 32px);
-    padding-top: 16px;
+    top: 14px;
+    left: 16px;
+  }
+
+  .header {
+    padding-top: 64px;
   }
 }

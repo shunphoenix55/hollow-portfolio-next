@@ -27,16 +27,20 @@ export default function ProjectsPage() {
         <nav className={styles.nav} aria-label="Back">
           <HkChoice href="/">Return</HkChoice>
         </nav>
-        <header className={styles.header}>
-          <SectionHeading
-            as="h1"
-            font="dialogue"
-            id="projects-page-title"
-            title={projectsPage.title}
-          />
-          <p className={styles.intro}>{projectsPage.intro}</p>
-        </header>
-        <ProjectBrowser projects={portfolioProjects} />
+        <ProjectBrowser
+          projects={portfolioProjects}
+          intro={
+            <header className={styles.header}>
+              <SectionHeading
+                as="h1"
+                font="dialogue"
+                id="projects-page-title"
+                title={projectsPage.title}
+              />
+              <p className={styles.intro}>{projectsPage.intro}</p>
+            </header>
+          }
+        />
       </main>
     </>
   );

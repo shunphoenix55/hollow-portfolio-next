@@ -4,7 +4,7 @@
   align-items: start;
   gap: clamp(40px, 6vw, 96px);
   width: min(1240px, 100% - 48px);
-  margin: clamp(40px, 8vh, 96px) auto 0;
+  margin: 16px auto 0;
   scroll-margin-top: 32px;
 }
 
