@@ -67,6 +67,7 @@
   background: none;
   color: var(--color-mist);
   font-size: 13px;
+  font-weight: 700;
   text-decoration: underline;
   text-decoration-color: rgb(255 255 255 / 0.25);
   text-underline-offset: 4px;
