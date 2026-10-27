@@ -1,7 +1,7 @@
 import { Ornament } from '@/components/ornament/Ornament';
 import styles from './CrestRule.module.css';
 
-export type RuleSize = 'wide' | 'medium' | 'aside' | 'narrow';
+export type RuleSize = 'wide' | 'medium' | 'aside' | 'narrow' | 'panel';
 
 export function CrestRule({ size = 'wide', className }: { size?: RuleSize; className?: string }) {
   return (
