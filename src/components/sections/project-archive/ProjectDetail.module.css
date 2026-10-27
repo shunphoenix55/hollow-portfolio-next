@@ -23,15 +23,8 @@
   }
 }
 
-.eyebrow {
-  margin: 0;
-  color: var(--color-muted);
-  font: 500 18px / 1.4 var(--font-dialogue);
-  letter-spacing: 0.04em;
-}
-
 .title {
-  margin: 12px 0 8px;
+  margin: 0 0 8px;
   scroll-margin-top: 96px;
   color: #fff;
   font: 500 clamp(36px, 3.8vw, 56px) / 1.1 var(--font-dialogue);

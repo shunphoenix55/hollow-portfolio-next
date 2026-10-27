@@ -24,7 +24,6 @@ export function ProjectDetail({ id, project }: { id: string; project: PortfolioP
   return (
     <article id={id} className={styles.detail} aria-labelledby={titleId}>
       <div className={styles.text}>
-        <p className={styles.eyebrow}>{project.category}</p>
         <h2 id={titleId} className={styles.title}>
           {project.title}
         </h2>
