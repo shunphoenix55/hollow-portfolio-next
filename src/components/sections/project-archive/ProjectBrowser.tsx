@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Ornament } from '@/components/ornament/Ornament';
 import { FerrisWheel } from '@/components/ui/ferris-wheel/FerrisWheel';
 import { wrap } from '@/components/ui/ferris-wheel/wheel-math';
 import type { PortfolioProject } from '@/content/portfolio-projects';
@@ -30,10 +29,10 @@ export function ProjectBrowser({ projects }: { projects: PortfolioProject[] }) {
     return () => removeEventListener('hashchange', fromHash);
   }, [projects]);
 
-  const select = (index: number) => {
+  const select = (index: number, byUser: boolean) => {
     const next = wrap(index, projects.length);
     setActive(next);
-    history.replaceState(null, '', `#${projects[next].slug}`);
+    if (byUser) history.replaceState(null, '', `#${projects[next].slug}`);
   };
 
   return (
@@ -46,29 +45,21 @@ export function ProjectBrowser({ projects }: { projects: PortfolioProject[] }) {
           label="Projects ferris wheel"
           controlsId={DETAIL_ID}
         />
-        <div className={styles.controls}>
-          <button
-            type="button"
-            className={styles.arrow}
-            aria-label="Previous project"
-            aria-controls={DETAIL_ID}
-            onClick={() => select(active - 1)}
-          >
-            <Ornament name="slot-mark" className={styles.arrowMarkLeft} />
-          </button>
-          <p className={styles.current} aria-hidden="true">
-            {project.title}
-          </p>
-          <button
-            type="button"
-            className={styles.arrow}
-            aria-label="Next project"
-            aria-controls={DETAIL_ID}
-            onClick={() => select(active + 1)}
-          >
-            <Ornament name="slot-mark" className={styles.arrowMark} />
-          </button>
-        </div>
+        <a
+          className={styles.cue}
+          href={`#${DETAIL_ID}`}
+          onClick={(event) => {
+            event.preventDefault();
+            const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+            document
+              .getElementById(DETAIL_ID)
+              ?.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'start' });
+          }}
+        >
+          <span className={styles.current}>{project.title}</span>
+          <span className={styles.hint}>Read about it below</span>
+          <i className={styles.line} aria-hidden="true" />
+        </a>
       </section>
       <ProjectDetail key={project.slug} id={DETAIL_ID} project={project} />
     </>

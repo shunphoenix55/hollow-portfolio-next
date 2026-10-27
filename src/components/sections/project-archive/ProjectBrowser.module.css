@@ -1,55 +1,67 @@
 .wheel {
   display: grid;
   justify-items: center;
-  gap: 20px;
-  width: min(640px, 100%);
+  gap: 14px;
+  width: min(960px, 100% - 24px);
   margin: 0 auto;
 }
 
-.controls {
+.cue {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) 48px;
-  align-items: center;
-  gap: 12px;
-  width: min(460px, 100%);
+  justify-items: center;
+  gap: 6px;
+  padding: 6px 16px 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.cue:focus-visible {
+  outline: 2px solid var(--color-mist);
+  outline-offset: 6px;
 }
 
 .current {
-  margin: 0;
   color: #fff;
-  font: 600 clamp(18px, 1.6vw, 24px) / 1.2 var(--font-title);
-  letter-spacing: 0.04em;
+  font: 500 clamp(24px, 2.2vw, 32px) / 1.2 var(--font-dialogue);
+  letter-spacing: 0.01em;
   text-align: center;
   text-shadow: var(--text-glow);
 }
 
-.arrow {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  border: 1px solid rgb(255 255 255 / 0.16);
-  border-radius: 50%;
-  background: radial-gradient(circle at 50% 40%, rgb(40 44 50 / 0.6), rgb(0 1 7 / 0.9));
-  cursor: pointer;
+.hint {
+  color: var(--color-mist);
+  font: 500 17px / 1.3 var(--font-dialogue);
+  letter-spacing: 0.02em;
   transition:
-    border-color 0.25s,
-    box-shadow 0.25s;
+    color 0.2s,
+    text-shadow 0.2s;
 }
 
-.arrow:hover,
-.arrow:focus-visible {
-  outline: none;
-  border-color: rgb(255 255 255 / 0.6);
-  box-shadow: 0 0 16px rgb(220 235 255 / 0.22);
+.cue:hover .hint,
+.cue:focus-visible .hint {
+  color: #fff;
+  text-shadow: 0 0 14px rgb(255 255 255 / 0.5);
 }
 
-.arrowMark,
-.arrowMarkLeft {
-  width: 24px;
-  height: 18px;
+.line {
+  width: 1px;
+  height: 42px;
+  background: linear-gradient(#fff, transparent);
+  transform-origin: top;
+  animation: cue-drop 2.2s ease-in-out infinite;
 }
 
-.arrowMarkLeft {
-  transform: scaleX(-1);
+@keyframes cue-drop {
+  0% {
+    transform: scaleY(0);
+    opacity: 1;
+  }
+  70% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 0;
+  }
 }
