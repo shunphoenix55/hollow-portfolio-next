@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { shortestStep, springProgress, wrap } from './wheel-math';
+import { nearestAngle, springProgress, wrap } from './wheel-math';
 
 describe('wrap', () => {
   it('keeps indices inside the ring in both directions', () => {
@@ -14,12 +14,11 @@ describe('wrap', () => {
   });
 });
 
-describe('shortestStep', () => {
-  it('turns the short way round', () => {
-    expect(shortestStep(0, 2, 9)).toBe(1);
-    expect(shortestStep(0, 7, 9)).toBe(-1);
-    expect(shortestStep(8, 0, 9)).toBe(1);
-    expect(shortestStep(4, 4, 9)).toBe(0);
+describe('nearestAngle', () => {
+  it('picks the equivalent angle closest to where the wheel is', () => {
+    expect(nearestAngle(0, 320)).toBe(-40);
+    expect(nearestAngle(700, 40)).toBe(760);
+    expect(nearestAngle(-30, 0)).toBe(0);
   });
 });
 

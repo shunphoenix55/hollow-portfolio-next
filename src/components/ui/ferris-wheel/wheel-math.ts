@@ -4,10 +4,8 @@ export function wrap(index: number, total: number) {
   return ((whole % total) + total) % total;
 }
 
-export function shortestStep(from: number, to: number, total: number) {
-  let distance = wrap(to - from, total);
-  if (distance > total / 2) distance -= total;
-  return Math.sign(distance);
+export function nearestAngle(from: number, base: number) {
+  return base + 360 * Math.round((from - base) / 360);
 }
 
 export function springProgress(progress: number) {

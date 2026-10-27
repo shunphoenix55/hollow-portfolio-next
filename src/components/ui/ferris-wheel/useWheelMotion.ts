@@ -1,18 +1,14 @@
 'use client';
 
 import { useLayoutEffect, useRef, useState } from 'react';
-import { shortestStep, springProgress, wrap } from './wheel-math';
+import { nearestAngle, springProgress, wrap } from './wheel-math';
 
-const TURN_MS = 650;
+const TURN_BASE_MS = 420;
+const TURN_PER_SLOT_MS = 170;
 const SWAY_MS = 340;
 const SWING = [0, -2.6, 0, 1.7, 0, -0.9, 0, 0.35, 0];
 
-type WheelMotion = {
-  selected: number;
-  total: number;
-  sign: 1 | -1;
-  reducedMotion: boolean;
-};
+type WheelMotion = { selected: number; total: number; sign: 1 | -1; reducedMotion: boolean };
 
 export function useWheelMotion({ selected, total, sign, reducedMotion }: WheelMotion) {
   const wheel = useRef<HTMLDivElement>(null);
@@ -29,9 +25,7 @@ export function useWheelMotion({ selected, total, sign, reducedMotion }: WheelMo
   }, [selected]);
 
   useLayoutEffect(() => {
-    let current = wrap(selectedRef.current, total);
-    let target = current;
-    let angle = current * slot * sign;
+    let angle = wrap(selectedRef.current, total) * slot * sign;
     let frame = 0;
     let sways: Animation[] = [];
 
@@ -46,54 +40,52 @@ export function useWheelMotion({ selected, total, sign, reducedMotion }: WheelMo
       sways.forEach((animation) => animation.cancel());
       sways = [];
     };
-    const sway = (turn: number) => {
+    const sway = (direction: number) => {
       sways = pendulums.current.flatMap((node) =>
         node
           ? [
               node.animate(
-                SWING.map((value) => ({ transform: `rotate(${value * turn}deg)` })),
+                SWING.map((value) => ({ transform: `rotate(${value * direction}deg)` })),
                 { duration: SWAY_MS, easing: 'ease-in-out' },
               ),
             ]
           : [],
       );
     };
-    const turn = () => {
-      const step = shortestStep(current, target, total);
-      if (step === 0) return;
+    const turnTo = (index: number) => {
+      cancelAnimationFrame(frame);
       stopSway();
-      const next = wrap(current + step, total);
       const from = angle;
-      const to = from + step * slot * sign;
+      const to = nearestAngle(from, index * slot * sign);
+      if (to === from) return;
+      const slots = Math.abs(to - from) / slot;
+      const duration = TURN_BASE_MS + TURN_PER_SLOT_MS * slots;
       const started = performance.now();
-      setShown(next);
       const tick = (now: number) => {
-        const progress = Math.min(1, (now - started) / TURN_MS);
+        const progress = Math.min(1, (now - started) / duration);
         paint(from + (to - from) * springProgress(progress));
         if (progress < 1) {
           frame = requestAnimationFrame(tick);
           return;
         }
         frame = 0;
-        current = next;
-        if (current !== target) turn();
-        else sway(step * sign);
+        paint(to);
+        sway(Math.sign(to - from));
       };
       frame = requestAnimationFrame(tick);
     };
 
     paint(angle);
-    setShown(current);
     command.current = (index) => {
-      target = wrap(index, total);
-      if (reducedMotion) {
-        cancelAnimationFrame(frame);
-        frame = 0;
-        stopSway();
-        current = target;
-        paint(current * slot * sign);
-        setShown(current);
-      } else if (!frame) turn();
+      const target = wrap(index, total);
+      setShown(target);
+      if (!reducedMotion) {
+        turnTo(target);
+        return;
+      }
+      cancelAnimationFrame(frame);
+      stopSway();
+      paint(target * slot * sign);
     };
     return () => {
       cancelAnimationFrame(frame);
