@@ -1,14 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import {
-  type FocusEvent,
-  type KeyboardEvent,
-  type PointerEvent,
-  useId,
-  useRef,
-  useState,
-} from 'react';
+import { type KeyboardEvent, type PointerEvent, useId, useRef } from 'react';
 import knightJump from '@/assets/exp-knight-jump.webp';
 import knightStand from '@/assets/exp-knight-stand.webp';
 import { Ornament } from '@/components/ornament/Ornament';
@@ -56,15 +49,13 @@ export function FerrisWheel({
   const drag = useRef<{ id: number; x: number; y: number; captured: boolean } | null>(null);
   const suppressClickUntil = useRef(0);
   const [root, inView] = useInView<HTMLDivElement>();
-  const [hovered, setHovered] = useState(false);
-  const [focused, setFocused] = useState(false);
   const helpId = useId();
   const { shown, initialAngle, slot, wheel, counters, pendulums } = useWheelMotion({
     selected,
     total,
     sign,
     reducedMotion,
-    spinning: inView && !hovered && !focused,
+    spinning: inView,
   });
 
   const request = (index: number) => {
@@ -114,12 +105,6 @@ export function FerrisWheel({
       aria-roledescription="carousel"
       aria-label={label}
       onKeyDown={onKeyDown}
-      onPointerEnter={() => setHovered(true)}
-      onPointerLeave={() => setHovered(false)}
-      onFocus={() => setFocused(true)}
-      onBlur={(event: FocusEvent) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
-      }}
     >
       <div className={styles.row}>
         <button
