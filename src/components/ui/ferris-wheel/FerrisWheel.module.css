@@ -2,9 +2,47 @@
   width: 100%;
 }
 
+.row {
+  display: grid;
+  grid-template-columns: auto minmax(0, min(620px, 54vh)) auto;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(4px, 2vw, 32px);
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, rgb(40 44 50 / 0.6), rgb(0 1 7 / 0.9));
+  cursor: pointer;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+
+.arrow:hover,
+.arrow:focus-visible {
+  outline: none;
+  border-color: rgb(255 255 255 / 0.6);
+  box-shadow: 0 0 16px rgb(220 235 255 / 0.22);
+}
+
+.arrowMark {
+  width: 26px;
+  height: 20px;
+}
+
+.arrowMarkRight {
+  transform: scaleX(-1);
+}
+
 .stage {
   position: relative;
-  width: min(640px, 100%);
+  width: 100%;
   aspect-ratio: 1;
   margin-inline: auto;
   border-radius: 24px;
@@ -179,8 +217,9 @@
   left: 50%;
   display: grid;
   place-items: center;
-  width: 18%;
+  width: 20%;
   aspect-ratio: 1;
+  overflow: hidden;
   border: 2px solid rgb(255 255 255 / 0.2);
   border-radius: 50%;
   background: radial-gradient(circle at 50% 40%, #12151b, var(--color-abyss) 70%);
@@ -191,23 +230,36 @@
   pointer-events: none;
 }
 
-.hubMark {
-  width: 34%;
+.hubKnight {
+  width: 78%;
   height: auto;
-  filter: drop-shadow(0 0 8px rgb(255 255 255 / 0.35));
+  translate: 0 6%;
+  filter: drop-shadow(0 0 10px rgb(220 230 240 / 0.3));
 }
 
 .help {
   margin: 4px 0 0;
   color: var(--color-muted);
-  font: 400 13px / 1.4 var(--font-label);
-  letter-spacing: 0.08em;
+  font: 500 16px / 1.4 var(--font-dialogue);
+  letter-spacing: 0.02em;
   text-align: center;
 }
 
 .help kbd {
   font: inherit;
   color: var(--color-mist);
+}
+
+@media (max-width: 640px) {
+  .arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .arrowMark {
+    width: 20px;
+    height: 15px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
