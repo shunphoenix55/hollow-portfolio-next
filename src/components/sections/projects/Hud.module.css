@@ -1,6 +1,6 @@
 .hud {
   position: absolute;
-  bottom: calc(100% + 3vh);
+  bottom: calc(100% + 6vh);
   left: 28px;
   display: grid;
   grid-template-rows: auto auto;

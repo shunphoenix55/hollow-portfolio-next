@@ -28,7 +28,7 @@
 .md {
   max-width: 15em;
   font-size: clamp(20px, 1.7vw, 28px);
-  line-height: 1.2;
+  line-height: 1.45;
   text-wrap: balance;
   text-shadow: 0 0 22px rgb(255 255 255 / 0.35);
 }
