@@ -45,13 +45,13 @@ export function ProjectBrowser({ projects }: { projects: PortfolioProject[] }) {
 
   const select = (index: number) => {
     const next = wrap(index, projects.length);
+    scrollPending.current = true;
     setActive(next);
     history.replaceState(null, '', `#${projects[next].slug}`);
   };
 
   const pick = (index: number) => {
     if (wrap(index, projects.length) === active) scrollToId(`${project.slug}-title`);
-    else scrollPending.current = true;
   };
 
   return (
