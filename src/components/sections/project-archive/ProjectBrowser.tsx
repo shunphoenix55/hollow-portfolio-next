@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FerrisWheel } from '@/components/ui/ferris-wheel/FerrisWheel';
 import { wrap } from '@/components/ui/ferris-wheel/wheel-math';
 import type { PortfolioProject } from '@/content/portfolio-projects';
@@ -9,8 +9,16 @@ import styles from './ProjectBrowser.module.css';
 
 const DETAIL_ID = 'project-detail';
 
+const scrollToId = (id: string) => {
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document
+    .getElementById(id)
+    ?.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'start' });
+};
+
 export function ProjectBrowser({ projects }: { projects: PortfolioProject[] }) {
   const [active, setActive] = useState(0);
+  const scrollPending = useRef(false);
   const project = projects[wrap(active, projects.length)];
   const items = projects.map((p) => ({
     id: p.slug,
@@ -29,10 +37,21 @@ export function ProjectBrowser({ projects }: { projects: PortfolioProject[] }) {
     return () => removeEventListener('hashchange', fromHash);
   }, [projects]);
 
-  const select = (index: number, byUser: boolean) => {
+  useEffect(() => {
+    if (!scrollPending.current) return;
+    scrollPending.current = false;
+    scrollToId(`${project.slug}-title`);
+  }, [project.slug]);
+
+  const select = (index: number) => {
     const next = wrap(index, projects.length);
     setActive(next);
-    if (byUser) history.replaceState(null, '', `#${projects[next].slug}`);
+    history.replaceState(null, '', `#${projects[next].slug}`);
+  };
+
+  const pick = (index: number) => {
+    if (wrap(index, projects.length) === active) scrollToId(`${project.slug}-title`);
+    else scrollPending.current = true;
   };
 
   return (
@@ -42,6 +61,7 @@ export function ProjectBrowser({ projects }: { projects: PortfolioProject[] }) {
           items={items}
           active={active}
           onActiveChange={select}
+          onPick={pick}
           label="Projects ferris wheel"
           controlsId={DETAIL_ID}
         />
@@ -50,10 +70,7 @@ export function ProjectBrowser({ projects }: { projects: PortfolioProject[] }) {
           href={`#${DETAIL_ID}`}
           onClick={(event) => {
             event.preventDefault();
-            const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-            document
-              .getElementById(DETAIL_ID)
-              ?.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'start' });
+            scrollToId(`${project.slug}-title`);
           }}
         >
           <span className={styles.current}>{project.title}</span>
