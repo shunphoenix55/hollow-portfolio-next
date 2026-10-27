@@ -1,11 +1,10 @@
 'use client';
 
-import { type LucideIcon, ExternalLink, Film, Play, CodeXml } from 'lucide-react';
+import { ArrowUpRight, CodeXml, ExternalLink, Film, type LucideIcon, Play } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { Ornament } from '@/components/ornament/Ornament';
 import { FrameCorners } from '@/components/ui/FrameCorners';
-import { HkChoice } from '@/components/ui/HkChoice';
 import type { PortfolioProject, ProjectLinkKind } from '@/content/portfolio-projects';
 import styles from './ProjectDetail.module.css';
 
@@ -63,19 +62,28 @@ export function ProjectDetail({ id, project }: { id: string; project: PortfolioP
         </dl>
 
         {project.links.length > 0 && (
-          <ul className={styles.links}>
-            {project.links.map((link) => {
-              const Icon = LINK_ICONS[link.kind];
-              return (
-                <li key={link.url}>
-                  <HkChoice href={link.url} target="_blank" rel="noopener noreferrer">
-                    <Icon className={styles.linkIcon} aria-hidden="true" />
-                    {link.label}
-                  </HkChoice>
-                </li>
-              );
-            })}
-          </ul>
+          <>
+            <h3 className={styles.label}>Links</h3>
+            <ul className={styles.links}>
+              {project.links.map((link) => {
+                const Icon = LINK_ICONS[link.kind];
+                return (
+                  <li key={link.url}>
+                    <a
+                      className={styles.link}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Icon className={styles.linkIcon} aria-hidden="true" />
+                      {link.label}
+                      <ArrowUpRight className={styles.linkArrow} aria-hidden="true" />
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </>
         )}
       </div>
 
