@@ -11,17 +11,19 @@ type Mover = {
   below: number;
 };
 
-const MIN_SPEED = 9;
-const MAX_SPEED = 18;
-const MAX_TURN = 0.8;
-const EDGE = 8;
-const TOP_SHARE = 0.06;
-const BOTTOM_SHARE = 0.8;
+export type DriftStart = { x: number; y: number; heading: number };
+
+const MIN_SPEED = 5;
+const MAX_SPEED = 10;
+const MAX_TURN = 0.5;
+const GAP = 22;
+const PUSH = 30;
+const REGION = { left: 0.16, right: 0.84, top: 0.12, bottom: 0.68 };
 
 export function startOrbDrift(
   section: HTMLElement,
   orbs: HTMLElement[],
-  starts: { x: number; y: number; heading: number }[] = [],
+  starts: DriftStart[] = [],
 ) {
   let movers: Mover[] = [];
   let width = 0;
@@ -55,16 +57,35 @@ export function startOrbDrift(
     });
   };
 
-  const step = (m: Mover, dt: number) => {
-    m.turn += (Math.random() - 0.5) * 2 * dt;
+  const separate = (dt: number) => {
+    for (let i = 0; i < movers.length; i++) {
+      for (let j = i + 1; j < movers.length; j++) {
+        const a = movers[i];
+        const b = movers[j];
+        const dx = b.cx + b.x - (a.cx + a.x);
+        const dy = b.cy + b.y - (a.cy + a.y);
+        const distance = Math.hypot(dx, dy) || 1;
+        const overlap = a.radius + b.radius + GAP - distance;
+        if (overlap <= 0) continue;
+        const shift = Math.min(overlap, PUSH * dt) / 2;
+        a.x -= (dx / distance) * shift;
+        a.y -= (dy / distance) * shift;
+        b.x += (dx / distance) * shift;
+        b.y += (dy / distance) * shift;
+      }
+    }
+  };
+
+  const move = (m: Mover, dt: number) => {
+    m.turn += (Math.random() - 0.5) * dt;
     m.turn = Math.max(-MAX_TURN, Math.min(MAX_TURN, m.turn));
     m.heading += m.turn * dt;
     let px = m.cx + m.x + Math.cos(m.heading) * m.speed * dt;
     let py = m.cy + m.y + Math.sin(m.heading) * m.speed * dt;
-    const minX = m.radius + EDGE;
-    const maxX = width - m.radius - EDGE;
-    const minY = height * TOP_SHARE + m.radius;
-    const maxY = height * BOTTOM_SHARE - m.radius - m.below;
+    const minX = width * REGION.left + m.radius;
+    const maxX = width * REGION.right - m.radius;
+    const minY = height * REGION.top + m.radius;
+    const maxY = height * REGION.bottom - m.radius - m.below;
     if (px < minX || px > maxX) {
       m.heading = Math.PI - m.heading;
       px = Math.min(maxX, Math.max(minX, px));
@@ -75,13 +96,16 @@ export function startOrbDrift(
     }
     m.x = px - m.cx;
     m.y = py - m.cy;
-    m.el.style.transform = `translate(${m.x.toFixed(1)}px, ${m.y.toFixed(1)}px)`;
   };
 
   const loop = (now: number) => {
     const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
     last = now;
-    movers.forEach((m) => step(m, dt));
+    movers.forEach((m) => move(m, dt));
+    separate(dt);
+    movers.forEach((m) => {
+      m.el.style.transform = `translate(${m.x.toFixed(1)}px, ${m.y.toFixed(1)}px)`;
+    });
     frame = requestAnimationFrame(loop);
   };
   const update = () => {

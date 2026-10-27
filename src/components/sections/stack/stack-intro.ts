@@ -23,9 +23,10 @@ const SHARD_FLIGHT = [
 ];
 
 const ORB_STAGGER_MS = 170;
-const RING_CENTER_Y = 0.42;
-const RING_SHARE = 0.2;
-const RING_HOLD_MS = 900;
+const CLUSTER_CENTER_Y = 0.4;
+const CLUSTER_SPACING = 58;
+const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
+const CLUSTER_HOLD_MS = 700;
 const OUT = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
 const SLOW_IN_OUT = 'cubic-bezier(0.65, 0, 0.35, 1)';
 const SPRING = 'cubic-bezier(0.2, 1.15, 0.35, 1)';
@@ -102,16 +103,17 @@ function releaseOrbs({ section, rock, orbs }: IntroActors) {
   const ox = origin.left + origin.width / 2;
   const oy = origin.top + origin.height * 0.6;
   const cx = stage.left + stage.width / 2;
-  const cy = stage.top + stage.height * RING_CENTER_Y;
-  const radius = Math.min(stage.width, stage.height) * RING_SHARE;
+  const cy = stage.top + stage.height * CLUSTER_CENTER_Y;
+  const spacing = Math.min(CLUSTER_SPACING, stage.width / 9);
   return orbs.map((orb, i) => {
     const box = orb.getBoundingClientRect();
     const bx = box.left + box.width / 2;
     const by = box.top + box.height / 2;
-    const heading = (i / orbs.length) * Math.PI * 2 - Math.PI / 2;
+    const heading = i * GOLDEN_ANGLE;
+    const distance = spacing * Math.sqrt(i + 0.5);
     const start: OrbStart = {
-      x: cx + Math.cos(heading) * radius - bx,
-      y: cy + Math.sin(heading) * radius * 0.7 - by,
+      x: cx + Math.cos(heading) * distance * 1.6 - bx,
+      y: cy + Math.sin(heading) * distance * 0.9 - by,
       heading,
     };
     orb.dataset.shown = '';
@@ -187,6 +189,6 @@ export async function playStackIntro(actors: IntroActors) {
 
   const starts = await orbs;
   section.dataset.intro = 'final';
-  await wait(RING_HOLD_MS);
+  await wait(CLUSTER_HOLD_MS);
   return starts;
 }
