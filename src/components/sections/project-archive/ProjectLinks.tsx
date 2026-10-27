@@ -20,9 +20,9 @@ export function ProjectLinks({ links, size = 'md', className }: ProjectLinksProp
         return (
           <li key={link.url}>
             <a className={styles.link} href={link.url} target="_blank" rel="noopener noreferrer">
-              <Icon className={styles.icon} aria-hidden="true" />
+              {size === 'md' && <Icon className={styles.icon} aria-hidden="true" />}
               {link.label}
-              <ArrowUpRight className={styles.arrow} aria-hidden="true" />
+              {size === 'md' && <ArrowUpRight className={styles.arrow} aria-hidden="true" />}
             </a>
           </li>
         );

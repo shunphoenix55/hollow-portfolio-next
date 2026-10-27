@@ -55,7 +55,7 @@
 
 .sm {
   justify-content: center;
-  gap: 6px 16px;
+  gap: 4px 14px;
 }
 
 .sm .link {
@@ -66,7 +66,7 @@
   border-radius: 0;
   background: none;
   color: var(--color-mist);
-  font-size: 15px;
+  font-size: 13px;
   text-decoration: underline;
   text-decoration-color: rgb(255 255 255 / 0.25);
   text-underline-offset: 4px;
@@ -77,10 +77,4 @@
   color: #fff;
   text-decoration-color: rgb(255 255 255 / 0.8);
   box-shadow: none;
-}
-
-.sm .icon,
-.sm .arrow {
-  width: 13px;
-  height: 13px;
 }

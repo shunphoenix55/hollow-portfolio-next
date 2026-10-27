@@ -40,7 +40,7 @@ export function ProjectPoints({ points, children }: { points: string[]; children
           <li key={point}>{point}</li>
         ))}
       </ul>
-      {children}
+      {(open || fits) && children}
       <HkChoice
         className={styles.more}
         aria-expanded={open}
