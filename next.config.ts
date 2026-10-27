@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   images: {
     formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'shunphoenix55.github.io', pathname: '/assets/projects/**' },
+    ],
   },
   turbopack: {
     rules: {

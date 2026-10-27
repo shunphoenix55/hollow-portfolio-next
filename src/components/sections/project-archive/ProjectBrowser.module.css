@@ -1,0 +1,55 @@
+.wheel {
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+  width: min(640px, 100%);
+  margin: 0 auto;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  align-items: center;
+  gap: 12px;
+  width: min(460px, 100%);
+}
+
+.current {
+  margin: 0;
+  color: #fff;
+  font: 600 clamp(18px, 1.6vw, 24px) / 1.2 var(--font-title);
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-shadow: var(--text-glow);
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, rgb(40 44 50 / 0.6), rgb(0 1 7 / 0.9));
+  cursor: pointer;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+
+.arrow:hover,
+.arrow:focus-visible {
+  outline: none;
+  border-color: rgb(255 255 255 / 0.6);
+  box-shadow: 0 0 16px rgb(220 235 255 / 0.22);
+}
+
+.arrowMark,
+.arrowMarkLeft {
+  width: 24px;
+  height: 18px;
+}
+
+.arrowMarkLeft {
+  transform: scaleX(-1);
+}

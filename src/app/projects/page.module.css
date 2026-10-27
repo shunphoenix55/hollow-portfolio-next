@@ -1,0 +1,35 @@
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  padding: 0 0 clamp(96px, 16vh, 180px);
+}
+
+.nav {
+  width: min(1240px, 100% - 48px);
+  margin: 0 auto;
+  padding-top: 28px;
+}
+
+.header {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  padding: clamp(24px, 6vh, 64px) 24px clamp(20px, 4vh, 40px);
+  text-align: center;
+}
+
+.intro {
+  max-width: 34em;
+  margin: 0;
+  color: var(--color-mist);
+  font: 500 clamp(18px, 1.4vw, 22px) / 1.6 var(--font-dialogue);
+  text-shadow: var(--text-shadow-deep);
+}
+
+@media (max-width: 640px) {
+  .nav {
+    width: calc(100% - 32px);
+    padding-top: 16px;
+  }
+}
