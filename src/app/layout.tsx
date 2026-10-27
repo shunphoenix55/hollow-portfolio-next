@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { SiteMenu } from '@/components/navigation/SiteMenu';
+import { SiteFooter } from '@/components/sections/footer/SiteFooter';
 import { menuLinks } from '@/content/journey';
 import { site } from '@/content/site';
 import { fontVariables } from './fonts';
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       <body>
         <SiteMenu links={menuLinks} />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );

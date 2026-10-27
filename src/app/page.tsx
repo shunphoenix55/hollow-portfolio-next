@@ -1,7 +1,6 @@
 import { Abyss } from '@/components/sections/abyss/Abyss';
 import { EndCredits } from '@/components/sections/credits/EndCredits';
 import { Experience } from '@/components/sections/experience/Experience';
-import { SiteFooter } from '@/components/sections/footer/SiteFooter';
 import { Hero } from '@/components/sections/hero/Hero';
 import { JourneyMenu } from '@/components/sections/journey/JourneyMenu';
 import { Projects } from '@/components/sections/projects/Projects';
@@ -26,7 +25,6 @@ export default function Home() {
         <TechStack items={stack} />
         <Experience jobs={jobs} start={knightStart} />
         <EndCredits />
-        <SiteFooter />
       </main>
     </>
   );
