@@ -6,7 +6,7 @@ import { clamp } from '@/lib/math';
 import { type AbyssRenderer, createAbyssRenderer } from './abyss-gl';
 import styles from './AbyssCanvas.module.css';
 
-export default function AbyssCanvas() {
+export default function AbyssCanvas({ revealOnHero }: { revealOnHero: boolean }) {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -44,21 +44,23 @@ export default function AbyssCanvas() {
       renderer.draw(performance.now() / 1000);
     };
 
-    const unsubscribe = subscribeHeroProgress((progress) => {
-      const opacity = clamp((progress - 0.55) / 0.4);
+    const reveal = (opacity: number) => {
       canvas.style.opacity = opacity.toFixed(3);
       visible = opacity > 0 && !!ensureRenderer();
       update();
-    });
+    };
+    const unsubscribe = revealOnHero
+      ? subscribeHeroProgress((progress) => reveal(clamp((progress - 0.55) / 0.4)))
+      : (reveal(1), undefined);
     addEventListener('resize', onResize);
     document.addEventListener('visibilitychange', update);
     return () => {
-      unsubscribe();
+      unsubscribe?.();
       cancelAnimationFrame(raf);
       removeEventListener('resize', onResize);
       document.removeEventListener('visibilitychange', update);
     };
-  }, []);
+  }, [revealOnHero]);
 
   return <canvas ref={ref} className={styles.canvas} aria-hidden="true" />;
 }

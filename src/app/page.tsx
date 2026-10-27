@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <>
       <PersonJsonLd />
-      <Abyss />
+      <Abyss revealOnHero />
       <main className="relative z-1">
         <Hero />
         <Town text={site.dialogue} />
