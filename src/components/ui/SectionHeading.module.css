@@ -33,6 +33,12 @@
   text-shadow: 0 0 22px rgb(255 255 255 / 0.35);
 }
 
+@media (max-width: 640px) {
+  .lg {
+    font-size: var(--type-phone-heading);
+  }
+}
+
 .dialogue {
   font-family: var(--font-dialogue);
   font-weight: 500;

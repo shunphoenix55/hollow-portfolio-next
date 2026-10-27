@@ -551,3 +551,14 @@ button.entry:focus-visible {
     white-space: normal;
   }
 }
+
+@media (max-width: 640px) {
+  .xp {
+    --name: var(--type-phone-lead);
+    --meta: var(--type-phone-small);
+  }
+
+  .dialogueRole {
+    font-size: var(--type-phone-small);
+  }
+}

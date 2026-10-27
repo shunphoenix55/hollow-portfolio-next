@@ -185,3 +185,9 @@
     justify-items: start;
   }
 }
+
+@media (max-width: 640px) {
+  .name {
+    font-size: var(--type-phone-title);
+  }
+}

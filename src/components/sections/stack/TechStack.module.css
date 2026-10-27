@@ -347,6 +347,10 @@
   }
 
   .label {
-    font-size: 14px;
+    font-size: var(--type-phone-minor);
+  }
+
+  .detail {
+    font-size: var(--type-phone-minor);
   }
 }

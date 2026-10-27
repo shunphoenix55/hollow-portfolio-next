@@ -136,12 +136,16 @@
     inset: 14cqw 1cqw 0;
   }
 
+  .points {
+    font-size: var(--type-phone-minor);
+  }
+
   .title {
     margin: 4px 0 12px;
-    font-size: 18px;
+    font-size: var(--type-phone-lead);
   }
 
   .more {
-    font-size: 16px;
+    font-size: var(--type-phone-minor);
   }
 }

@@ -58,4 +58,8 @@
   .header {
     padding-top: 64px;
   }
+
+  .intro {
+    font-size: var(--type-phone-body);
+  }
 }

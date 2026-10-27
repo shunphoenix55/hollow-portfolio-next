@@ -87,3 +87,9 @@
     opacity: 0;
   }
 }
+
+@media (max-width: 640px) {
+  .current {
+    font-size: var(--type-phone-heading);
+  }
+}

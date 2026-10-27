@@ -202,9 +202,13 @@
   }
 
   .name {
-    font-size: 13vw;
+    font-size: var(--type-phone-display);
     line-height: 1.02;
     white-space: normal;
+  }
+
+  .cue {
+    font-size: var(--type-phone-label);
   }
 
   .top {

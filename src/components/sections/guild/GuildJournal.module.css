@@ -157,3 +157,9 @@
     padding: 40px 24px 32px;
   }
 }
+
+@media (max-width: 640px) {
+  .itemSub {
+    font-size: var(--type-phone-small);
+  }
+}

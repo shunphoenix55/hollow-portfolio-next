@@ -80,3 +80,9 @@
   padding-inline: 8px;
   font-size: clamp(21px, 1.7vw, 26px);
 }
+
+@media (max-width: 640px) {
+  .lg {
+    font-size: var(--type-phone-lead);
+  }
+}

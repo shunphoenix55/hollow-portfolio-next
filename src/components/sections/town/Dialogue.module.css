@@ -84,7 +84,7 @@
   }
 
   .text {
-    font-size: 18px;
+    font-size: var(--type-phone-body);
     line-height: 1.6;
   }
 }

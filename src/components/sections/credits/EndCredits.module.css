@@ -242,6 +242,15 @@
     width: 190cqw;
   }
 
+  .lead,
+  .note {
+    font-size: var(--type-phone-minor);
+  }
+
+  .guildTitle {
+    font-size: var(--type-phone-heading);
+  }
+
   .roll {
     left: 50%;
     width: 46cqw;

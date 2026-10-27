@@ -476,3 +476,17 @@
   padding: 0;
   list-style: none;
 }
+
+@media (max-width: 640px) {
+  .title,
+  .sm .title {
+    font-size: var(--type-phone-title);
+  }
+
+  .label,
+  .sm .label,
+  .features h4,
+  .sm .features h4 {
+    font-size: var(--type-phone-lead);
+  }
+}

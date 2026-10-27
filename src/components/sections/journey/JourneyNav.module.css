@@ -78,7 +78,7 @@
   .item {
     min-height: 48px;
     padding: 10px 0;
-    font-size: 22px;
+    font-size: var(--type-phone-heading);
   }
 }
 
