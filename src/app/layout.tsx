@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { MenuSidebar } from '@/components/navigation/MenuSidebar';
+import { SiteMenu } from '@/components/navigation/SiteMenu';
 import { journeyLinks } from '@/content/journey';
 import { site } from '@/content/site';
 import { fontVariables } from './fonts';
@@ -35,7 +35,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={fontVariables}>
       <body>
-        <MenuSidebar links={journeyLinks} />
+        <SiteMenu links={journeyLinks} />
         {children}
       </body>
     </html>

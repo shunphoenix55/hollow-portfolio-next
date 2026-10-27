@@ -57,59 +57,54 @@
 
 .panel {
   position: fixed;
-  inset: 0 0 0 auto;
-  width: min(440px, 88vw);
+  inset: 0;
+  width: 100vw;
   max-width: none;
   height: 100dvh;
   max-height: none;
   margin: 0;
   padding: 0;
   border: 0;
-  border-left: 1px solid rgb(255 255 255 / 0.12);
   background:
-    radial-gradient(90% 60% at 50% 40%, rgb(30 34 40 / 0.55), transparent 70%), rgb(0 1 7 / 0.97);
-  box-shadow: -30px 0 80px rgb(0 0 0 / 0.7);
+    radial-gradient(60% 55% at 50% 48%, rgb(30 34 40 / 0.5), transparent 70%), rgb(0 1 7 / 0.95);
   color: #fff;
-  translate: 100% 0;
+  opacity: 0;
   transition:
-    translate 0.45s var(--ease-hk),
-    overlay 0.45s allow-discrete,
-    display 0.45s allow-discrete;
+    opacity 0.35s ease,
+    overlay 0.35s allow-discrete,
+    display 0.35s allow-discrete;
 }
 
 .panel[open] {
-  translate: 0 0;
+  opacity: 1;
 }
 
 @starting-style {
   .panel[open] {
-    translate: 100% 0;
+    opacity: 0;
   }
 }
 
 .panel::backdrop {
-  background: rgb(0 0 0 / 0);
-  transition:
-    background 0.45s,
-    overlay 0.45s allow-discrete,
-    display 0.45s allow-discrete;
+  background: transparent;
 }
 
-.panel[open]::backdrop {
-  background: rgb(0 0 0 / 0.6);
+.panel[open] .inner {
+  scale: 1;
 }
 
 @starting-style {
-  .panel[open]::backdrop {
-    background: rgb(0 0 0 / 0);
+  .panel[open] .inner {
+    scale: 0.96;
   }
 }
 
 .inner {
   display: grid;
-  align-content: center;
+  place-content: center;
   min-height: 100%;
   padding: 72px 24px 48px;
+  transition: scale 0.35s var(--ease-hk);
 }
 
 .close {

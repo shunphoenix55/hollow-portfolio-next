@@ -81,3 +81,18 @@
     font-size: 22px;
   }
 }
+
+.compact .list {
+  gap: 8px;
+}
+
+.compact .item {
+  gap: 16px;
+  padding: 6px 0;
+  font-size: clamp(16px, 1.2vw, 19px);
+}
+
+.compact .mark {
+  width: 24px;
+  height: 18px;
+}
