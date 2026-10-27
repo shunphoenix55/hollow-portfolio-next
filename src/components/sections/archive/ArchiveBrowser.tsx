@@ -1,12 +1,13 @@
 'use client';
 
-import { type ReactNode, useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 import { FerrisWheel } from '@/components/ui/ferris-wheel/FerrisWheel';
 import { wrap } from '@/components/ui/ferris-wheel/wheel-math';
 import type { ArchiveEntry, ArchiveLabels } from '@/content/archive';
 import { slowScrollTo } from '@/lib/slow-scroll';
 import { ArchiveDetail } from './ArchiveDetail';
 import styles from './ArchiveBrowser.module.css';
+import { useHashSelection } from './useHashSelection';
 
 const DETAIL_ID = 'archive-detail';
 
@@ -17,7 +18,7 @@ type ArchiveBrowserProps = {
 };
 
 export function ArchiveBrowser({ entries, labels, intro }: ArchiveBrowserProps) {
-  const [active, setActive] = useState(0);
+  const [active, selectEntry] = useHashSelection(entries);
   const entry = entries[wrap(active, entries.length)];
   const items = entries.map((p) => ({
     id: p.slug,
@@ -26,21 +27,7 @@ export function ArchiveBrowser({ entries, labels, intro }: ArchiveBrowserProps) 
     alt: p.images[0].alt,
   }));
 
-  useEffect(() => {
-    const fromHash = () => {
-      const index = entries.findIndex((p) => p.slug === location.hash.slice(1));
-      if (index >= 0) setActive(index);
-    };
-    fromHash();
-    addEventListener('hashchange', fromHash);
-    return () => removeEventListener('hashchange', fromHash);
-  }, [entries]);
-
-  const select = (index: number) => {
-    const next = wrap(index, entries.length);
-    setActive(next);
-    history.replaceState(null, '', `#${entries[next].slug}`);
-  };
+  const select = (index: number) => selectEntry(wrap(index, entries.length));
 
   return (
     <>

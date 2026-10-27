@@ -1,11 +1,7 @@
-import Image from 'next/image';
 import cavern from '@/assets/projects-cavern.webp';
-import { Abyss } from '@/components/sections/abyss/Abyss';
-import { HkChoice } from '@/components/ui/HkChoice';
-import { SectionHeading } from '@/components/ui/SectionHeading';
 import type { ArchiveEntry, ArchiveLabels } from '@/content/archive';
 import { ArchiveBrowser } from './ArchiveBrowser';
-import styles from './ArchivePage.module.css';
+import { ArchiveHeader, ArchiveShell } from './ArchiveShell';
 
 type ArchivePageProps = {
   id: string;
@@ -17,26 +13,12 @@ type ArchivePageProps = {
 
 export function ArchivePage({ id, title, intro, entries, labels }: ArchivePageProps) {
   return (
-    <>
-      <Abyss />
-      <main className={styles.page}>
-        <div className={styles.backdrop} aria-hidden="true">
-          <Image src={cavern} alt="" preload sizes="(max-aspect-ratio: 16/9) 178vh, 100vw" />
-        </div>
-        <nav className={styles.nav} aria-label="Back">
-          <HkChoice href="/">Return</HkChoice>
-        </nav>
-        <ArchiveBrowser
-          entries={entries}
-          labels={labels}
-          intro={
-            <header className={styles.header}>
-              <SectionHeading as="h1" font="dialogue" id={`${id}-page-title`} title={title} />
-              <p className={styles.intro}>{intro}</p>
-            </header>
-          }
-        />
-      </main>
-    </>
+    <ArchiveShell backdrop={cavern}>
+      <ArchiveBrowser
+        entries={entries}
+        labels={labels}
+        intro={<ArchiveHeader id={id} title={title} intro={intro} />}
+      />
+    </ArchiveShell>
   );
 }
