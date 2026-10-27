@@ -108,7 +108,7 @@ src/
 
 ## Open items
 
-- **Placeholders:** project titles, text and art; the HUD geo count of 12.
+- **Projects:** the home section shows the first four entries of `src/content/portfolio-projects.ts` (the same data as `/projects`); the HUD count is the total number of projects. Images load from shunphoenix55.github.io.
 - **Journey links:** "Achievements" and "Contact" point at sections that don't exist yet.
 - **Links:** project, hackathon and "View all" URLs.
 - **Portrait art** for the hero, town and projects on phones.
