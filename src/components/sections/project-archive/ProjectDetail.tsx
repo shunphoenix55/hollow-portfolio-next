@@ -1,19 +1,12 @@
 'use client';
 
-import { ArrowUpRight, CodeXml, ExternalLink, Film, type LucideIcon, Play } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { Ornament } from '@/components/ornament/Ornament';
 import { FrameCorners } from '@/components/ui/FrameCorners';
-import type { PortfolioProject, ProjectLinkKind } from '@/content/portfolio-projects';
+import type { PortfolioProject } from '@/content/portfolio-projects';
+import { ProjectLinks } from './ProjectLinks';
 import styles from './ProjectDetail.module.css';
-
-const LINK_ICONS: Record<ProjectLinkKind, LucideIcon> = {
-  play: Play,
-  code: CodeXml,
-  video: Film,
-  page: ExternalLink,
-};
 
 export function ProjectDetail({ id, project }: { id: string; project: PortfolioProject }) {
   const [shot, setShot] = useState(0);
@@ -64,25 +57,7 @@ export function ProjectDetail({ id, project }: { id: string; project: PortfolioP
         {project.links.length > 0 && (
           <>
             <h3 className={styles.label}>Links</h3>
-            <ul className={styles.links}>
-              {project.links.map((link) => {
-                const Icon = LINK_ICONS[link.kind];
-                return (
-                  <li key={link.url}>
-                    <a
-                      className={styles.link}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Icon className={styles.linkIcon} aria-hidden="true" />
-                      {link.label}
-                      <ArrowUpRight className={styles.linkArrow} aria-hidden="true" />
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
+            <ProjectLinks links={project.links} className={styles.links} />
           </>
         )}
       </div>
