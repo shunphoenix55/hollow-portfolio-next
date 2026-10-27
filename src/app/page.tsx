@@ -1,4 +1,5 @@
 import { Abyss } from '@/components/sections/abyss/Abyss';
+import { EndCredits } from '@/components/sections/credits/EndCredits';
 import { Experience } from '@/components/sections/experience/Experience';
 import { Hero } from '@/components/sections/hero/Hero';
 import { JourneyMenu } from '@/components/sections/journey/JourneyMenu';
@@ -23,6 +24,7 @@ export default function Home() {
         <Projects />
         <TechStack items={stack} />
         <Experience jobs={jobs} start={knightStart} />
+        <EndCredits />
       </main>
     </>
   );
