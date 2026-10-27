@@ -10,6 +10,7 @@ type SectionHeadingProps = {
   adornment?: ReactNode;
   className?: string;
   as?: 'h1' | 'h2';
+  font?: 'title' | 'dialogue';
 };
 
 export function SectionHeading({
@@ -20,12 +21,13 @@ export function SectionHeading({
   adornment,
   className,
   as: Heading = 'h2',
+  font = 'title',
 }: SectionHeadingProps) {
   return (
     <div className={[styles.heading, className].filter(Boolean).join(' ')}>
       <div className={styles.name}>
         {adornment}
-        <Heading id={id} className={`${styles.title} ${styles[size]}`}>
+        <Heading id={id} className={`${styles.title} ${styles[size]} ${styles[font]}`}>
           {title}
         </Heading>
       </div>

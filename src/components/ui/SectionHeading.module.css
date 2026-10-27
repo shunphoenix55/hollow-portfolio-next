@@ -32,3 +32,9 @@
   text-wrap: balance;
   text-shadow: 0 0 22px rgb(255 255 255 / 0.35);
 }
+
+.dialogue {
+  font-family: var(--font-dialogue);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}

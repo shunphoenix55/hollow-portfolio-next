@@ -15,7 +15,7 @@
   display: grid;
   justify-items: center;
   gap: 6px;
-  padding: clamp(24px, 6vh, 64px) 24px clamp(20px, 4vh, 40px);
+  padding: clamp(4px, 2vh, 28px) 24px clamp(8px, 2vh, 20px);
   text-align: center;
 }
 

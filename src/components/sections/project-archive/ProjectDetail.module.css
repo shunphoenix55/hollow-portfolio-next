@@ -4,7 +4,8 @@
   align-items: start;
   gap: clamp(40px, 6vw, 96px);
   width: min(1240px, 100% - 48px);
-  margin: clamp(72px, 12vh, 132px) auto 0;
+  margin: clamp(40px, 8vh, 96px) auto 0;
+  scroll-margin-top: 32px;
 }
 
 .detail > * {
@@ -25,16 +26,15 @@
 .eyebrow {
   margin: 0;
   color: var(--color-muted);
-  font: 400 13px / 1.4 var(--font-label);
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
+  font: 500 18px / 1.4 var(--font-dialogue);
+  letter-spacing: 0.04em;
 }
 
 .title {
   margin: 12px 0 8px;
   color: #fff;
-  font: 600 clamp(30px, 3.2vw, 48px) / 1.1 var(--font-title);
-  letter-spacing: 0.03em;
+  font: 500 clamp(36px, 3.8vw, 56px) / 1.1 var(--font-dialogue);
+  letter-spacing: 0.01em;
   text-shadow: var(--text-glow);
   text-wrap: balance;
 }
@@ -63,10 +63,9 @@
   align-items: center;
   gap: 16px;
   margin: 44px 0 18px;
-  color: var(--color-muted);
-  font: 400 13px / 1 var(--font-label);
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
+  color: var(--color-mist);
+  font: 500 20px / 1 var(--font-dialogue);
+  letter-spacing: 0.02em;
 }
 
 .label::after {
@@ -102,10 +101,10 @@
 }
 
 .features h4 {
-  margin: 0 0 6px;
+  margin: 0 0 4px;
   color: #fff;
-  font: 600 15px / 1.3 var(--font-title);
-  letter-spacing: 0.04em;
+  font: 500 20px / 1.3 var(--font-dialogue);
+  letter-spacing: 0.01em;
 }
 
 .features p {
@@ -147,9 +146,7 @@
 
 .details dt {
   color: var(--color-muted);
-  font: 400 12px / 1.6 var(--font-label);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font: 400 13px / 1.6 var(--font-body);
 }
 
 .details dd {

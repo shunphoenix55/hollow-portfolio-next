@@ -23,7 +23,12 @@ export default function ProjectsPage() {
           <HkChoice href="/">Return</HkChoice>
         </nav>
         <header className={styles.header}>
-          <SectionHeading as="h1" id="projects-page-title" title={projectsPage.title} />
+          <SectionHeading
+            as="h1"
+            font="dialogue"
+            id="projects-page-title"
+            title={projectsPage.title}
+          />
           <p className={styles.intro}>{projectsPage.intro}</p>
         </header>
         <ProjectBrowser projects={portfolioProjects} />
