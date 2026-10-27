@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { ComponentProps, ReactNode } from 'react';
 import { Ornament } from '@/components/ornament/Ornament';
 import styles from './HkChoice.module.css';
@@ -22,9 +23,9 @@ export function HkChoice({ children, selected, className, ...rest }: HkChoicePro
   );
   if (rest.href !== undefined) {
     return (
-      <a className={classes} {...(rest as ComponentProps<'a'>)}>
+      <Link className={classes} {...(rest as ComponentProps<'a'> & { href: string })}>
         {content}
-      </a>
+      </Link>
     );
   }
   return (
