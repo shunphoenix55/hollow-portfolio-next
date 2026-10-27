@@ -23,6 +23,9 @@ const SHARD_FLIGHT = [
 ];
 
 const ORB_STAGGER_MS = 170;
+const RING_CENTER_Y = 0.42;
+const RING_SHARE = 0.2;
+const RING_HOLD_MS = 900;
 const OUT = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
 const SLOW_IN_OUT = 'cubic-bezier(0.65, 0, 0.35, 1)';
 const SPRING = 'cubic-bezier(0.2, 1.15, 0.35, 1)';
@@ -91,23 +94,40 @@ function breakRock({ rock, shards, slash, flash, rockDust, backdrop }: IntroActo
   });
 }
 
-function releaseOrbs({ rock, orbs }: IntroActors) {
+export type OrbStart = { x: number; y: number; heading: number };
+
+function releaseOrbs({ section, rock, orbs }: IntroActors) {
+  const stage = section.getBoundingClientRect();
   const origin = rock.getBoundingClientRect();
   const ox = origin.left + origin.width / 2;
   const oy = origin.top + origin.height * 0.6;
+  const cx = stage.left + stage.width / 2;
+  const cy = stage.top + stage.height * RING_CENTER_Y;
+  const radius = Math.min(stage.width, stage.height) * RING_SHARE;
   return orbs.map((orb, i) => {
     const box = orb.getBoundingClientRect();
-    const dx = ox - (box.left + box.width / 2);
-    const dy = oy - (box.top + box.height / 2);
+    const bx = box.left + box.width / 2;
+    const by = box.top + box.height / 2;
+    const heading = (i / orbs.length) * Math.PI * 2 - Math.PI / 2;
+    const start: OrbStart = {
+      x: cx + Math.cos(heading) * radius - bx,
+      y: cy + Math.sin(heading) * radius * 0.7 - by,
+      heading,
+    };
     orb.dataset.shown = '';
-    return orb.animate(
+    const flight = orb.animate(
       [
-        { transform: `translate(${dx}px, ${dy}px) scale(0.15)`, opacity: 0 },
+        { transform: `translate(${ox - bx}px, ${oy - by}px) scale(0.15)`, opacity: 0 },
         { opacity: 1, offset: 0.2 },
-        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+        { transform: `translate(${start.x}px, ${start.y}px) scale(1)`, opacity: 1 },
       ],
-      { duration: 1500, delay: i * ORB_STAGGER_MS, easing: SPRING, fill: 'backwards' },
-    ).finished;
+      { duration: 1500, delay: i * ORB_STAGGER_MS, easing: SPRING, fill: 'both' },
+    );
+    return flight.finished.then(() => {
+      orb.style.transform = `translate(${start.x}px, ${start.y}px)`;
+      flight.cancel();
+      return start;
+    });
   });
 }
 
@@ -165,6 +185,8 @@ export async function playStackIntro(actors: IntroActors) {
     { duration: 500, easing: OUT },
   ).finished;
 
-  await orbs;
+  const starts = await orbs;
   section.dataset.intro = 'final';
+  await wait(RING_HOLD_MS);
+  return starts;
 }

@@ -11,14 +11,18 @@ type Mover = {
   below: number;
 };
 
-const MIN_SPEED = 18;
-const MAX_SPEED = 36;
+const MIN_SPEED = 9;
+const MAX_SPEED = 18;
 const MAX_TURN = 0.8;
 const EDGE = 8;
 const TOP_SHARE = 0.06;
 const BOTTOM_SHARE = 0.8;
 
-export function startOrbDrift(section: HTMLElement, orbs: HTMLElement[]) {
+export function startOrbDrift(
+  section: HTMLElement,
+  orbs: HTMLElement[],
+  starts: { x: number; y: number; heading: number }[] = [],
+) {
   let movers: Mover[] = [];
   let width = 0;
   let height = 0;
@@ -34,15 +38,15 @@ export function startOrbDrift(section: HTMLElement, orbs: HTMLElement[]) {
       const previous = movers[i];
       const ball = (el.firstElementChild as HTMLElement | null) ?? el;
       const rect = ball.getBoundingClientRect();
-      const x = previous?.x ?? 0;
-      const y = previous?.y ?? 0;
+      const x = previous?.x ?? starts[i]?.x ?? 0;
+      const y = previous?.y ?? starts[i]?.y ?? 0;
       return {
         el,
         cx: rect.left + rect.width / 2 - box.left - x,
         cy: rect.top + rect.height / 2 - box.top - y,
         x,
         y,
-        heading: previous?.heading ?? Math.random() * Math.PI * 2,
+        heading: previous?.heading ?? starts[i]?.heading ?? Math.random() * Math.PI * 2,
         turn: previous?.turn ?? 0,
         speed: previous?.speed ?? MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED),
         radius: rect.width / 2,

@@ -61,8 +61,8 @@ export function StackIntro() {
         const needed = Math.min(START_SHARE, (innerHeight / section.offsetHeight) * START_SHARE);
         if (entry.intersectionRatio < needed) return;
         io.disconnect();
-        playStackIntro(actors).then(() => {
-          if (!disposed) stopDrift = startOrbDrift(section, actors.orbs);
+        playStackIntro(actors).then((starts) => {
+          if (!disposed) stopDrift = startOrbDrift(section, actors.orbs, starts);
         });
       },
       { threshold: THRESHOLDS },
