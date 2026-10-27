@@ -236,7 +236,7 @@
   aspect-ratio: 1;
   translate: 0 8%;
   filter: drop-shadow(0 0 10px rgb(220 230 240 / 0.3));
-  animation: run-bob 0.38s ease-in-out infinite;
+  animation: run-bob 0.72s ease-in-out infinite;
 }
 
 .runner img {
@@ -247,13 +247,13 @@
 }
 
 .runStand {
-  animation: stride-a 0.38s infinite;
+  animation: stride-a 0.72s infinite;
 }
 
 .runStride {
   opacity: 0;
   translate: 10% 7.6%;
-  animation: stride-b 0.38s infinite;
+  animation: stride-b 0.72s infinite;
 }
 
 .dust {
@@ -265,7 +265,7 @@
   border-radius: 50%;
   background: radial-gradient(closest-side, rgb(230 235 240 / 0.5), transparent);
   opacity: 0;
-  animation: run-dust 0.38s ease-out infinite;
+  animation: run-dust 0.72s ease-out infinite;
 }
 
 @keyframes run-bob {
