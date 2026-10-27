@@ -1,33 +1,23 @@
-export type ProjectLinkKind = 'play' | 'code' | 'video' | 'page';
-
-export type ProjectLink = { kind: ProjectLinkKind; label: string; url: string };
-
-export type ProjectImage = { src: string; alt: string };
-
-export type PortfolioProject = {
-  slug: string;
-  title: string;
-  subtitle: string;
-  category: string;
-  summary: string;
-  overview: string[];
-  features: { title: string; description: string }[];
-  techStack: string[];
-  details: { label: string; value: string }[];
-  images: ProjectImage[];
-  links: ProjectLink[];
-};
+import type { ArchiveEntry, ArchiveImage, ArchiveLabels } from './archive';
 
 const ASSETS = 'https://shunphoenix55.github.io/assets/projects';
 
-const image = (path: string, alt: string): ProjectImage => ({ src: `${ASSETS}/${path}`, alt });
+const image = (path: string, alt: string): ArchiveImage => ({ src: `${ASSETS}/${path}`, alt });
 
 export const projectsPage = {
   title: 'Projects',
   intro: 'A collection of my creative experiments, game prototypes, and technical demos.',
 };
 
-export const portfolioProjects: PortfolioProject[] = [
+export const projectLabels: ArchiveLabels = {
+  wheel: 'Projects ferris wheel',
+  features: 'Features',
+  stack: 'Built with',
+  details: 'Details',
+  links: 'Links',
+};
+
+export const portfolioProjects: ArchiveEntry[] = [
   {
     slug: 'metasoccer',
     title: 'MetaSoccer',

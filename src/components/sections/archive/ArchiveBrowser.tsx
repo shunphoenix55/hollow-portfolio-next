@@ -3,19 +3,23 @@
 import { type ReactNode, useEffect, useState } from 'react';
 import { FerrisWheel } from '@/components/ui/ferris-wheel/FerrisWheel';
 import { wrap } from '@/components/ui/ferris-wheel/wheel-math';
-import type { PortfolioProject } from '@/content/portfolio-projects';
+import type { ArchiveEntry, ArchiveLabels } from '@/content/archive';
 import { slowScrollTo } from '@/lib/slow-scroll';
-import { ProjectDetail } from './ProjectDetail';
-import styles from './ProjectBrowser.module.css';
+import { ArchiveDetail } from './ArchiveDetail';
+import styles from './ArchiveBrowser.module.css';
 
-const DETAIL_ID = 'project-detail';
+const DETAIL_ID = 'archive-detail';
 
-type ProjectBrowserProps = { projects: PortfolioProject[]; intro?: ReactNode };
+type ArchiveBrowserProps = {
+  entries: ArchiveEntry[];
+  labels: ArchiveLabels;
+  intro?: ReactNode;
+};
 
-export function ProjectBrowser({ projects, intro }: ProjectBrowserProps) {
+export function ArchiveBrowser({ entries, labels, intro }: ArchiveBrowserProps) {
   const [active, setActive] = useState(0);
-  const project = projects[wrap(active, projects.length)];
-  const items = projects.map((p) => ({
+  const entry = entries[wrap(active, entries.length)];
+  const items = entries.map((p) => ({
     id: p.slug,
     title: p.title,
     src: p.images[0].src,
@@ -24,31 +28,31 @@ export function ProjectBrowser({ projects, intro }: ProjectBrowserProps) {
 
   useEffect(() => {
     const fromHash = () => {
-      const index = projects.findIndex((p) => p.slug === location.hash.slice(1));
+      const index = entries.findIndex((p) => p.slug === location.hash.slice(1));
       if (index >= 0) setActive(index);
     };
     fromHash();
     addEventListener('hashchange', fromHash);
     return () => removeEventListener('hashchange', fromHash);
-  }, [projects]);
+  }, [entries]);
 
   const select = (index: number) => {
-    const next = wrap(index, projects.length);
+    const next = wrap(index, entries.length);
     setActive(next);
-    history.replaceState(null, '', `#${projects[next].slug}`);
+    history.replaceState(null, '', `#${entries[next].slug}`);
   };
 
   return (
     <>
       <div className={styles.hero}>
         {intro}
-        <section className={styles.wheel} aria-label="Project wheel">
+        <section className={styles.wheel} aria-label={labels.wheel}>
           <div className={styles.wheelArea}>
             <FerrisWheel
               items={items}
               active={active}
               onActiveChange={select}
-              label="Projects ferris wheel"
+              label={labels.wheel}
               controlsId={DETAIL_ID}
             />
           </div>
@@ -57,17 +61,17 @@ export function ProjectBrowser({ projects, intro }: ProjectBrowserProps) {
             href={`#${DETAIL_ID}`}
             onClick={(event) => {
               event.preventDefault();
-              const title = document.getElementById(`${project.slug}-title`);
+              const title = document.getElementById(`${entry.slug}-title`);
               if (title) slowScrollTo(title);
             }}
           >
-            <span className={styles.current}>{project.title}</span>
+            <span className={styles.current}>{entry.title}</span>
             <span className={styles.hint}>Read about it below</span>
             <i className={styles.line} aria-hidden="true" />
           </a>
         </section>
       </div>
-      <ProjectDetail key={project.slug} id={DETAIL_ID} project={project} />
+      <ArchiveDetail key={entry.slug} id={DETAIL_ID} entry={entry} labels={labels} />
     </>
   );
 }

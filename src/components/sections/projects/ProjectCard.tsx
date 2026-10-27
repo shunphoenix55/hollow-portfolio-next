@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Ornament } from '@/components/ornament/Ornament';
-import { ProjectLinks } from '@/components/sections/project-archive/ProjectLinks';
-import type { PortfolioProject } from '@/content/portfolio-projects';
+import { ArchiveLinks } from '@/components/sections/archive/ArchiveLinks';
+import type { ArchiveEntry } from '@/content/archive';
 import { ProjectPoints } from './ProjectPoints';
 import styles from './ProjectCard.module.css';
 
-export function ProjectCard({ project }: { project: PortfolioProject }) {
+export function ProjectCard({ project }: { project: ArchiveEntry }) {
   const [feature] = project.features;
   const points = feature
     ? [project.summary, `${feature.title}: ${feature.description}`]
@@ -25,7 +25,7 @@ export function ProjectCard({ project }: { project: PortfolioProject }) {
           </Link>
         </h3>
         <ProjectPoints points={points}>
-          <ProjectLinks links={project.links} size="sm" className={styles.links} />
+          <ArchiveLinks links={project.links} size="sm" className={styles.links} />
         </ProjectPoints>
       </div>
     </article>

@@ -4,32 +4,34 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { Ornament } from '@/components/ornament/Ornament';
 import { FrameCorners } from '@/components/ui/FrameCorners';
-import type { PortfolioProject } from '@/content/portfolio-projects';
-import { ProjectLinks } from './ProjectLinks';
-import styles from './ProjectDetail.module.css';
+import type { ArchiveEntry, ArchiveLabels } from '@/content/archive';
+import { ArchiveLinks } from './ArchiveLinks';
+import styles from './ArchiveDetail.module.css';
 
-export function ProjectDetail({ id, project }: { id: string; project: PortfolioProject }) {
+type ArchiveDetailProps = { id: string; entry: ArchiveEntry; labels: ArchiveLabels };
+
+export function ArchiveDetail({ id, entry, labels }: ArchiveDetailProps) {
   const [shot, setShot] = useState(0);
-  const titleId = `${project.slug}-title`;
-  const image = project.images[shot];
+  const titleId = `${entry.slug}-title`;
+  const image = entry.images[shot];
 
   return (
     <article id={id} className={styles.detail} aria-labelledby={titleId}>
       <div className={styles.text}>
         <h2 id={titleId} className={styles.title}>
-          {project.title}
+          {entry.title}
         </h2>
-        <p className={styles.subtitle}>{project.subtitle}</p>
+        <p className={styles.subtitle}>{entry.subtitle}</p>
         <Ornament name="orn-flourish" className={styles.flourish} />
         <div className={styles.prose}>
-          {project.overview.map((paragraph) => (
+          {entry.overview.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
         </div>
 
-        <h3 className={styles.label}>Features</h3>
+        <h3 className={styles.label}>{labels.features}</h3>
         <ul className={styles.features}>
-          {project.features.map((feature) => (
+          {entry.features.map((feature) => (
             <li key={feature.title}>
               <h4>{feature.title}</h4>
               <p>{feature.description}</p>
@@ -37,16 +39,16 @@ export function ProjectDetail({ id, project }: { id: string; project: PortfolioP
           ))}
         </ul>
 
-        <h3 className={styles.label}>Built with</h3>
+        <h3 className={styles.label}>{labels.stack}</h3>
         <ul className={styles.tags}>
-          {project.techStack.map((tech) => (
+          {entry.techStack.map((tech) => (
             <li key={tech}>{tech}</li>
           ))}
         </ul>
 
-        <h3 className={styles.label}>Details</h3>
+        <h3 className={styles.label}>{labels.details}</h3>
         <dl className={styles.details}>
-          {project.details.map((detail) => (
+          {entry.details.map((detail) => (
             <div key={detail.label}>
               <dt>{detail.label}</dt>
               <dd>{detail.value}</dd>
@@ -54,10 +56,10 @@ export function ProjectDetail({ id, project }: { id: string; project: PortfolioP
           ))}
         </dl>
 
-        {project.links.length > 0 && (
+        {entry.links.length > 0 && (
           <>
-            <h3 className={styles.label}>Links</h3>
-            <ProjectLinks links={project.links} className={styles.links} />
+            <h3 className={styles.label}>{labels.links}</h3>
+            <ArchiveLinks links={entry.links} className={styles.links} />
           </>
         )}
       </div>
@@ -74,9 +76,9 @@ export function ProjectDetail({ id, project }: { id: string; project: PortfolioP
           />
           <FrameCorners />
         </div>
-        {project.images.length > 1 && (
-          <div className={styles.thumbs} role="group" aria-label={`${project.title} images`}>
-            {project.images.map((img, index) => (
+        {entry.images.length > 1 && (
+          <div className={styles.thumbs} role="group" aria-label={`${entry.title} images`}>
+            {entry.images.map((img, index) => (
               <button
                 key={img.src}
                 type="button"

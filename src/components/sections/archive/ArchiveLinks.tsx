@@ -1,17 +1,17 @@
 import { ArrowUpRight, CodeXml, ExternalLink, Film, type LucideIcon, Play } from 'lucide-react';
-import type { ProjectLink, ProjectLinkKind } from '@/content/portfolio-projects';
-import styles from './ProjectLinks.module.css';
+import type { ArchiveLink, ArchiveLinkKind } from '@/content/archive';
+import styles from './ArchiveLinks.module.css';
 
-const LINK_ICONS: Record<ProjectLinkKind, LucideIcon> = {
+const LINK_ICONS: Record<ArchiveLinkKind, LucideIcon> = {
   play: Play,
   code: CodeXml,
   video: Film,
   page: ExternalLink,
 };
 
-type ProjectLinksProps = { links: ProjectLink[]; size?: 'md' | 'sm'; className?: string };
+type ArchiveLinksProps = { links: ArchiveLink[]; size?: 'md' | 'sm'; className?: string };
 
-export function ProjectLinks({ links, size = 'md', className }: ProjectLinksProps) {
+export function ArchiveLinks({ links, size = 'md', className }: ArchiveLinksProps) {
   if (links.length === 0) return null;
   return (
     <ul className={[styles.links, styles[size], className].filter(Boolean).join(' ')}>
