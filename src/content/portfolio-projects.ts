@@ -1,11 +1,26 @@
+import type { StaticImageData } from 'next/image';
+import threeDucation1 from '@/assets/projects/3ducation-1.webp';
+import threeDucation2 from '@/assets/projects/3ducation-2.webp';
+import bhashaxr from '@/assets/projects/bhashaxr.webp';
+import bubbleoidvania from '@/assets/projects/bubbleoidvania.webp';
+import clink from '@/assets/projects/clink.webp';
+import fruitNinja from '@/assets/projects/fruit-ninja.webp';
+import groupiee from '@/assets/projects/groupiee.webp';
+import metasoccer1 from '@/assets/projects/metasoccer-1.webp';
+import metasoccer2 from '@/assets/projects/metasoccer-2.webp';
+import metasoccer3 from '@/assets/projects/metasoccer-3.webp';
+import rcade1 from '@/assets/projects/rcade-1.webp';
+import rcade2 from '@/assets/projects/rcade-2.webp';
+import rcade3 from '@/assets/projects/rcade-3.webp';
+import spacetime1 from '@/assets/projects/spacetime-1.webp';
+import spacetime2 from '@/assets/projects/spacetime-2.webp';
+import spacetime3 from '@/assets/projects/spacetime-3.webp';
 import type { ArchiveEntry, ArchiveImage, ArchiveLabels } from './archive';
 
-const ASSETS = 'https://shunphoenix55.github.io/assets/projects';
-
-const image = (path: string, alt: string): ArchiveImage => ({ src: `${ASSETS}/${path}`, alt });
+const image = (src: StaticImageData, alt: string): ArchiveImage => ({ src, alt });
 
 export const projectsPage = {
-  title: 'Projects',
+  title: 'Projects, Hackathons and Game Jams',
   intro: 'A collection of my creative experiments, game prototypes, and technical demos.',
 };
 
@@ -61,9 +76,9 @@ export const portfolioProjects: ArchiveEntry[] = [
       { label: 'Role', value: 'Game Designer' },
     ],
     images: [
-      image('metasoccer/concept_1.jpg', 'MetaSoccer Concept 1'),
-      image('metasoccer/concept_2.jpg', 'MetaSoccer Concept 2'),
-      image('metasoccer/Untitled_Artwork_9.JPG', 'MetaSoccer Concept 3'),
+      image(metasoccer1, 'MetaSoccer Concept 1'),
+      image(metasoccer2, 'MetaSoccer Concept 2'),
+      image(metasoccer3, 'MetaSoccer Concept 3'),
     ],
     links: [
       { kind: 'page', label: 'SFMOMA Page', url: 'https://www.sfmoma.org/exhibition/artcade/' },
@@ -124,7 +139,7 @@ export const portfolioProjects: ArchiveEntry[] = [
       { label: 'Platform', value: 'Meta Quest 3' },
       { label: 'Role', value: 'Unity XR Developer' },
     ],
-    images: [image('bhashaxr/bhasha-xr.png', 'BhashaXR')],
+    images: [image(bhashaxr, 'BhashaXR')],
     links: [
       { kind: 'video', label: 'Watch Demo', url: 'https://youtube.com/shorts/fSWe7liTKV8' },
       { kind: 'video', label: 'Watch Gameplay', url: 'https://youtube.com/shorts/qO1CZKgwxew' },
@@ -172,10 +187,7 @@ export const portfolioProjects: ArchiveEntry[] = [
       { label: 'Focus', value: 'Drone Assembly Training' },
       { label: 'Role', value: 'Unity Developer' },
     ],
-    images: [
-      image('3ducation/tech.png', '3Ducation Tech'),
-      image('3ducation/drone.png', '3Ducation Assembly'),
-    ],
+    images: [image(threeDucation1, '3Ducation Tech'), image(threeDucation2, '3Ducation Assembly')],
     links: [{ kind: 'video', label: 'Watch Video', url: 'https://youtu.be/j-I2bN3C9w4' }],
   },
   {
@@ -220,7 +232,7 @@ export const portfolioProjects: ArchiveEntry[] = [
       { label: 'Genre', value: '2D Platformer' },
       { label: 'Platform', value: 'Web / PC / Mac / Linux' },
     ],
-    images: [image('bubbleoidvania/content.png', 'Bubbleoidvania')],
+    images: [image(bubbleoidvania, 'Bubbleoidvania')],
     links: [
       {
         kind: 'play',
@@ -278,7 +290,7 @@ export const portfolioProjects: ArchiveEntry[] = [
       { label: 'Platform', value: 'Web (WebGL)' },
       { label: 'Team', value: 'Indie Team (Original Art & Music)' },
     ],
-    images: [image('clink/cover.png', 'Clink! cover')],
+    images: [image(clink, 'Clink! cover')],
     links: [{ kind: 'play', label: 'Play on Itch.io', url: 'https://dasaniket15.itch.io/clink' }],
   },
   {
@@ -324,9 +336,9 @@ export const portfolioProjects: ArchiveEntry[] = [
       { label: 'Role', value: 'Unity Programmer' },
     ],
     images: [
-      image('spacetime-ar/poly%20planets.jpg', 'Low-poly planets'),
-      image('spacetime-ar/Ice_Planet_Blue.png', 'Ice planet'),
-      image('spacetime-ar/Forest_Planet.png', 'Forest planet'),
+      image(spacetime1, 'Low-poly planets'),
+      image(spacetime2, 'Ice planet'),
+      image(spacetime3, 'Forest planet'),
     ],
     links: [
       { kind: 'code', label: 'GitHub Repo', url: 'https://github.com/JWizards/Spacetime-AR-EduEx' },
@@ -378,9 +390,9 @@ export const portfolioProjects: ArchiveEntry[] = [
       { label: 'Role', value: 'Unity Developer' },
     ],
     images: [
-      image('rcade/rcade-1.png', 'RCade Screenshot 1'),
-      image('rcade/rcade-2.png', 'RCade Screenshot 2'),
-      image('rcade/rcade-3.png', 'RCade Screenshot 3'),
+      image(rcade1, 'RCade Screenshot 1'),
+      image(rcade2, 'RCade Screenshot 2'),
+      image(rcade3, 'RCade Screenshot 3'),
     ],
     links: [
       { kind: 'code', label: 'GitHub Repo', url: 'https://github.com/souvik150/WomenTechies23' },
@@ -428,7 +440,7 @@ export const portfolioProjects: ArchiveEntry[] = [
       { label: 'Mode', value: 'Remote' },
       { label: 'Role', value: 'Backend Developer' },
     ],
-    images: [image('groupiee/groupiee.png', 'Groupiee')],
+    images: [image(groupiee, 'Groupiee')],
     links: [
       {
         kind: 'code',
@@ -479,7 +491,7 @@ export const portfolioProjects: ArchiveEntry[] = [
       { label: 'Engine', value: 'Unity' },
       { label: 'Focus', value: 'Game Systems & Design' },
     ],
-    images: [image('fruit-ninja/fruit.png', 'Fruit Ninja Clone')],
+    images: [image(fruitNinja, 'Fruit Ninja Clone')],
     links: [],
   },
 ];

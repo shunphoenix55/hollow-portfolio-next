@@ -1,8 +1,16 @@
+import type { StaticImageData } from 'next/image';
+import ationStudios from '@/assets/work/ation-studios.webp';
+import doomTown from '@/assets/work/doom-town.webp';
+import halara from '@/assets/work/halara.webp';
+import ivaPlus from '@/assets/work/iva-plus.webp';
+import virtualBride from '@/assets/work/virtual-bride.webp';
+import vrDnd from '@/assets/work/vr-dnd.webp';
+import whiteRabbit from '@/assets/work/white-rabbit.webp';
+import whiteRabbit2 from '@/assets/work/white-rabbit-2.webp';
+import whiteRabbit3 from '@/assets/work/white-rabbit-3.webp';
 import type { ArchiveEntry, ArchiveImage, ArchiveLabels, ArchiveLink } from './archive';
 
-const ASSETS = 'https://shunphoenix55.github.io/assets';
-
-const image = (path: string, alt: string): ArchiveImage => ({ src: `${ASSETS}/${path}`, alt });
+const image = (src: StaticImageData, alt: string): ArchiveImage => ({ src, alt });
 const video = (url: string, label = 'Watch Video'): ArchiveLink => ({ kind: 'video', label, url });
 const site = (url: string, label: string): ArchiveLink => ({ kind: 'page', label, url });
 
@@ -60,7 +68,7 @@ export const workExperience: ArchiveEntry[] = [
       { label: 'Platform', value: 'Meta Quest 2/3' },
       { label: 'Status', value: 'Live' },
     ],
-    images: [image('covers/doom-town.png', 'Doom Town')],
+    images: [image(doomTown, 'Doom Town')],
     links: [
       site('https://www.anomalysimulationsystems.com', 'Studio Website'),
       video('https://youtu.be/PxBUL5u0uGA'),
@@ -100,7 +108,7 @@ export const workExperience: ArchiveEntry[] = [
       { label: 'Platform', value: 'Meta Quest 2/3' },
       { label: 'Status', value: 'Shipped' },
     ],
-    images: [image('work/vr-dnd/dnd.png', 'Dungeons and Dragons VR')],
+    images: [image(vrDnd, 'Dungeons and Dragons VR')],
     links: [
       site('https://www.anomalysimulationsystems.com', 'Studio Website'),
       video('https://youtu.be/fYB5CHUX8PE'),
@@ -136,12 +144,9 @@ export const workExperience: ArchiveEntry[] = [
       { label: 'Team Size', value: '15' },
     ],
     images: [
-      image('work/white-rabbit/white-rabbit.jpg', 'White Rabbit'),
-      image('work/white-rabbit/white-rabbit-screenshot-3.png', 'White Rabbit gameplay screenshot'),
-      image(
-        'work/white-rabbit/white-rabbit-screenshot-2.png',
-        'White Rabbit gameplay screenshot 2',
-      ),
+      image(whiteRabbit, 'White Rabbit'),
+      image(whiteRabbit2, 'White Rabbit gameplay screenshot'),
+      image(whiteRabbit3, 'White Rabbit gameplay screenshot 2'),
     ],
     links: [
       site('https://www.dissentstudio.in', 'Studio Website'),
@@ -191,7 +196,7 @@ export const workExperience: ArchiveEntry[] = [
       { label: 'Duration', value: '4 months' },
       { label: 'Team Size', value: '6' },
     ],
-    images: [image('work/iva-plus/iva-plus.png', 'Intelligent Vision Analyzer Plus')],
+    images: [image(ivaPlus, 'Intelligent Vision Analyzer Plus')],
     links: [
       site('https://alfaleus.in', 'Alfaleus Website'),
       video('https://www.youtube.com/watch?v=MPbURIU4H8k'),
@@ -229,7 +234,7 @@ export const workExperience: ArchiveEntry[] = [
       { label: 'Duration', value: '4 months' },
       { label: 'Team Size', value: '10' },
     ],
-    images: [image('work/halara/halara.png', 'Halara')],
+    images: [image(halara, 'Halara')],
     links: [
       site('https://halaravr.co.in', 'Halara Website'),
       video('https://www.youtube.com/watch?v=oc0IxjpXRCE'),
@@ -267,12 +272,7 @@ export const workExperience: ArchiveEntry[] = [
       { label: 'Duration', value: '4 months' },
       { label: 'Team Size', value: '10' },
     ],
-    images: [
-      {
-        src: 'https://sulakshanamonga.com/cdn/shop/products/2_ce6969ce-cd85-4d51-a7b7-bd9c54e4df88.jpg?v=1663138104&width=1200',
-        alt: 'Virtual Bride bridal wear',
-      },
-    ],
+    images: [image(virtualBride, 'Virtual Bride bridal wear')],
     links: [site('https://sulakshanamonga.com', 'Sulakshana Monga Website')],
   },
   {
@@ -301,7 +301,7 @@ export const workExperience: ArchiveEntry[] = [
       { label: 'Duration', value: '3 months' },
       { label: 'Team Size', value: '6' },
     ],
-    images: [image('work/ation-studios/ation.png', 'Ation Studios')],
+    images: [image(ationStudios, 'Ation Studios')],
     links: [video('https://youtu.be/X-qWpWhGsH8')],
   },
 ];

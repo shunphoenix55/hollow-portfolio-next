@@ -17,7 +17,13 @@ export function ProjectCard({ project }: { project: ArchiveEntry }) {
       <Ornament name="orn-panel-top" className={styles.cap} />
       <div className={styles.body}>
         <Link href={`/projects#${project.slug}`} className={styles.shot} tabIndex={-1}>
-          <Image src={cover.src} alt={cover.alt} fill sizes="(max-width: 640px) 80vw, 320px" />
+          <Image
+            src={cover.src}
+            alt={cover.alt}
+            fill
+            sizes="(max-width: 640px) 80vw, 320px"
+            placeholder="blur"
+          />
         </Link>
         <h3 className={styles.title}>
           <Link href={`/projects#${project.slug}`} className={styles.titleLink}>

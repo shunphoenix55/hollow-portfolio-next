@@ -1,8 +1,10 @@
+import type { StaticImageData } from 'next/image';
+
 export type ArchiveLinkKind = 'play' | 'code' | 'video' | 'page';
 
 export type ArchiveLink = { kind: ArchiveLinkKind; label: string; url: string };
 
-export type ArchiveImage = { src: string; alt: string };
+export type ArchiveImage = { src: StaticImageData; alt: string };
 
 export type ArchiveEntry = {
   slug: string;

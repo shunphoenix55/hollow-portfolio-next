@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Image, { type StaticImageData } from 'next/image';
 import { type KeyboardEvent, type PointerEvent, useId, useRef } from 'react';
 import knightJump from '@/assets/exp-knight-jump.webp';
 import knightStand from '@/assets/exp-knight-stand.webp';
@@ -11,7 +11,7 @@ import { useWheelMotion } from './useWheelMotion';
 import { wrap } from './wheel-math';
 import styles from './FerrisWheel.module.css';
 
-export type FerrisWheelItem = { id: string; title: string; src: string; alt: string };
+export type FerrisWheelItem = { id: string; title: string; src: StaticImageData; alt: string };
 
 type FerrisWheelProps = {
   items: FerrisWheelItem[];
@@ -193,6 +193,7 @@ export function FerrisWheel({
                                 alt=""
                                 fill
                                 sizes="(max-width: 640px) 96px, 160px"
+                                placeholder="blur"
                                 draggable={false}
                               />
                             </span>
