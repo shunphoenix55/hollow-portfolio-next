@@ -52,11 +52,13 @@ scripts/ornaments/        build-time SVG ornament engine (ported geo.mjs + ornam
 src/
   app/                    layout, page, fonts, metadata routes (OG image, sitemap, robots, icon), JSON-LD
   styles/theme.css        all design tokens (palette, fonts, glows, easing) in one @theme
-  content/                typed section data: site, journey, projects, stack, experience
+  content/                typed section data: site, journey, projects, stack, experience,
+                          plus the archive pages (archive.ts types, portfolio-projects.ts, work-experience.ts)
   components/
     ornament/             <Ornament name="…"> — typed <use> of the generated sprite
     ui/                   SectionHeading, CrestRule, HkChoice, FrameCorners, MotionSection
     sections/<name>/      one folder per section: component, module CSS, its client hooks
+    sections/archive/     shared /projects and /experience page: ferris wheel, detail panel, links
   hooks/                  useInView, useOnceInView, useMediaQuery
   lib/                    rafScheduler, clamp/smoothstep, hero-progress bus
   assets/                 WebP sources imported by next/image
@@ -108,7 +110,7 @@ src/
 
 ## Open items
 
-- **Projects:** the home section shows the first four entries of `src/content/portfolio-projects.ts` (the same data as `/projects`); the HUD count is the total number of projects. Images load from shunphoenix55.github.io.
+- **Archive pages:** `/projects` and `/experience` are the same `ArchivePage` fed different data (`portfolio-projects.ts`, `work-experience.ts`, both copied from shunphoenix55.github.io). The home Projects section shows the first four projects; the HUD count is the total. Images load from shunphoenix55.github.io (and one from sulakshanamonga.com), allowed in `next.config.ts`.
 - **Journey links:** "Achievements" and "Contact" point at sections that don't exist yet.
 - **Links:** project, hackathon and "View all" URLs.
 - **Portrait art** for the hero, town and projects on phones.
