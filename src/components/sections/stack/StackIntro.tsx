@@ -6,6 +6,7 @@ import knightJump from '@/assets/exp-knight-jump.webp';
 import knightStand from '@/assets/exp-knight-stand.webp';
 import knightSlash from '@/assets/knight-slash.webp';
 import rockImage from '@/assets/stack-rock.webp';
+import { startOrbDrift } from './orb-drift';
 import { playStackIntro } from './stack-intro';
 import styles from './TechStack.module.css';
 
@@ -17,7 +18,8 @@ const SHARDS = [
   'polygon(50% 60%, 50% 100%, 0 100%, 0 70%)',
   'polygon(50% 60%, 0 70%, 0 0)',
 ];
-const START_SHARE = 0.45;
+const START_SHARE = 0.9;
+const THRESHOLDS = Array.from({ length: 11 }, (_, i) => 0.5 + i * 0.05);
 
 export function StackIntro() {
   const knight = useRef<HTMLDivElement>(null);
@@ -25,6 +27,7 @@ export function StackIntro() {
   const rock = useRef<HTMLDivElement>(null);
   const slash = useRef<SVGPathElement>(null);
   const flash = useRef<HTMLElement>(null);
+  const dim = useRef<HTMLElement>(null);
   const rockDust = useRef<HTMLElement>(null);
   const knightDust = useRef<HTMLElement>(null);
 
@@ -32,7 +35,8 @@ export function StackIntro() {
     const backdrop = knight.current?.parentElement;
     const section = backdrop?.closest('section');
     if (!section || !backdrop || !body.current || !rock.current || !slash.current) return;
-    if (!flash.current || !rockDust.current || !knightDust.current || !knight.current) return;
+    if (!flash.current || !dim.current || !rockDust.current || !knightDust.current) return;
+    if (!knight.current) return;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const actors = {
@@ -44,21 +48,31 @@ export function StackIntro() {
       shards: [...rock.current.querySelectorAll<HTMLElement>('[data-shard]')],
       slash: slash.current,
       flash: flash.current,
+      dim: dim.current,
       rockDust: rockDust.current,
       knightDust: knightDust.current,
       orbs: [...section.querySelectorAll<HTMLElement>('[data-stack-orb]')],
     };
     section.dataset.intro = 'armed';
+    let stopDrift: (() => void) | undefined;
+    let disposed = false;
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.intersectionRatio < START_SHARE) return;
+        const needed = Math.min(START_SHARE, (innerHeight / section.offsetHeight) * START_SHARE);
+        if (entry.intersectionRatio < needed) return;
         io.disconnect();
-        playStackIntro(actors);
+        playStackIntro(actors).then(() => {
+          if (!disposed) stopDrift = startOrbDrift(section, actors.orbs);
+        });
       },
-      { threshold: [START_SHARE] },
+      { threshold: THRESHOLDS },
     );
     io.observe(section);
-    return () => io.disconnect();
+    return () => {
+      disposed = true;
+      io.disconnect();
+      stopDrift?.();
+    };
   }, []);
 
   return (
@@ -77,6 +91,7 @@ export function StackIntro() {
           />
         ))}
       </div>
+      <i ref={dim} className={styles.dim} />
       <i ref={rockDust} className={`${styles.dust} ${styles.dustRock}`} />
       <i ref={flash} className={styles.flash} />
       <svg className={styles.slashArc} viewBox="0 0 160 110">

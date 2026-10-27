@@ -1,9 +1,3 @@
-@property --sway {
-  syntax: '<angle>';
-  inherits: true;
-  initial-value: 0deg;
-}
-
 .stack {
   position: relative;
   z-index: 1;
@@ -36,61 +30,31 @@
   translate: -50% 0;
 }
 
-.arc {
-  --rx: min(44cqw, 600px);
-  --ry: 40cqh;
-  --cy: 66cqh;
+.field {
   position: absolute;
   inset: 0;
   margin: 0;
   padding: 0;
   list-style: none;
-  animation: arc-sway 7s ease-in-out infinite alternate;
-}
-
-@keyframes arc-sway {
-  from {
-    --sway: -11deg;
-  }
-  to {
-    --sway: 11deg;
-  }
 }
 
 .card {
   position: absolute;
-  top: calc(var(--cy) - sin(var(--a) + var(--sway)) * var(--ry));
-  left: calc(50% + cos(var(--a) + var(--sway)) * var(--rx));
+  top: var(--y);
+  left: var(--x);
   translate: -50% -50%;
+}
+
+.card:has(.orb:hover, .orb:focus-visible) {
+  z-index: 2;
 }
 
 .orb {
   display: grid;
   justify-items: center;
   gap: 12px;
+  outline: none;
   transition: opacity 0.3s;
-  animation: orb-float 4.6s ease-in-out infinite alternate;
-  animation-delay: var(--d);
-}
-
-@keyframes orb-float {
-  0% {
-    translate: -8px -14px;
-  }
-  50% {
-    translate: 6px 6px;
-  }
-  100% {
-    translate: -4px 14px;
-  }
-}
-
-.card:nth-child(odd) .orb {
-  animation-duration: 3.8s;
-}
-
-.card:nth-child(3n) .orb {
-  animation-duration: 5.2s;
 }
 
 .ball {
@@ -130,7 +94,6 @@
   border: 1px solid rgb(220 235 255 / 0.55);
   border-radius: 50%;
   animation: orb-pulse 3.2s ease-out infinite;
-  animation-delay: var(--d);
 }
 
 @keyframes orb-pulse {
@@ -161,10 +124,11 @@
   width: 42%;
   height: 42%;
   fill: #e8ebef;
+  color: #e8ebef;
   filter: drop-shadow(0 0 6px rgb(255 255 255 / 0.3));
 }
 
-.orb:hover .ball {
+.orb:is(:hover, :focus-visible) .ball {
   scale: 1.08;
   box-shadow:
     0 0 30px rgb(220 235 255 / 0.35),
@@ -180,6 +144,41 @@
   text-align: center;
   white-space: nowrap;
   text-shadow: var(--text-shadow-deep);
+}
+
+.detail {
+  position: absolute;
+  top: 100%;
+  width: max-content;
+  max-width: 200px;
+  margin-top: 6px;
+  padding: 8px 12px;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 8px;
+  background: rgb(0 1 7 / 0.92);
+  color: var(--color-prose);
+  font: 500 15px / 1.4 var(--font-dialogue);
+  text-align: center;
+  opacity: 0;
+  translate: 0 -4px;
+  pointer-events: none;
+  transition:
+    opacity 0.25s,
+    translate 0.25s;
+}
+
+.orb {
+  position: relative;
+}
+
+.orb:is(:hover, :focus-visible) .detail {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.orb:focus-visible .ball {
+  outline: 2px solid var(--color-mist);
+  outline-offset: 4px;
 }
 
 @supports not (backdrop-filter: blur(1px)) {
@@ -311,6 +310,14 @@
   filter: drop-shadow(0 0 6px rgb(220 235 255 / 0.9));
 }
 
+.dim {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(70% 60% at 62% 80%, transparent, #000 75%);
+  opacity: 0;
+  pointer-events: none;
+}
+
 .dust {
   position: absolute;
   top: 88.4%;
@@ -331,14 +338,8 @@
 }
 
 @media (max-width: 640px) {
-  .arc {
-    --rx: 40cqw;
-    --ry: 46cqh;
-    --cy: 62cqh;
-  }
-
   .ball {
-    width: 66px;
+    width: 58px;
   }
 
   .orb {

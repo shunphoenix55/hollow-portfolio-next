@@ -7,6 +7,7 @@ export type IntroActors = {
   shards: HTMLElement[];
   slash: SVGPathElement;
   flash: HTMLElement;
+  dim: HTMLElement;
   rockDust: HTMLElement;
   knightDust: HTMLElement;
   orbs: HTMLElement[];
@@ -21,9 +22,10 @@ const SHARD_FLIGHT = [
   [-95, -30, -65],
 ];
 
-const ORB_STAGGER_MS = 90;
+const ORB_STAGGER_MS = 170;
 const OUT = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
-const SPRING = 'cubic-bezier(0.2, 1.2, 0.35, 1)';
+const SLOW_IN_OUT = 'cubic-bezier(0.65, 0, 0.35, 1)';
+const SPRING = 'cubic-bezier(0.2, 1.15, 0.35, 1)';
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -31,40 +33,47 @@ const pose = (knight: HTMLElement, name: 'stand' | 'jump' | 'slash') => {
   knight.dataset.pose = name;
 };
 
-const puff = (dust: HTMLElement) =>
+const puff = (dust: HTMLElement, duration = 700) =>
   dust.animate(
     [
       { opacity: 0.9, transform: 'scale(0.4, 0.6)' },
-      { opacity: 0, transform: 'scale(1.4, 1)' },
+      { opacity: 0, transform: 'scale(1.5, 1)' },
     ],
-    { duration: 520, easing: 'ease-out' },
+    { duration, easing: 'ease-out' },
   );
+
+const dimScene = (dim: HTMLElement, to: number, duration: number) =>
+  dim.animate([{ opacity: Number(getComputedStyle(dim).opacity) }, { opacity: to }], {
+    duration,
+    easing: 'ease-in-out',
+    fill: 'forwards',
+  });
 
 function breakRock({ rock, shards, slash, flash, rockDust, backdrop }: IntroActors) {
   slash.animate(
     [
       { strokeDashoffset: 1, opacity: 1 },
-      { strokeDashoffset: 0, opacity: 1, offset: 0.55 },
+      { strokeDashoffset: 0, opacity: 1, offset: 0.5 },
       { strokeDashoffset: 0, opacity: 0 },
     ],
-    { duration: 380, easing: 'ease-out' },
+    { duration: 950, easing: 'ease-out' },
   );
-  flash.animate([{ opacity: 0 }, { opacity: 0.9, offset: 0.2 }, { opacity: 0 }], {
-    duration: 420,
+  flash.animate([{ opacity: 0 }, { opacity: 0.95, offset: 0.18 }, { opacity: 0 }], {
+    duration: 1200,
     easing: 'ease-out',
   });
   backdrop.animate(
     [
       { transform: 'translate(0, 0)' },
-      { transform: 'translate(-6px, 3px)' },
-      { transform: 'translate(5px, -4px)' },
-      { transform: 'translate(-3px, 2px)' },
+      { transform: 'translate(-5px, 3px)' },
+      { transform: 'translate(4px, -3px)' },
+      { transform: 'translate(-2px, 1px)' },
       { transform: 'translate(0, 0)' },
     ],
-    { duration: 260, easing: 'ease-out' },
+    { duration: 420, easing: 'ease-out' },
   );
   rock.dataset.broken = '';
-  puff(rockDust);
+  puff(rockDust, 1100);
   shards.forEach((shard, i) => {
     const [x, y, turn] = SHARD_FLIGHT[i % SHARD_FLIGHT.length];
     shard.animate(
@@ -77,7 +86,7 @@ function breakRock({ rock, shards, slash, flash, rockDust, backdrop }: IntroActo
         },
         { transform: `translate(${x}%, ${y + 140}%) rotate(${turn}deg)`, opacity: 0 },
       ],
-      { duration: 900, easing: 'cubic-bezier(0.25, 0.6, 0.5, 1)', fill: 'forwards' },
+      { duration: 1800, easing: 'cubic-bezier(0.25, 0.6, 0.5, 1)', fill: 'forwards' },
     );
   });
 }
@@ -97,47 +106,55 @@ function releaseOrbs({ rock, orbs }: IntroActors) {
         { opacity: 1, offset: 0.2 },
         { transform: 'translate(0, 0) scale(1)', opacity: 1 },
       ],
-      { duration: 820, delay: i * ORB_STAGGER_MS, easing: SPRING, fill: 'backwards' },
+      { duration: 1500, delay: i * ORB_STAGGER_MS, easing: SPRING, fill: 'backwards' },
     ).finished;
   });
 }
 
 export async function playStackIntro(actors: IntroActors) {
-  const { section, knight, body, knightDust } = actors;
+  const { section, knight, body, knightDust, dim } = actors;
   section.dataset.intro = 'playing';
   pose(knight, 'stand');
 
-  await body.animate([{ transform: 'none' }, { transform: 'scale(1.06, 0.9)' }], {
-    duration: 170,
-    easing: 'ease-in',
-  }).finished;
+  dimScene(dim, 0.45, 900);
+  await body.animate(
+    [
+      { transform: 'none' },
+      { transform: 'scale(1.08, 0.86)', offset: 0.6 },
+      { transform: 'scale(1.08, 0.86)' },
+    ],
+    { duration: 520, easing: 'ease-in' },
+  ).finished;
 
   pose(knight, 'jump');
   await body.animate(
     [
       { transform: 'translate(0, 0)' },
-      { transform: 'translate(36%, -62%)', offset: 0.55 },
-      { transform: 'translate(62%, -24%)' },
+      { transform: 'translate(34%, -66%)', offset: 0.6 },
+      { transform: 'translate(58%, -30%)' },
     ],
-    { duration: 380, easing: OUT, fill: 'forwards' },
+    { duration: 900, easing: OUT, fill: 'forwards' },
   ).finished;
 
   pose(knight, 'slash');
   breakRock(actors);
-  const orbs = wait(140).then(() => Promise.all(releaseOrbs(actors)));
+  const orbs = wait(520).then(() => {
+    dimScene(dim, 0, 1400);
+    return Promise.all(releaseOrbs(actors));
+  });
   await body.animate(
-    [{ transform: 'translate(62%, -24%)' }, { transform: 'translate(70%, -22%)' }],
-    { duration: 200, easing: OUT, fill: 'forwards' },
+    [{ transform: 'translate(58%, -30%)' }, { transform: 'translate(68%, -26%)' }],
+    { duration: 950, easing: SLOW_IN_OUT, fill: 'forwards' },
   ).finished;
 
   pose(knight, 'jump');
   await body.animate(
     [
-      { transform: 'translate(70%, -22%)' },
-      { transform: 'translate(34%, -58%)', offset: 0.45 },
+      { transform: 'translate(68%, -26%)' },
+      { transform: 'translate(32%, -60%)', offset: 0.45 },
       { transform: 'translate(0, 0)' },
     ],
-    { duration: 440, easing: 'ease-in-out', fill: 'forwards' },
+    { duration: 1000, easing: SLOW_IN_OUT, fill: 'forwards' },
   ).finished;
 
   pose(knight, 'stand');
@@ -145,7 +162,7 @@ export async function playStackIntro(actors: IntroActors) {
   puff(knightDust);
   await body.animate(
     [{ transform: 'scale(1.1, 0.86)' }, { transform: 'scale(0.97, 1.04)' }, { transform: 'none' }],
-    { duration: 300, easing: OUT },
+    { duration: 500, easing: OUT },
   ).finished;
 
   await orbs;
