@@ -3,7 +3,12 @@ import type { ComponentProps, ReactNode } from 'react';
 import { Ornament } from '@/components/ornament/Ornament';
 import styles from './HkChoice.module.css';
 
-type ChoiceContent = { children: ReactNode; selected?: boolean; className?: string };
+type ChoiceContent = {
+  children: ReactNode;
+  selected?: boolean;
+  size?: 'md' | 'lg';
+  className?: string;
+};
 
 type HkChoiceProps =
   | (ChoiceContent & { href: string } & Omit<ComponentProps<'a'>, 'children' | 'className'>)
@@ -12,8 +17,15 @@ type HkChoiceProps =
         'children' | 'className'
       >);
 
-export function HkChoice({ children, selected, className, ...rest }: HkChoiceProps) {
-  const classes = [styles.choice, selected && styles.selected, className].filter(Boolean).join(' ');
+export function HkChoice({ children, selected, size = 'md', className, ...rest }: HkChoiceProps) {
+  const classes = [
+    styles.choice,
+    selected && styles.selected,
+    size === 'lg' && styles.lg,
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
   const content = (
     <>
       <Ornament name="slot-mark" className={`${styles.mark} ${styles.left}`} />

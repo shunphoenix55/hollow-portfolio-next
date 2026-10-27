@@ -57,12 +57,6 @@
   translate: 28px 0;
 }
 
-.all {
-  --band-inset: 0 38px;
-  padding-inline: 8px;
-  font-size: clamp(21px, 1.7vw, 26px);
-}
-
 @media (max-width: 900px) {
   .projects {
     grid-template-columns: 1fr;

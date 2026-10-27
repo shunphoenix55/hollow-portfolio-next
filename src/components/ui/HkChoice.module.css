@@ -74,3 +74,9 @@
 .selected .left {
   transform: scaleX(-1);
 }
+
+.lg {
+  --band-inset: 0 38px;
+  padding-inline: 8px;
+  font-size: clamp(21px, 1.7vw, 26px);
+}

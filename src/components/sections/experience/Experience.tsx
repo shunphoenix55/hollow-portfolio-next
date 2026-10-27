@@ -5,6 +5,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import cave from '@/assets/exp-cave.webp';
 import jump from '@/assets/exp-knight-jump.webp';
 import stand from '@/assets/exp-knight-stand.webp';
+import { HkChoice } from '@/components/ui/HkChoice';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import type { Job } from '@/content/experience';
 import { useInView } from '@/hooks/useInView';
@@ -114,6 +115,11 @@ export function Experience({ jobs, start }: ExperienceProps) {
             </div>
           </div>
         </div>
+      </div>
+      <div className={styles.more}>
+        <HkChoice selected size="lg" href="/experience">
+          View all
+        </HkChoice>
       </div>
     </section>
   );

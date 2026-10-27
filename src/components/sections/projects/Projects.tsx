@@ -30,7 +30,7 @@ export function Projects() {
             <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
-        <HkChoice selected href={projectsHeading.viewAllHref} className={styles.all}>
+        <HkChoice selected size="lg" href={projectsHeading.viewAllHref}>
           View all
         </HkChoice>
       </div>

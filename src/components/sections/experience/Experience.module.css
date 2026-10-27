@@ -4,6 +4,14 @@
   margin-bottom: 18vh;
 }
 
+.more {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  margin-top: 4vh;
+}
+
 .stage {
   position: relative;
   display: flex;
