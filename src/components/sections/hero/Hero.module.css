@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   z-index: 2;
-  height: 200vh;
+  height: 170vh;
   background: var(--color-abyss);
 }
 
@@ -194,7 +194,7 @@
 
 @media (max-width: 640px) {
   .hero {
-    height: 160vh;
+    height: 140vh;
   }
 
   .title {
