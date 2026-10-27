@@ -4,16 +4,15 @@ import { useEffect, useRef, useState } from 'react';
 import { FerrisWheel } from '@/components/ui/ferris-wheel/FerrisWheel';
 import { wrap } from '@/components/ui/ferris-wheel/wheel-math';
 import type { PortfolioProject } from '@/content/portfolio-projects';
+import { slowScrollTo } from '@/lib/slow-scroll';
 import { ProjectDetail } from './ProjectDetail';
 import styles from './ProjectBrowser.module.css';
 
 const DETAIL_ID = 'project-detail';
 
 const scrollToId = (id: string) => {
-  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  document
-    .getElementById(id)
-    ?.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'start' });
+  const element = document.getElementById(id);
+  if (element) slowScrollTo(element);
 };
 
 export function ProjectBrowser({ projects }: { projects: PortfolioProject[] }) {
