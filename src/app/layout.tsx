@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { SiteMenu } from '@/components/navigation/SiteMenu';
-import { journeyLinks } from '@/content/journey';
+import { menuLinks } from '@/content/journey';
 import { site } from '@/content/site';
 import { fontVariables } from './fonts';
 import './globals.css';
@@ -33,9 +33,9 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="en" className={fontVariables}>
+    <html lang="en" className={fontVariables} data-scroll-behavior="smooth">
       <body>
-        <SiteMenu links={journeyLinks} />
+        <SiteMenu links={menuLinks} />
         {children}
       </body>
     </html>
