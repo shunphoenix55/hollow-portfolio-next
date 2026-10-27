@@ -4,7 +4,7 @@ Short record of the practices adopted for the rebuild and why.
 
 ## Framework
 
-- **Next.js 16 App Router, TypeScript strict.** Server Components by default; `'use client'` only on the pieces that own a rAF loop, an observer or a toggle (hero, town, abyss canvas, read-more, swords, experience journey). Everything else (headings, ornaments, cards, menu, stack list, HUD) renders on the server and ships no JS.
+- **Next.js 16 App Router, TypeScript strict.** Server Components by default; `'use client'` only on the pieces that own a rAF loop, an observer or a toggle (hero, town, abyss canvas, read-more, tech-stack intro, ferris wheel, menu, experience journey). Everything else (headings, ornaments, cards, menu, stack list, HUD) renders on the server and ships no JS.
 - **Static page.** The whole page is prerendered at build time; there is no request data.
 - **Heavy client pieces are lazy.** The WebGL canvas is loaded with `next/dynamic` (`ssr: false`) from a small client wrapper, so the shader never blocks first paint.
 

@@ -62,9 +62,9 @@ src/
   assets/                 WebP sources imported by next/image
 ```
 
-**Boundaries.** Section content lives in `src/content` and is passed in as props; components only render. Pages are server components; `'use client'` is limited to the pieces that own an animation loop, an observer or a toggle (hero, town, abyss canvas, read-more, swords, experience). Each motion effect lives in its own hook next to its section (`useHeroMotion`, `useTownParallax`, `useKnightJourney`), and the knight's pure path math is in `journey-math.ts` with unit tests.
+**Boundaries.** Section content lives in `src/content` and is passed in as props; components only render. Pages are server components; `'use client'` is limited to the pieces that own an animation loop, an observer or a toggle (hero, town, abyss canvas, read-more, tech-stack intro, ferris wheel, menu, experience). Each motion effect lives in its own hook next to its section (`useHeroMotion`, `useTownParallax`, `useKnightJourney`), and the knight's pure path math is in `journey-math.ts` with unit tests.
 
-**Editing content.** Change a project, tech or job in `src/content/*.ts`. The tech-stack arc spreads any number of cards over 150°→30°, and the three swords aim at fractions 0.12 / 0.5 / 0.88 of the card row, so they work with any count. New tech logos go in `scripts/ornaments/tech-icons.mjs` (Simple Icons path data) and become `tech-<id>` symbols.
+**Editing content.** Change a project, tech or job in `src/content/*.ts`. The tech-stack arc spreads any number of orbs over 150°→30°. On first view the knight jumps, slashes the rock and the orbs burst out of it (`stack-intro.ts`); with reduced motion, or before JavaScript runs, the section shows its final layout. New tech logos go in `scripts/ornaments/tech-icons.mjs` (Simple Icons path data) and become `tech-<id>` symbols.
 
 **Swapping art.** Each image slot is one `next/image` in its section component, with its `sizes` next to it. Portrait art for mobile can be added later with `getImageProps()` and a `<picture>` element in the same slot without touching layout.
 
