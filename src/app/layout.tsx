@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from 'next';
+import { MenuSidebar } from '@/components/navigation/MenuSidebar';
+import { journeyLinks } from '@/content/journey';
 import { site } from '@/content/site';
 import { fontVariables } from './fonts';
 import './globals.css';
@@ -32,7 +34,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={fontVariables}>
-      <body>{children}</body>
+      <body>
+        <MenuSidebar links={journeyLinks} />
+        {children}
+      </body>
     </html>
   );
 }
