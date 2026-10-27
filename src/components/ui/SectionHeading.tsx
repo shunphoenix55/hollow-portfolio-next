@@ -9,6 +9,7 @@ type SectionHeadingProps = {
   rule?: RuleSize;
   adornment?: ReactNode;
   className?: string;
+  as?: 'h1' | 'h2';
 };
 
 export function SectionHeading({
@@ -18,14 +19,15 @@ export function SectionHeading({
   rule = 'wide',
   adornment,
   className,
+  as: Heading = 'h2',
 }: SectionHeadingProps) {
   return (
     <div className={[styles.heading, className].filter(Boolean).join(' ')}>
       <div className={styles.name}>
         {adornment}
-        <h2 id={id} className={`${styles.title} ${styles[size]}`}>
+        <Heading id={id} className={`${styles.title} ${styles[size]}`}>
           {title}
-        </h2>
+        </Heading>
       </div>
       <CrestRule size={rule} />
     </div>
