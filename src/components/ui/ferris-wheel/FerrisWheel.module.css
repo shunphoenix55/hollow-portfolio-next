@@ -123,7 +123,7 @@
 .anchor {
   position: absolute;
   z-index: 1;
-  width: 30%;
+  width: 24%;
 }
 
 .anchor[data-active] {
@@ -230,11 +230,87 @@
   pointer-events: none;
 }
 
-.hubKnight {
-  width: 78%;
-  height: auto;
-  translate: 0 6%;
+.runner {
+  position: relative;
+  width: 80%;
+  aspect-ratio: 1;
+  translate: 0 8%;
   filter: drop-shadow(0 0 10px rgb(220 230 240 / 0.3));
+  animation: run-bob 0.38s ease-in-out infinite;
+}
+
+.runner img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.runStand {
+  animation: stride-a 0.38s infinite;
+}
+
+.runStride {
+  opacity: 0;
+  translate: 10% 7.6%;
+  animation: stride-b 0.38s infinite;
+}
+
+.dust {
+  position: absolute;
+  bottom: 2%;
+  left: 62%;
+  width: 34%;
+  height: 12%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(230 235 240 / 0.5), transparent);
+  opacity: 0;
+  animation: run-dust 0.38s ease-out infinite;
+}
+
+@keyframes run-bob {
+  0%,
+  50%,
+  100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+  25%,
+  75% {
+    transform: translateY(-6%) rotate(-8deg);
+  }
+}
+
+@keyframes stride-a {
+  0%,
+  49.9% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes stride-b {
+  0%,
+  49.9% {
+    opacity: 0;
+  }
+  50%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes run-dust {
+  0% {
+    opacity: 0.8;
+    transform: translateX(0) scale(0.4);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(40%) scale(1.2);
+  }
 }
 
 .help {
@@ -263,7 +339,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .light {
+  .light,
+  .runner,
+  .runStand,
+  .runStride,
+  .dust {
     animation: none;
   }
 }

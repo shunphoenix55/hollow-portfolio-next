@@ -1,11 +1,19 @@
 'use client';
 
 import Image from 'next/image';
-import { type KeyboardEvent, type PointerEvent, useId, useRef } from 'react';
-import knight from '@/assets/exp-knight-stand.webp';
+import {
+  type FocusEvent,
+  type KeyboardEvent,
+  type PointerEvent,
+  useId,
+  useRef,
+  useState,
+} from 'react';
+import knightJump from '@/assets/exp-knight-jump.webp';
+import knightStand from '@/assets/exp-knight-stand.webp';
 import { Ornament } from '@/components/ornament/Ornament';
+import { useInView } from '@/hooks/useInView';
 import { REDUCED_MOTION, useMediaQuery } from '@/hooks/useMediaQuery';
-import { useAutoTurn } from './useAutoTurn';
 import { useWheelMotion } from './useWheelMotion';
 import { wrap } from './wheel-math';
 import styles from './FerrisWheel.module.css';
@@ -15,7 +23,8 @@ export type FerrisWheelItem = { id: string; title: string; src: string; alt: str
 type FerrisWheelProps = {
   items: FerrisWheelItem[];
   active: number;
-  onActiveChange: (index: number, byUser: boolean) => void;
+  onActiveChange: (index: number) => void;
+  onPick?: (index: number) => void;
   label: string;
   controlsId?: string;
   direction?: 'cw' | 'ccw';
@@ -30,13 +39,12 @@ const RIM_LIGHTS = Array.from({ length: 24 }, (_, i) => ({
 }));
 const DRAG_START = 8;
 const DRAG_TURN = 30;
-const AUTO_TURN_MS = 3200;
-const USER_HOLD_MS = 8000;
 
 export function FerrisWheel({
   items,
   active,
   onActiveChange,
+  onPick,
   label,
   controlsId,
   direction = 'cw',
@@ -47,25 +55,21 @@ export function FerrisWheel({
   const reducedMotion = useMediaQuery(REDUCED_MOTION);
   const drag = useRef<{ id: number; x: number; y: number; captured: boolean } | null>(null);
   const suppressClickUntil = useRef(0);
-  const root = useRef<HTMLDivElement>(null);
+  const [root, inView] = useInView<HTMLDivElement>();
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
   const helpId = useId();
   const { shown, initialAngle, slot, wheel, counters, pendulums } = useWheelMotion({
     selected,
     total,
     sign,
     reducedMotion,
-  });
-
-  const holdAutoTurn = useAutoTurn(root, {
-    enabled: !reducedMotion && total > 1,
-    interval: AUTO_TURN_MS,
-    onTick: () => onActiveChange(wrap(selected + 1, total), false),
+    spinning: inView && !hovered && !focused,
   });
 
   const request = (index: number) => {
-    holdAutoTurn(USER_HOLD_MS);
     const next = wrap(index, total);
-    if (next !== selected) onActiveChange(next, true);
+    if (next !== selected) onActiveChange(next);
   };
 
   const onKeyDown = (event: KeyboardEvent) => {
@@ -110,6 +114,12 @@ export function FerrisWheel({
       aria-roledescription="carousel"
       aria-label={label}
       onKeyDown={onKeyDown}
+      onPointerEnter={() => setHovered(true)}
+      onPointerLeave={() => setHovered(false)}
+      onFocus={() => setFocused(true)}
+      onBlur={(event: FocusEvent) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
+      }}
     >
       <div className={styles.row}>
         <button
@@ -190,7 +200,9 @@ export function FerrisWheel({
                             aria-current={isActive || undefined}
                             aria-controls={controlsId}
                             onClick={() => {
-                              if (performance.now() >= suppressClickUntil.current) request(index);
+                              if (performance.now() < suppressClickUntil.current) return;
+                              request(index);
+                              onPick?.(index);
                             }}
                           >
                             <span className={styles.window}>
@@ -212,7 +224,11 @@ export function FerrisWheel({
             })}
           </div>
           <div className={styles.hub} aria-hidden="true">
-            <Image src={knight} alt="" sizes="96px" className={styles.hubKnight} />
+            <span className={styles.runner}>
+              <Image src={knightStand} alt="" sizes="96px" className={styles.runStand} />
+              <Image src={knightJump} alt="" sizes="96px" className={styles.runStride} />
+              <i className={styles.dust} />
+            </span>
           </div>
         </div>
         <button
