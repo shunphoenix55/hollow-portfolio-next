@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
+import cavern from '@/assets/projects-cavern.webp';
 import { Abyss } from '@/components/sections/abyss/Abyss';
 import { ProjectBrowser } from '@/components/sections/project-archive/ProjectBrowser';
 import { HkChoice } from '@/components/ui/HkChoice';
@@ -19,6 +21,9 @@ export default function ProjectsPage() {
     <>
       <Abyss />
       <main className={styles.page}>
+        <div className={styles.backdrop} aria-hidden="true">
+          <Image src={cavern} alt="" preload sizes="(max-aspect-ratio: 16/9) 178vh, 100vw" />
+        </div>
         <nav className={styles.nav} aria-label="Back">
           <HkChoice href="/">Return</HkChoice>
         </nav>
