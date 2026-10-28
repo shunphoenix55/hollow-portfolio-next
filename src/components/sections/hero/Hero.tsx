@@ -49,7 +49,6 @@ export function Hero() {
         </div>
         <div className={styles.vignette} />
         <div className={styles.title} data-title>
-          <Ornament name="knight" glow={false} className={styles.mark} />
           <Ornament name="orn-flourish" className={styles.top} />
           <h1 className={styles.name}>{site.name}</h1>
           <Ornament name="orn-crest" flip className={styles.bottom} />

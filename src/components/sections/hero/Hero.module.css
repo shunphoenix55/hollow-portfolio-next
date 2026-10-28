@@ -125,13 +125,6 @@
   will-change: transform, opacity;
 }
 
-.mark {
-  width: 24px;
-  height: auto;
-  margin-bottom: 18px;
-  filter: drop-shadow(0 0 8px rgb(255 255 255 / 0.45));
-}
-
 .top {
   width: min(30%, 260px);
   aspect-ratio: 1140 / 105;
