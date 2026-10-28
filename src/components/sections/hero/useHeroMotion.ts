@@ -41,9 +41,9 @@ export function useHeroMotion(rootRef: RefObject<HTMLElement | null>) {
         }
         title.style.transform = `translate3d(calc(-50% + ${(tx * 10).toFixed(2)}px), ${(ty * 6 - p * 160).toFixed(2)}px, 0)`;
       }
-      title.style.opacity = String(Math.max(0, 1 - p * 1.8));
+      title.style.opacity = String(Math.max(0, 1 - p * 2.2));
       cue.style.opacity = String(Math.max(0, 1 - p * 6));
-      dark.style.opacity = String(clamp((p - 0.5) / 0.5) * 0.7);
+      dark.style.opacity = String(clamp((p - 0.6) / 0.4));
       publishHeroProgress(p);
       return Math.abs(mx - tx) > 0.001 || Math.abs(my - ty) > 0.001;
     });
