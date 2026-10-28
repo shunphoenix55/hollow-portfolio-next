@@ -8,7 +8,7 @@ import { Ornament } from '@/components/ornament/Ornament';
 import { useInView } from '@/hooks/useInView';
 import { REDUCED_MOTION, useMediaQuery } from '@/hooks/useMediaQuery';
 import { useWheelMotion } from './useWheelMotion';
-import { wrap } from './wheel-math';
+import { angleDelta, pointerAngle, wrap } from './wheel-math';
 import styles from './FerrisWheel.module.css';
 
 export type FerrisWheelItem = { id: string; title: string; src: StaticImageData; alt: string };
@@ -30,7 +30,6 @@ const RIM_LIGHTS = Array.from({ length: 24 }, (_, i) => ({
   delay: `${(i % 6) * -0.6}s`,
 }));
 const DRAG_START = 8;
-const DRAG_TURN = 30;
 
 export function FerrisWheel({
   items,
@@ -44,11 +43,17 @@ export function FerrisWheel({
   const selected = wrap(active, total);
   const sign = direction === 'cw' ? 1 : -1;
   const reducedMotion = useMediaQuery(REDUCED_MOTION);
-  const drag = useRef<{ id: number; x: number; y: number; captured: boolean } | null>(null);
+  const drag = useRef<{
+    id: number;
+    x: number;
+    y: number;
+    angle: number;
+    captured: boolean;
+  } | null>(null);
   const suppressClickUntil = useRef(0);
   const [root, inView] = useInView<HTMLDivElement>();
   const helpId = useId();
-  const { shown, initialAngle, slot, wheel, counters, pendulums } = useWheelMotion({
+  const { initialAngle, slot, wheel, counters, turnBy } = useWheelMotion({
     selected,
     total,
     sign,
@@ -68,16 +73,36 @@ export function FerrisWheel({
     request(selected + (event.key === 'ArrowRight' ? 1 : -1));
   };
 
+  const angleOf = (event: PointerEvent<HTMLDivElement>) => {
+    const box = event.currentTarget.getBoundingClientRect();
+    return pointerAngle(
+      event.clientX,
+      event.clientY,
+      box.left + box.width / 2,
+      box.top + box.height / 2,
+    );
+  };
   const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
     if (!event.isPrimary || event.button !== 0) return;
-    drag.current = { id: event.pointerId, x: event.clientX, y: event.clientY, captured: false };
+    drag.current = {
+      id: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+      angle: angleOf(event),
+      captured: false,
+    };
   };
   const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
     const start = drag.current;
-    if (!start || start.id !== event.pointerId || start.captured) return;
-    if (Math.hypot(event.clientX - start.x, event.clientY - start.y) <= DRAG_START) return;
-    event.currentTarget.setPointerCapture(event.pointerId);
-    start.captured = true;
+    if (!start || start.id !== event.pointerId) return;
+    if (!start.captured) {
+      if (Math.hypot(event.clientX - start.x, event.clientY - start.y) <= DRAG_START) return;
+      event.currentTarget.setPointerCapture(event.pointerId);
+      start.captured = true;
+    }
+    const angle = angleOf(event);
+    turnBy.current(angleDelta(start.angle, angle));
+    start.angle = angle;
   };
   const onPointerUp = (event: PointerEvent<HTMLDivElement>) => {
     const start = drag.current;
@@ -86,11 +111,7 @@ export function FerrisWheel({
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
-    const x = event.clientX - start.x;
-    const y = event.clientY - start.y;
-    const delta = Math.abs(x) >= Math.abs(y) ? x : y;
     if (start.captured) suppressClickUntil.current = performance.now() + 300;
-    if (Math.abs(delta) >= DRAG_TURN) request(selected - Math.sign(delta));
   };
 
   if (total === 0) return null;
@@ -145,7 +166,7 @@ export function FerrisWheel({
             {items.map((item, index) => {
               const turn = sign * index * slot;
               const radians = (-turn * Math.PI) / 180;
-              const isActive = index === shown;
+              const isActive = index === selected;
               return (
                 <div key={item.id} className={styles.seat}>
                   <span
@@ -169,12 +190,7 @@ export function FerrisWheel({
                       style={{ transform: `rotate(${-initialAngle}deg)` }}
                     >
                       <div className={styles.hang}>
-                        <div
-                          ref={(node) => {
-                            pendulums.current[index] = node;
-                          }}
-                          className={styles.pendulum}
-                        >
+                        <div className={styles.pendulum}>
                           <span className={styles.hanger} aria-hidden="true" />
                           <button
                             type="button"
@@ -228,7 +244,7 @@ export function FerrisWheel({
         Drag the wheel, pick a carriage or use <kbd>←</kbd> <kbd>→</kbd>
       </p>
       <span role="status" aria-live="polite" aria-atomic="true" className="sr-only">
-        {shown === selected ? items[selected].title : ''}
+        {items[selected].title}
       </span>
     </div>
   );

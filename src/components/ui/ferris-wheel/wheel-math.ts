@@ -4,11 +4,10 @@ export function wrap(index: number, total: number) {
   return ((whole % total) + total) % total;
 }
 
-export function nearestAngle(from: number, base: number) {
-  return base + 360 * Math.round((from - base) / 360);
+export function pointerAngle(x: number, y: number, centerX: number, centerY: number) {
+  return (Math.atan2(y - centerY, x - centerX) * 180) / Math.PI;
 }
 
-export function springProgress(progress: number) {
-  const tail = progress - 1;
-  return 1 + 2.2 * tail ** 3 + 1.2 * tail ** 2;
+export function angleDelta(from: number, to: number) {
+  return ((((to - from + 180) % 360) + 360) % 360) - 180;
 }

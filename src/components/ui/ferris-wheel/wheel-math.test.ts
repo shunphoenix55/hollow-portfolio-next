@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { nearestAngle, springProgress, wrap } from './wheel-math';
+import { angleDelta, pointerAngle, wrap } from './wheel-math';
 
 describe('wrap', () => {
   it('keeps indices inside the ring in both directions', () => {
@@ -14,17 +14,18 @@ describe('wrap', () => {
   });
 });
 
-describe('nearestAngle', () => {
-  it('picks the equivalent angle closest to where the wheel is', () => {
-    expect(nearestAngle(0, 320)).toBe(-40);
-    expect(nearestAngle(700, 40)).toBe(760);
-    expect(nearestAngle(-30, 0)).toBe(0);
+describe('pointerAngle', () => {
+  it('measures the pointer direction from the wheel centre in degrees', () => {
+    expect(pointerAngle(10, 0, 0, 0)).toBe(0);
+    expect(pointerAngle(0, 10, 0, 0)).toBe(90);
+    expect(pointerAngle(-10, 0, 0, 0)).toBe(180);
   });
 });
 
-describe('springProgress', () => {
-  it('starts at rest and lands exactly on target', () => {
-    expect(springProgress(0)).toBeCloseTo(0);
-    expect(springProgress(1)).toBe(1);
+describe('angleDelta', () => {
+  it('takes the short way round the circle', () => {
+    expect(angleDelta(170, -170)).toBe(20);
+    expect(angleDelta(-170, 170)).toBe(-20);
+    expect(angleDelta(10, 40)).toBe(30);
   });
 });
