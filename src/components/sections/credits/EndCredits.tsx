@@ -45,7 +45,7 @@ export function EndCredits() {
 
       <Farewell text={farewellLine} />
 
-      <PlayOnView className={styles.scene} aria-label="Credits">
+      <PlayOnView className={styles.scene} aria-label="Credits" replay>
         <div className={styles.frame}>
           <Image src={cave} alt="" fill sizes={SCENE_SIZES} className={styles.art} />
           <div

@@ -46,7 +46,7 @@
 [data-playing] .walker {
   animation:
     walk-frames 1.1s steps(6) infinite,
-    walk-path 50s linear -12.5s infinite;
+    walk-path 50s linear -12.5s forwards;
 }
 
 @keyframes walk-frames {
