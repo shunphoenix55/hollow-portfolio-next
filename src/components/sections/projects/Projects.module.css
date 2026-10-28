@@ -49,7 +49,7 @@
   grid-template-columns: repeat(2, minmax(0, 380px));
   align-items: start;
   justify-content: center;
-  gap: 96px 72px;
+  gap: 56px 72px;
   width: 100%;
 }
 
