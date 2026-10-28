@@ -22,6 +22,8 @@ void main(){
   col.g-=fbm(uv*1.003+vec2(0,T*.015)+n+.003);
   col.b-=fbm(uv*1.006+vec2(0,T*.015)+n+.006);
   float l=dot(col,vec3(.21,.71,.07));
+  vec2 q=gl_FragCoord.xy/resolution;
+  l+=.12*smoothstep(.5,1.,q.x)*smoothstep(.8,.1,q.y);
   col=mix(col,tint,l)*smoothstep(.35,.85,l);
   O=vec4(clamp(col,0.,1.),1);
 }`;

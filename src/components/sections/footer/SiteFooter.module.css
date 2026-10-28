@@ -18,7 +18,7 @@
   width: 100%;
   height: 50%;
   mask-image:
-    linear-gradient(90deg, transparent, #000 4%, #000 85%, transparent),
+    linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent),
     linear-gradient(0deg, #000 25%, transparent);
   mask-composite: intersect;
 }
