@@ -111,6 +111,6 @@ src/
 ## Open items
 
 - **Archive pages:** `/projects` and `/experience` are the same `ArchivePage` fed different data (`portfolio-projects.ts`, `work-experience.ts`, both copied from shunphoenix55.github.io). The home Projects section shows the first four projects; the HUD count is the total. Their images were downloaded once from shunphoenix55.github.io (and one from sulakshanamonga.com), converted to WebP and live in `src/assets/projects` and `src/assets/work`.
-- **Journey links:** "Achievements" and "Contact" point at sections that don't exist yet.
+- **Journey links:** "Contact" points at the footer (`#contact`).
 - **Links:** project, hackathon and "View all" URLs.
 - **Portrait art** for the hero, town and projects on phones.

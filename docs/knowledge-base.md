@@ -46,7 +46,7 @@ Everything is statically prerendered. `new Date()` in a server component breaks 
 
 `<Abyss revealOnHero />` (fixed WebGL motes behind everything) sits behind these; `<SiteMenu>` and `<SiteFooter>` come from the root layout, so every page gets them:
 
-1. **Hero** `sections/hero`. Sticky scene of four parallax layers (`hero-back`, `hero-stage` + `hero-knight`, `hero-mid`, `hero-front`) plus two fog layers, a vignette and the name. `useHeroMotion` maps scroll progress `p` (0 → 1 over the sticky phase) to layer lift and zoom, title opacity `1 - p * 1.8`, cue opacity and a dark overlay `clamp((p - 0.5) / 0.5) * 0.7`, and publishes `p` on `lib/hero-progress` (the abyss fades in from `p` 0.55). Track height 170vh, 140vh on phones. Mouse parallax only on fine pointers.
+1. **Hero** `sections/hero`. Sticky scene of four parallax layers (`hero-back`, `hero-stage` + `hero-knight`, `hero-mid`, `hero-front`) plus two fog layers, a vignette and the name. `useHeroMotion` maps scroll progress `p` (0 → 1 over the sticky phase) to layer lift and zoom, title opacity `1 - p * 2.2`, cue opacity and a dark overlay `clamp((p - 0.6) / 0.4)` (full black as the sticky phase ends), and publishes `p` on `lib/hero-progress` (the abyss fades in from `p` 0.55). Track height 200vh, 160vh on phones. The motion is tuned to that length: a shorter track makes every scroll step move the layers further and the parallax feels choppy. Mouse parallax only on fine pointers.
 2. **Town** `sections/town`. Lamp-lit town scene with a typed welcome dialogue (`site.dialogue`). Images mount only when near (`useOnceInView` with 50% root margin); typing starts at 40% visibility. Characters are revealed by CSS `transition-delay` 34 ms each.
 3. **JourneyMenu** `sections/journey`. "Choose your path" list from `journeyLinks` (home anchors).
 4. **Projects** `sections/projects`. Cave backdrop, HUD (count of all projects), heading, first four projects as cards, "View all" → `/projects`. Two columns above 900px, one column below, a horizontal snap row on phones.
@@ -56,7 +56,7 @@ Everything is statically prerendered. `new Date()` in a server component breaks 
    - Guild scene (`credits-forest`), pulled up 8vh, with org summary and a CTA to `/organizations`.
    - Farewell (`town-farewell`): typed goodbye (`farewellLine`), then the knight turns and walks off right and fades. `TYPE_PER_CHAR_MS = 34` in `Farewell.tsx` must match the dialogue CSS delay.
    - Credits cave (`credits-cave`): a knight walk-cycle sprite (`knight-walk`, 6 frames) and a looping credits roll from `creditRoll`.
-   - Each scene starts when in view via `PlayOnView` (`data-playing`).
+   - Each scene starts when in view via `PlayOnView` (`data-playing`). The credits cave uses `replay`: the knight walks across once and the roll restarts each time the scene is scrolled back into view.
 8. **SiteFooter** `sections/footer`, `id="contact"`, rendered by `src/app/layout.tsx` after every page. 100vh black, pulled up 8vh, content at the bottom. WebGL smoke (`ui/smoke`, colour `#8c929b`, half resolution, pauses off-screen) along the bottom half. Contact mailto + round GitHub and LinkedIn icons (`site.socials`) top right; name, short role, copyright, page links and email at the bottom.
 
 ## Archive pages (`/projects`, `/experience`)
@@ -74,7 +74,7 @@ Everything is statically prerendered. `new Date()` in a server component breaks 
 
 ## Navigation
 
-- `SiteMenu`: fixed round toggle top right opening a `<dialog>` with `JourneyNav compact` and `menuLinks`: Achievements and Skills and Contact go to home anchors; Projects, Experience, Organizations and Workshops go to pages.
+- `SiteMenu`: fixed round toggle top right opening a `<dialog>` with `JourneyNav compact` and `menuLinks`: Skills and Contact go to home anchors; Projects, Experience, Organizations and Workshops go to pages.
 - `<html data-scroll-behavior="smooth">` tells Next 16 to disable smooth scrolling during route changes (otherwise new pages scroll-animate from the old position).
 
 ## Content model (`src/content`)
@@ -149,7 +149,7 @@ Scenes keep the 1672:941 ratio and are contained, feathered with two-gradient ma
 ## Responsive rules (current)
 
 - Breakpoints in use: 640px (phone), 900px (stacked layouts), 960px + 609px tall (Experience journey).
-- Hero 140vh on phones, name 34px; town reframes on the characters with the dialogue at the bottom; projects become a swipe row; experience becomes a list.
+- Hero 160vh on phones, name 34px; town reframes on the characters with the dialogue at the bottom; projects become a swipe row; experience becomes a list.
 - Most scenes still use `100vh`; `svh` only on the town (phones) and archive hero. See `handoff.md` for the planned mobile pass and the portrait images to create.
 
 ## Motion and performance rules

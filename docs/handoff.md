@@ -15,14 +15,14 @@ State of the portfolio as of 27 Oct 2026, `main` at `8664e9d phone type scale`. 
 | `be74c02` | Dialogue typing 34 ms per character                                                                |
 | `acfd57f` | Site menu links to the pages; smooth scroll fixed for route changes                                |
 | `5266e69` | Site footer with WebGL smoke                                                                       |
-| `c51ba6b` | Hero pacing: 170vh track, softer dark fade (no black dead zone before the town)                    |
+| `c51ba6b` | Hero pacing experiment (170vh track, softer fade), later reverted: it made the parallax choppy     |
 | `8664e9d` | Phone type scale (`--type-phone-*` tokens)                                                         |
 
 All of these passed lint, typecheck, Vitest, Prettier and `next build`.
 
 ## Findings that drove the last two commits
 
-- **Hero "sluggish" scroll** was pacing, not frame rate. Measured in a browser: steady 60 fps, p95 ~17 ms, no long animation frames at 1440×900 or 375 wide. The old 200vh track faded to full black at the end of the sticky phase, leaving ~0.65 of a screen of empty black scroll before the town. Now 170vh (140vh on phones), the title fades at `p * 1.8`, and the dark overlay only reaches 0.7.
+- **Hero "sluggish" scroll** was pacing, not frame rate. Measured in a browser: steady 60 fps, p95 ~17 ms, no long animation frames at 1440×900 or 375 wide. The old 200vh track faded to full black at the end of the sticky phase, leaving ~0.65 of a screen of empty black scroll before the town. Shortening the track to 170vh removed that gap but made each scroll step move the layers ~43% further, so the parallax felt choppy; it was reverted to the original 200vh and full fade.
 - **Phone text** had 43 different font sizes, mostly `clamp(min, vw, max)` values sitting on desktop minimums. Phones now use one scale (see the knowledge base, Typography).
 
 GPU cost of the hero (four zoomed full-scene layers, two fog layers with `mix-blend-mode: screen`) was not measurable in a hidden browser pane. It may still matter on low-end phones.
@@ -67,7 +67,6 @@ Test matrix: 360×800, 375×667, 390×844, 430×932, 844×390, 768×1024, 820×1
 - `src/components/sections/archive/ArchiveDetail.module.css` has a large duplicated block of selectors (`.title` … `.media` defined twice). Dedupe before the next real change there.
 - `README.md` predates the credits, footer, `/organizations` and the latest hero numbers (it still says 200vh/160vh and lists the archive pages as open items). The knowledge base is current.
 - `site.socials` has GitHub and LinkedIn; more links can be added with a path in `SocialIcon.tsx`.
-- Menu "Achievements" points at `/#achievements`, which doesn't exist yet.
 
 ## Deploy
 
