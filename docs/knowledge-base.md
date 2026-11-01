@@ -63,7 +63,8 @@ Everything is statically prerendered. `new Date()` in a server component breaks 
 
 - `ArchivePage` = `ArchiveShell` (cavern backdrop, back nav) + `ArchiveHeader` + `ArchiveBrowser`.
 - `ArchiveBrowser`: ferris wheel (`ui/ferris-wheel`, drag, arrows, keyboard) selects an entry; a cue under it slow-scrolls (`lib/slow-scroll.ts`, cancelled by wheel, touch or key) to the detail.
-- `ArchiveDetail`: title, subtitle, overview, features, tech tags, details list, links, and a framed image with thumbnails. `size="sm"` gives smaller text and `HkChoice` links. Without images it renders text only.
+- `ArchiveDetail`: title, subtitle, overview, features, tech tags, details list, links, and `ArchiveGallery`.
+- `ArchiveGallery`: framed media with thumbnails. `archiveMedia()` (`content/archive-media.ts`) lists an entry's images first, then its YouTube `video` links, so a new video link joins the gallery automatically. Videos show a poster and load the `youtube-nocookie.com` player only on press; switching item stops it. Entries with no images (organizations) stay text only. `size="sm"` gives smaller text and `HkChoice` links. Without images it renders text only.
 - Selection is synced to the URL hash by `useHashSelection` (replaceState on select, listens to `hashchange`).
 
 ## Organizations page
@@ -143,6 +144,8 @@ New phone text should pick one of these instead of a new pixel value.
 | `town-farewell`                             | 1672×941                      | Farewell                              |
 | `credits-cave`, `knight-walk`               | 1672×941, 1662×492 (6 frames) | Credits cave                          |
 | `projects/*`, `work/*`                      | various                       | Archive entries and home cards        |
+
+YouTube posters are the one remote image: `i.ytimg.com/vi/**`, allowed in `next.config.ts` and served through `next/image`.
 
 Scenes keep the 1672:941 ratio and are contained, feathered with two-gradient masks, never cropped hard against black.
 
