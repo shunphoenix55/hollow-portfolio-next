@@ -1,0 +1,133 @@
+.frame {
+  --corner-size: 26px;
+  --corner-inset: 10px;
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  background: #07090d;
+  box-shadow:
+    0 30px 80px rgb(0 0 0 / 0.7),
+    0 0 40px rgb(190 215 240 / 0.06);
+}
+
+.frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 100% at 50% 50%, transparent 60%, rgb(0 1 7 / 0.55));
+}
+
+.photo {
+  object-fit: cover;
+  animation: photo-in 0.5s ease both;
+}
+
+@keyframes photo-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.thumb {
+  position: relative;
+  width: 84px;
+  aspect-ratio: 1.45;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  background: #07090d;
+  cursor: pointer;
+  opacity: 0.6;
+  transition:
+    opacity 0.25s,
+    border-color 0.25s;
+}
+
+.thumb img {
+  object-fit: cover;
+}
+
+.thumb:hover,
+.thumb[aria-pressed='true'] {
+  border-color: rgb(255 255 255 / 0.7);
+  opacity: 1;
+}
+
+.poster {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.poster:focus-visible {
+  outline-offset: -6px;
+}
+
+.play {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 68px;
+  aspect-ratio: 1;
+  border: 1px solid rgb(255 255 255 / 0.45);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, rgb(40 44 50 / 0.8), rgb(0 1 7 / 0.92));
+  box-shadow: 0 0 24px rgb(220 235 255 / 0.25);
+  color: #fff;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+
+.play svg {
+  width: 26px;
+  height: 26px;
+  margin-left: 3px;
+  fill: currentColor;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .poster:hover .play {
+    border-color: #fff;
+    box-shadow: 0 0 32px rgb(220 235 255 / 0.55);
+  }
+}
+
+.player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.frame[data-playing]::after {
+  display: none;
+}
+
+.thumbPlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  color: #fff;
+  fill: currentColor;
+  filter: drop-shadow(0 1px 4px rgb(0 0 0 / 0.9));
+  translate: -50% -50%;
+}

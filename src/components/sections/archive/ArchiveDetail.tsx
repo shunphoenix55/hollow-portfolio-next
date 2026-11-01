@@ -1,11 +1,8 @@
-'use client';
-
-import Image from 'next/image';
-import { useState } from 'react';
 import { Ornament } from '@/components/ornament/Ornament';
-import { FrameCorners } from '@/components/ui/FrameCorners';
 import { HkChoice } from '@/components/ui/HkChoice';
 import type { ArchiveEntry, ArchiveLabels } from '@/content/archive';
+import { archiveMedia } from '@/content/archive-media';
+import { ArchiveGallery } from './ArchiveGallery';
 import { ArchiveLinks } from './ArchiveLinks';
 import styles from './ArchiveDetail.module.css';
 
@@ -17,10 +14,9 @@ type ArchiveDetailProps = {
 };
 
 export function ArchiveDetail({ id, entry, labels, size = 'md' }: ArchiveDetailProps) {
-  const [shot, setShot] = useState(0);
   const titleId = `${entry.slug}-title`;
-  const image = entry.images[shot];
-  const classes = [styles.detail, !image && styles.textOnly, size === 'sm' && styles.sm]
+  const media = archiveMedia(entry);
+  const classes = [styles.detail, media.length === 0 && styles.textOnly, size === 'sm' && styles.sm]
     .filter(Boolean)
     .join(' ');
 
@@ -89,37 +85,8 @@ export function ArchiveDetail({ id, entry, labels, size = 'md' }: ArchiveDetailP
         )}
       </div>
 
-      {image && (
-        <figure className={styles.media}>
-          <div className={styles.frame}>
-            <Image
-              key={image.src.src}
-              src={image.src}
-              placeholder="blur"
-              alt={image.alt}
-              fill
-              sizes="(max-width: 900px) 92vw, 52vw"
-              className={styles.photo}
-            />
-            <FrameCorners />
-          </div>
-          {entry.images.length > 1 && (
-            <div className={styles.thumbs} role="group" aria-label={`${entry.title} images`}>
-              {entry.images.map((img, index) => (
-                <button
-                  key={img.src.src}
-                  type="button"
-                  className={styles.thumb}
-                  aria-label={`Show ${img.alt}`}
-                  aria-pressed={index === shot}
-                  onClick={() => setShot(index)}
-                >
-                  <Image src={img.src} alt="" fill sizes="96px" placeholder="blur" />
-                </button>
-              ))}
-            </div>
-          )}
-        </figure>
+      {media.length > 0 && (
+        <ArchiveGallery media={media} title={entry.title} className={styles.media} />
       )}
     </article>
   );
