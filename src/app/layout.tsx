@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import { SiteMenu } from '@/components/navigation/SiteMenu';
 import { SiteFooter } from '@/components/sections/footer/SiteFooter';
 import { menuLinks } from '@/content/journey';
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         <SiteMenu links={menuLinks} />
         {children}
         <SiteFooter />
+        <Analytics />
       </body>
     </html>
   );
