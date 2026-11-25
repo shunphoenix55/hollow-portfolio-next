@@ -7,7 +7,7 @@ import { SocialIcon } from './SocialIcon';
 import styles from './SiteFooter.module.css';
 
 const SMOKE_COLOR = '#8c929b';
-const pageLinks = menuLinks.filter((link) => !link.href.includes('#'));
+const pageLinks = menuLinks.filter((link) => link.href !== '/' && !link.href.includes('#'));
 
 export function SiteFooter() {
   return (

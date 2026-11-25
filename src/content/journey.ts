@@ -8,6 +8,7 @@ export const journeyLinks: JourneyLink[] = [
 ];
 
 export const menuLinks: JourneyLink[] = [
+  { label: 'Home', href: '/' },
   { label: 'Projects', href: '/projects' },
   { label: 'Skills', href: '/#skills' },
   { label: 'Experience', href: '/experience' },
