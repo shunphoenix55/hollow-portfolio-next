@@ -83,19 +83,35 @@
 
 @media (max-width: 640px) {
   .frame {
-    width: 130cqw;
+    width: max(100cqw, 100cqh * 1024 / 1536);
+  }
+
+  .knight {
+    top: 71.8%;
+    left: 62%;
+    width: 10.5cqw;
+    height: 11.2cqw;
+  }
+
+  .stand {
+    width: 11.2cqw;
+    height: 11.2cqw;
+  }
+
+  .walker {
+    height: 10.5cqw;
   }
 
   .ui {
-    top: 12%;
+    top: 9%;
     right: 50%;
     left: auto;
-    width: 48cqw;
+    width: 62cqw;
     padding: 0;
     translate: 50% 0;
   }
 
   .orn {
-    width: 26cqw;
+    width: 34cqw;
   }
 }

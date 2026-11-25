@@ -1,16 +1,17 @@
-import Image from 'next/image';
 import type { CSSProperties } from 'react';
 import cave from '@/assets/credits-cave.webp';
 import forest from '@/assets/credits-forest.webp';
 import walk from '@/assets/knight-walk.webp';
+import cavePhone from '@/assets/portrait/credits-cave.webp';
+import forestPhone from '@/assets/portrait/credits-forest.webp';
 import { Ornament } from '@/components/ornament/Ornament';
 import { HkChoice } from '@/components/ui/HkChoice';
 import { PlayOnView } from '@/components/ui/PlayOnView';
+import { SceneImage } from '@/components/ui/SceneImage';
 import { creditRoll, farewellLine, guildScene } from '@/content/credits';
 import { Farewell } from './Farewell';
+import { PHONE_SCENE_SIZES, SCENE_SIZES } from './scene-sizes';
 import styles from './EndCredits.module.css';
-
-const SCENE_SIZES = '(max-aspect-ratio: 16/9) 100vw, 178vh';
 
 export function EndCredits() {
   return (
@@ -21,7 +22,13 @@ export function EndCredits() {
         threshold={0.5}
       >
         <div className={styles.frame}>
-          <Image src={forest} alt="" fill sizes={SCENE_SIZES} className={styles.art} />
+          <SceneImage
+            src={forest}
+            phone={forestPhone}
+            sizes={SCENE_SIZES}
+            phoneSizes={PHONE_SCENE_SIZES}
+            className={styles.art}
+          />
           <div className={styles.guild}>
             <Ornament name="orn-crest" flip className={styles.emblem} />
             <Ornament name="orn-flourish" className={styles.flourish} />
@@ -47,7 +54,13 @@ export function EndCredits() {
 
       <PlayOnView className={styles.scene} aria-label="Credits" replay>
         <div className={styles.frame}>
-          <Image src={cave} alt="" fill sizes={SCENE_SIZES} className={styles.art} />
+          <SceneImage
+            src={cave}
+            phone={cavePhone}
+            sizes={SCENE_SIZES}
+            phoneSizes={PHONE_SCENE_SIZES}
+            className={styles.art}
+          />
           <div
             className={styles.walker}
             style={{ backgroundImage: `url(${walk.src})` }}

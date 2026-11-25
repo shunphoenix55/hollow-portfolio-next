@@ -4,10 +4,13 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import walk from '@/assets/knight-walk.webp';
 import stand from '@/assets/exp-knight-stand.webp';
+import farewellPhone from '@/assets/portrait/town-farewell.webp';
 import farewell from '@/assets/town-farewell.webp';
 import { Ornament } from '@/components/ornament/Ornament';
 import { Dialogue } from '@/components/sections/town/Dialogue';
+import { SceneImage } from '@/components/ui/SceneImage';
 import { useOnceInView } from '@/hooks/useOnceInView';
+import { PHONE_SCENE_SIZES, SCENE_SIZES } from './scene-sizes';
 import scene from './EndCredits.module.css';
 import styles from './Farewell.module.css';
 
@@ -32,11 +35,11 @@ export function Farewell({ text }: { text: string }) {
   return (
     <section ref={ref} className={scene.scene} aria-label="Farewell">
       <div className={`${scene.frame} ${styles.frame}`}>
-        <Image
+        <SceneImage
           src={farewell}
-          alt=""
-          fill
-          sizes="(max-aspect-ratio: 16/9) 100vw, 178vh"
+          phone={farewellPhone}
+          sizes={SCENE_SIZES}
+          phoneSizes={PHONE_SCENE_SIZES}
           className={scene.art}
         />
         <div className={styles.knight} data-leaving={leaving || undefined} aria-hidden="true">
