@@ -25,7 +25,7 @@ All of these passed lint, typecheck, Vitest, Prettier and `next build`.
 - **Hero "sluggish" scroll** was pacing, not frame rate. Measured in a browser: steady 60 fps, p95 ~17 ms, no long animation frames at 1440×900 or 375 wide. The old 200vh track faded to full black at the end of the sticky phase, leaving ~0.65 of a screen of empty black scroll before the town. Shortening the track to 170vh removed that gap but made each scroll step move the layers ~43% further, so the parallax felt choppy; it was reverted to the original 200vh and full fade.
 - **Phone text** had 43 different font sizes, mostly `clamp(min, vw, max)` values sitting on desktop minimums. Phones now use one scale (see the knowledge base, Typography).
 
-GPU cost of the hero (four zoomed full-scene layers, two fog layers with `mix-blend-mode: screen`) was not measurable in a hidden browser pane. It may still matter on low-end phones.
+The phone hero flash was GPU tile dropout while JS re-scaled four full-scene layers every frame; phones now animate those layers with a CSS scroll timeline. Not yet confirmed on a real Android device.
 
 ## Next: mobile pass
 

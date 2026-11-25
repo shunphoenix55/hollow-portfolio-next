@@ -188,6 +188,26 @@
   }
 }
 
+@keyframes layer-rise {
+  to {
+    transform: translate3d(0, calc(var(--depth) * -38vh), 0) scale(calc(1 + var(--depth) * 0.32));
+  }
+}
+
+@media (max-width: 640px) and (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .hero {
+      view-timeline: --hero block;
+    }
+
+    .layer {
+      animation: layer-rise linear both;
+      animation-timeline: --hero;
+      animation-range: contain 0% contain 100%;
+    }
+  }
+}
+
 @media (max-width: 640px) {
   .hero {
     height: 220vh;

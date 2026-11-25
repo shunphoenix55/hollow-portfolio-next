@@ -2,6 +2,7 @@
 
 import { type RefObject, useEffect } from 'react';
 import { publishHeroProgress } from '@/lib/hero-progress';
+import { PHONE_QUERY } from '@/lib/media';
 import { clamp } from '@/lib/math';
 import { rafScheduler } from '@/lib/raf';
 
@@ -17,6 +18,10 @@ export function useHeroMotion(rootRef: RefObject<HTMLElement | null>) {
     const cue = root.querySelector<HTMLElement>('[data-cue]')!;
     const dark = root.querySelector<HTMLElement>('[data-dark]')!;
     const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const phone = matchMedia(PHONE_QUERY);
+    const scrollTimeline = CSS.supports('animation-timeline', 'view()');
+    const layersInCss = () => scrollTimeline && phone.matches;
+    for (const { el, depth } of layers) el.style.setProperty('--depth', String(depth));
     const parallax = !still && matchMedia('(hover: hover) and (pointer: fine)').matches;
     let mx = 0;
     let my = 0;
@@ -35,11 +40,12 @@ export function useHeroMotion(rootRef: RefObject<HTMLElement | null>) {
       const p = progress;
       drawn = p;
       if (!still) {
-        for (const { el, depth } of layers) {
-          const lift = -p * depth * 38;
-          const zoom = 1 + p * depth * 0.32;
-          el.style.transform = `translate3d(${(-tx * depth * 22).toFixed(2)}px, calc(${(-ty * depth * 14).toFixed(2)}px + ${lift.toFixed(2)}vh), 0) scale(${zoom.toFixed(4)})`;
-        }
+        if (!layersInCss())
+          for (const { el, depth } of layers) {
+            const lift = -p * depth * 38;
+            const zoom = 1 + p * depth * 0.32;
+            el.style.transform = `translate3d(${(-tx * depth * 22).toFixed(2)}px, calc(${(-ty * depth * 14).toFixed(2)}px + ${lift.toFixed(2)}vh), 0) scale(${zoom.toFixed(4)})`;
+          }
         title.style.transform = `translate3d(calc(-50% + ${(tx * 10).toFixed(2)}px), ${(ty * 6 - p * 160).toFixed(2)}px, 0)`;
       }
       title.style.opacity = String(Math.max(0, 1 - p * 2.2));
