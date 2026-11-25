@@ -1,10 +1,12 @@
 .journal {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(280px, 0.56fr) minmax(0, 1fr);
   align-items: start;
   gap: clamp(32px, 5vw, 80px);
   width: min(1160px, 100% - 48px);
-  margin: clamp(40px, 7vh, 80px) auto 0;
+  margin: calc(-1 * clamp(96px, 16vh, 180px)) auto 0;
 }
 
 .index {
@@ -144,7 +146,7 @@
   .journal {
     grid-template-columns: minmax(0, 1fr);
     width: min(680px, 100% - 32px);
-    margin-top: 48px;
+    margin-top: -72px;
   }
 
   .index {

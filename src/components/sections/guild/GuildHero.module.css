@@ -4,7 +4,7 @@
   display: grid;
   align-content: start;
   height: clamp(520px, 88vh, 960px);
-  padding-top: clamp(64px, 11vh, 130px);
+  padding-top: clamp(80px, 15vh, 170px);
 }
 
 .art {
@@ -20,7 +20,7 @@
 @media (max-width: 900px) {
   .hero {
     height: clamp(420px, 66vh, 640px);
-    padding-top: 48px;
+    padding-top: 64px;
   }
 }
 
