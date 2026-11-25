@@ -116,16 +116,21 @@ Cinzel is caps-only, so it reads as small caps; anything mixed case uses Cormora
 
 **Phone scale** (`theme.css`, applied inside each section's `@media (max-width: 640px)`; desktop sizes are untouched):
 
-| Token                  | Size | Used for                                                                         |
-| ---------------------- | ---- | -------------------------------------------------------------------------------- |
-| `--type-phone-display` | 34px | Hero name                                                                        |
-| `--type-phone-title`   | 28px | Archive and org titles, footer name                                              |
-| `--type-phone-heading` | 22px | `SectionHeading lg`, journey items, wheel title, guild scene title               |
-| `--type-phone-lead`    | 19px | Card titles, `HkChoice lg`, detail labels and feature titles, experience company |
-| `--type-phone-body`    | 17px | Dialogue, archive intro                                                          |
-| `--type-phone-minor`   | 16px | Card points, "Read more", tech labels and details, credits lead and note         |
-| `--type-phone-small`   | 14px | Experience role and meta, journal subtitles                                      |
-| `--type-phone-label`   | 12px | Hero cue                                                                         |
+| Token                  | Size | Used for                                                                  |
+| ---------------------- | ---- | ------------------------------------------------------------------------- |
+| `--type-phone-display` | 34px | Hero name                                                                 |
+| `--type-phone-title`   | 28px | Footer name                                                               |
+| `--type-phone-heading` | 22px | `SectionHeading lg` (archive page titles), journey items, wheel title     |
+| `--type-phone-entry`   | 20px | Archive and org entry titles                                              |
+| `--type-phone-lead`    | 19px | Card titles, `HkChoice lg`, experience company                            |
+| `--type-phone-body`    | 17px | Dialogue, journal group labels                                            |
+| `--type-phone-minor`   | 16px | Detail subtitle and labels, journal item names, card points, credits lead |
+| `--type-phone-copy`    | 15px | Archive intro, detail prose, feature titles and text                      |
+| `--type-phone-small`   | 14px | Experience role and meta                                                  |
+| `--type-phone-caption` | 13px | Journal item and org card role/date lines                                 |
+| `--type-phone-label`   | 12px | Hero cue                                                                  |
+
+On the archive and organizations pages every content size stays below the 22px page title.
 
 New phone text should pick one of these instead of a new pixel value.
 

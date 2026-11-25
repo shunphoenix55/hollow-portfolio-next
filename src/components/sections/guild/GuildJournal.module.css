@@ -161,8 +161,16 @@
 }
 
 @media (max-width: 640px) {
+  .groupLabel {
+    font-size: var(--type-phone-body);
+  }
+
+  .itemTitle {
+    font-size: var(--type-phone-minor);
+  }
+
   .itemSub {
-    font-size: var(--type-phone-small);
+    font-size: var(--type-phone-caption);
   }
 
   .page {

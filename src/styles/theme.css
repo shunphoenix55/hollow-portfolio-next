@@ -16,10 +16,13 @@
   --type-phone-display: 34px;
   --type-phone-title: 28px;
   --type-phone-heading: 22px;
+  --type-phone-entry: 20px;
   --type-phone-lead: 19px;
   --type-phone-body: 17px;
   --type-phone-minor: 16px;
+  --type-phone-copy: 15px;
   --type-phone-small: 14px;
+  --type-phone-caption: 13px;
   --type-phone-label: 12px;
 
   --orn-glow: drop-shadow(0 0 0.6px rgb(255 255 255 / 0.9))

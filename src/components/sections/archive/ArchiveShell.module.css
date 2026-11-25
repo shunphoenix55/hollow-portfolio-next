@@ -52,6 +52,6 @@
   }
 
   .intro {
-    font-size: var(--type-phone-body);
+    font-size: var(--type-phone-copy);
   }
 }
