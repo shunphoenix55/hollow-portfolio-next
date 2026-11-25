@@ -61,16 +61,16 @@ Everything is statically prerendered. `new Date()` in a server component breaks 
 
 ## Archive pages (`/projects`, `/experience`)
 
-- `ArchivePage` = `ArchiveShell` (cavern backdrop, back nav) + `ArchiveHeader` + `ArchiveBrowser`.
+- `ArchivePage` = `ArchiveShell` (cavern backdrop) + `ArchiveHeader` + `ArchiveBrowser`.
 - `ArchiveBrowser`: ferris wheel (`ui/ferris-wheel`, drag, arrows, keyboard) selects an entry; a cue under it slow-scrolls (`lib/slow-scroll.ts`, cancelled by wheel, touch or key) to the detail.
 - `ArchiveDetail`: title, subtitle, overview, features, tech tags, details list, links, and `ArchiveGallery`.
-- `ArchiveGallery`: framed media with thumbnails. `archiveMedia()` (`content/archive-media.ts`) lists an entry's images first, then its YouTube `video` links, so a new video link joins the gallery automatically. Videos show a poster and load the `youtube-nocookie.com` player only on press; switching item stops it. Entries with no images (organizations) stay text only. `size="sm"` gives smaller text and `HkChoice` links. Without images it renders text only.
+- `ArchiveGallery`: framed media with thumbnails. `archiveMedia()` (`content/archive-media.ts`) lists an entry's images first, then its YouTube `video` links, so a new video link joins the gallery automatically. Videos show a poster and load the `youtube-nocookie.com` player only on press; switching item stops it. Entries with neither images nor videos stay text only. `size="sm"` gives smaller text and `HkChoice` links. Without images it renders text only.
 - Selection is synced to the URL hash by `useHashSelection` (replaceState on select, listens to `hashchange`).
 
 ## Organizations page
 
 - `GuildHero`: `credits-forest` contained in a block with a bottom fade, page header inside.
-- `GuildJournal`: sticky left index grouped into Organizations and Workshops and talks (slot mark on the selected item), right page card with `FrameCorners`, content via `ArchiveDetail size="sm"`. Same hash sync. Below 900px it stacks.
+- `GuildJournal`: sticky left index grouped into Organizations and Workshops and talks (slot mark on the selected item), right page card with `FrameCorners`, content via `ArchiveDetail size="sm"`. Same hash sync. The gallery sits above the text inside the card, so workshop recordings play there. Below 900px it stacks.
 - Content in `content/guild.ts`: 2 orgs (CodeChef VIT, TAG Club VIT), 4 workshops/talks (DEVSOC '23, Beyond Reality XR webinar, Blender workshop, Fruit Ninja Unity workshop). Tested by `guild.test.ts`.
 
 ## Navigation
@@ -149,7 +149,7 @@ YouTube posters are the one remote image: `i.ytimg.com/vi/**`, allowed in `next.
 
 Scenes keep the 1672:941 ratio and are contained, feathered with two-gradient masks, never cropped hard against black.
 
-Phones (≤640px) get portrait 1024×1536 versions from `src/assets/portrait/` through `ui/SceneImage` (`getImageProps` + `<picture>`, query in `lib/media.ts`): hero back/mid/front, town scene/front, farewell, credits forest/cave, stack ruins and the projects cavern. `hero-stage` and the knight sprites are shared; the hero knight sits inside the stage box so it stays on the mound in both layouts. Overlay positions (hero stage box, farewell knight, credits walker and roll, stack intro) have phone values in each module's 640px block: re-measure them if a portrait image changes.
+Phones (≤640px) get portrait 1024×1536 versions from `src/assets/portrait/` through `ui/SceneImage` (`getImageProps` + `<picture>`, query in `lib/media.ts`): hero back/mid/front, town scene/front, farewell, credits forest/cave, stack ruins, the projects cavern and the Experience cave (the phone job list sits on it). The `/organizations` hero has its own art: `org-forest` (3:2) on desktop and a portrait version on phones. `hero-stage` and the knight sprites are shared; the hero knight sits inside the stage box so it stays on the mound in both layouts. Overlay positions (hero stage box, farewell knight, credits walker and roll, stack intro) have phone values in each module's 640px block: re-measure them if a portrait image changes.
 
 ## Responsive rules (current)
 
