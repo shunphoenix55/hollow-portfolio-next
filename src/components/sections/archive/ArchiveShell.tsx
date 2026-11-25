@@ -1,7 +1,6 @@
 import type { StaticImageData } from 'next/image';
 import type { ReactNode } from 'react';
 import { Abyss } from '@/components/sections/abyss/Abyss';
-import { HkChoice } from '@/components/ui/HkChoice';
 import { SceneImage } from '@/components/ui/SceneImage';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import styles from './ArchiveShell.module.css';
@@ -28,9 +27,6 @@ export function ArchiveShell({ backdrop, children }: ArchiveShellProps) {
             />
           </div>
         )}
-        <nav className={styles.nav} aria-label="Back">
-          <HkChoice href="/">Return</HkChoice>
-        </nav>
         {children}
       </main>
     </>
