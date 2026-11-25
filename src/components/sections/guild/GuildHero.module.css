@@ -3,14 +3,14 @@
   isolation: isolate;
   display: grid;
   align-content: start;
-  height: clamp(440px, 66vh, 760px);
-  padding-top: clamp(80px, 15vh, 170px);
+  height: clamp(520px, 88vh, 960px);
+  padding-top: clamp(64px, 11vh, 130px);
 }
 
 .art {
   z-index: -1;
   object-fit: cover;
-  object-position: 50% 35%;
+  object-position: 50% 30%;
   mask-image:
     linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent),
     linear-gradient(180deg, #000 70%, transparent);
@@ -19,7 +19,13 @@
 
 @media (max-width: 900px) {
   .hero {
-    height: clamp(360px, 56vh, 520px);
-    padding-top: 64px;
+    height: clamp(420px, 66vh, 640px);
+    padding-top: 48px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    height: 150vw;
   }
 }
