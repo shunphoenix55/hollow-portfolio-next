@@ -88,12 +88,21 @@
 }
 
 .compact .item {
-  gap: 16px;
   padding: 6px 0;
   font-size: clamp(16px, 1.2vw, 19px);
+  white-space: nowrap;
 }
 
 .compact .mark {
+  position: absolute;
   width: 24px;
   height: 18px;
+}
+
+.compact .mark:first-child {
+  right: calc(100% + 14px);
+}
+
+.compact .mark:last-child {
+  left: calc(100% + 14px);
 }

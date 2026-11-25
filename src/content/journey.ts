@@ -11,6 +11,6 @@ export const menuLinks: JourneyLink[] = [
   { label: 'Projects', href: '/projects' },
   { label: 'Skills', href: '/#skills' },
   { label: 'Experience', href: '/experience' },
-  { label: 'Organizations and Workshops', href: '/organizations' },
+  { label: 'Organizations & Workshops', href: '/organizations' },
   { label: 'Contact', href: '/#contact' },
 ];
