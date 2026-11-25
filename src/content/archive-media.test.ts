@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { ArchiveImage, ArchiveLink } from './archive';
 import { archiveMedia, youtubeId } from './archive-media';
+import { guildGroups } from './guild';
 import { portfolioProjects } from './portfolio-projects';
 import { workExperience } from './work-experience';
 
@@ -60,14 +61,21 @@ describe('archiveMedia', () => {
     expect(media).toHaveLength(2);
   });
 
-  it('leaves entries without images text only', () => {
-    expect(archiveMedia({ images: [], links: [video('https://youtu.be/PxBUL5u0uGA')] })).toEqual(
-      [],
-    );
+  it('builds a gallery from videos alone', () => {
+    const media = archiveMedia({ images: [], links: [video('https://youtu.be/PxBUL5u0uGA')] });
+    expect(media).toEqual([{ kind: 'video', id: 'PxBUL5u0uGA', label: 'Watch' }]);
   });
 
-  it('can embed every video link in the projects and experience content', () => {
-    const links = [...portfolioProjects, ...workExperience].flatMap((entry) => entry.links);
+  it('leaves entries with neither images nor videos text only', () => {
+    const page: ArchiveLink = { kind: 'page', label: 'Site', url: 'https://example.com' };
+    expect(archiveMedia({ images: [], links: [page] })).toEqual([]);
+  });
+
+  it('can embed every video link in the content', () => {
+    const guild = guildGroups.flatMap((group) => group.entries);
+    const links = [...portfolioProjects, ...workExperience, ...guild].flatMap(
+      (entry) => entry.links,
+    );
     const videos = links.filter((link) => link.kind === 'video');
     expect(videos.length).toBeGreaterThan(0);
     videos.forEach((link) => expect(youtubeId(link.url)).not.toBeNull());

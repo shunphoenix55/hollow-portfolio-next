@@ -370,6 +370,18 @@
   }
 }
 
+.detail.sm {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  width: auto;
+  margin: 0;
+}
+
+.sm .media {
+  position: static;
+  order: -1;
+}
+
 .sm .title {
   font-size: clamp(32px, 2.8vw, 46px);
 }

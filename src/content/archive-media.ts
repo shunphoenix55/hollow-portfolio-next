@@ -28,7 +28,6 @@ export const youtubeEmbed = (id: string) =>
   `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1`;
 
 export function archiveMedia({ images, links }: Pick<ArchiveEntry, 'images' | 'links'>) {
-  if (images.length === 0) return [];
   const media: ArchiveMedia[] = images.map((image) => ({
     kind: 'image',
     id: image.src.src,
