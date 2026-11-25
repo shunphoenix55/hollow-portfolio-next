@@ -263,7 +263,7 @@
 
   .roll {
     top: max(96px, 13%);
-    bottom: 46%;
+    bottom: 0;
     left: 50%;
     width: 60cqw;
     translate: -50% 0;
@@ -272,7 +272,7 @@
 
   .list {
     gap: 5cqw;
-    padding-top: 30cqw;
+    padding-top: 130cqw;
   }
 
   .block {
