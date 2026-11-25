@@ -9,6 +9,7 @@
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100svh;
   min-height: 560px;
   overflow: hidden;
   container-type: size;
@@ -189,7 +190,8 @@
 
 @media (max-width: 640px) {
   .hero {
-    height: 160vh;
+    height: 220vh;
+    height: 220svh;
   }
 
   .scene {
