@@ -432,9 +432,28 @@
   }
 
   .label,
-  .sm .label,
+  .sm .label {
+    font-size: var(--type-phone-lead);
+  }
+
   .features h4,
   .sm .features h4 {
-    font-size: var(--type-phone-lead);
+    font-size: var(--type-phone-body);
+  }
+
+  .prose p,
+  .sm .prose p {
+    font-size: var(--type-phone-minor);
+    line-height: 1.55;
+  }
+
+  .features p,
+  .sm .features p {
+    font-size: var(--type-phone-minor);
+    line-height: 1.5;
+  }
+
+  .sm .subtitle {
+    font: 400 var(--type-phone-small) / 1.4 var(--font-body);
   }
 }
