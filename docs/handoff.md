@@ -39,13 +39,11 @@ In priority order:
 4. **Home project cards.** Swipe row exists; show a peek of the next card and dots. Card images are greyscale until hover, so on touch they never colour: move hover effects behind `@media (hover: hover) and (pointer: fine)`.
 5. **Tech stack.** 11 orbs in a 5-column scatter overlap at 390px (labels are now 16px, which makes it tighter). Use a 3-column scatter on phones (second set of `--x`/`--y` vars) and show the detail on tap.
 6. **Min heights.** Scenes have 560–680px `min-height`, which overflows on landscape phones (360–430px tall). Experience already handles this with `max-height: 608px`; the others don't.
-7. **Art direction.** Portrait crops through `getImageProps()` + `<picture>` in the existing image slots once the art exists (list below).
+7. **Art direction.** Done: portrait art in `src/assets/portrait`, swapped in on phones by `SceneImage` (see the knowledge base, Assets).
 
-### Images to recreate in portrait
+### Portrait art
 
-Must: `hero-back`, `hero-mid`, `hero-front`, `hero-stage` (one aligned set), `town-scene` + `town-front`, `town-farewell`, `credits-forest` (guild scene; the `/organizations` hero crops it fine), `credits-cave`.
-Nice to have: `stack-ruins`, `projects-cavern`.
-Fine as is: `exp-cave`, `projects-cave` (already portrait), knight sprites.
+Created and wired: `hero-back`, `hero-mid`, `hero-front`, `town-scene`, `town-front`, `town-farewell`, `credits-forest`, `credits-cave`, `stack-ruins`, `projects-cavern`. Reused as is: `hero-stage`, `exp-cave`, `projects-cave` (already portrait), knight sprites; the `/organizations` hero keeps cropping `credits-forest`.
 
 On ultrawide (2560px+) the 1672px-wide scene art is upscaled and soft; wider masters would fix that.
 

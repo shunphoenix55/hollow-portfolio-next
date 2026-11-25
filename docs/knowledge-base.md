@@ -149,11 +149,13 @@ YouTube posters are the one remote image: `i.ytimg.com/vi/**`, allowed in `next.
 
 Scenes keep the 1672:941 ratio and are contained, feathered with two-gradient masks, never cropped hard against black.
 
+Phones (≤640px) get portrait 1024×1536 versions from `src/assets/portrait/` through `ui/SceneImage` (`getImageProps` + `<picture>`, query in `lib/media.ts`): hero back/mid/front, town scene/front, farewell, credits forest/cave, stack ruins and the projects cavern. `hero-stage` and the knight sprites are shared; the hero knight sits inside the stage box so it stays on the mound in both layouts. Overlay positions (hero stage box, farewell knight, credits walker and roll, stack intro) have phone values in each module's 640px block: re-measure them if a portrait image changes.
+
 ## Responsive rules (current)
 
 - Breakpoints in use: 640px (phone), 900px (stacked layouts), 960px + 609px tall (Experience journey).
 - Hero 160vh on phones, name 34px; town reframes on the characters with the dialogue at the bottom; projects become a swipe row; experience becomes a list.
-- Most scenes still use `100vh`; `svh` only on the town (phones) and archive hero. See `handoff.md` for the planned mobile pass and the portrait images to create.
+- Most scenes still use `100vh`; `svh` only on the town (phones) and archive hero. See `handoff.md` for the rest of the planned mobile pass.
 
 ## Motion and performance rules
 
