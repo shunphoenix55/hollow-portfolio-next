@@ -50,6 +50,10 @@
 }
 
 @media (max-width: 640px) {
+  .backdrop {
+    width: 100%;
+  }
+
   .nav {
     top: 14px;
     left: 16px;

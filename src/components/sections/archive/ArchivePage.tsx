@@ -1,3 +1,4 @@
+import cavernPhone from '@/assets/portrait/projects-cavern.webp';
 import cavern from '@/assets/projects-cavern.webp';
 import type { ArchiveEntry, ArchiveLabels } from '@/content/archive';
 import { ArchiveBrowser } from './ArchiveBrowser';
@@ -13,7 +14,7 @@ type ArchivePageProps = {
 
 export function ArchivePage({ id, title, intro, entries, labels }: ArchivePageProps) {
   return (
-    <ArchiveShell backdrop={cavern}>
+    <ArchiveShell backdrop={{ src: cavern, phone: cavernPhone }}>
       <ArchiveBrowser
         entries={entries}
         labels={labels}

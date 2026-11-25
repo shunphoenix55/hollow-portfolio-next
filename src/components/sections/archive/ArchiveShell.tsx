@@ -1,11 +1,15 @@
-import Image, { type StaticImageData } from 'next/image';
+import type { StaticImageData } from 'next/image';
 import type { ReactNode } from 'react';
 import { Abyss } from '@/components/sections/abyss/Abyss';
 import { HkChoice } from '@/components/ui/HkChoice';
+import { SceneImage } from '@/components/ui/SceneImage';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import styles from './ArchiveShell.module.css';
 
-type ArchiveShellProps = { backdrop?: StaticImageData; children: ReactNode };
+type ArchiveShellProps = {
+  backdrop?: { src: StaticImageData; phone: StaticImageData };
+  children: ReactNode;
+};
 
 export function ArchiveShell({ backdrop, children }: ArchiveShellProps) {
   return (
@@ -14,7 +18,14 @@ export function ArchiveShell({ backdrop, children }: ArchiveShellProps) {
       <main className={styles.page}>
         {backdrop && (
           <div className={styles.backdrop} aria-hidden="true">
-            <Image src={backdrop} alt="" preload sizes="(max-aspect-ratio: 16/9) 178vh, 100vw" />
+            <SceneImage
+              src={backdrop.src}
+              phone={backdrop.phone}
+              sizes="(max-aspect-ratio: 16/9) 178vh, 100vw"
+              phoneSizes="100vw"
+              fill={false}
+              priority
+            />
           </div>
         )}
         <nav className={styles.nav} aria-label="Back">
