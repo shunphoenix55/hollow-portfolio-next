@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import forest from '@/assets/org-forest.webp';
-import forestPhone from '@/assets/portrait/org-forest.webp';
+import cavernPhone from '@/assets/portrait/projects-cavern.webp';
+import cavern from '@/assets/projects-cavern.webp';
 import { ArchiveHeader, ArchiveShell } from '@/components/sections/archive/ArchiveShell';
 import { GuildHero } from '@/components/sections/guild/GuildHero';
 import { GuildJournal } from '@/components/sections/guild/GuildJournal';
@@ -21,7 +21,7 @@ export default function OrganizationsPage() {
         groups={guildGroups}
         labels={guildLabels}
         intro={
-          <GuildHero backdrop={{ src: forest, phone: forestPhone }}>
+          <GuildHero backdrop={{ src: cavern, phone: cavernPhone }}>
             <ArchiveHeader id="organizations" title={guildPage.title} intro={guildPage.intro} />
           </GuildHero>
         }
