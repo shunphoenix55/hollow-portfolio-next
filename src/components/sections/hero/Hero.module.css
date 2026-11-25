@@ -36,16 +36,18 @@
 }
 
 .stage {
+  position: absolute;
+  inset: 0;
   transform-origin: 0 0;
   transform: translate(14.3%, 25.8%) scale(0.72);
 }
 
 .knight {
   position: absolute;
-  bottom: 28.3%;
-  left: 50.5%;
+  bottom: 36.25%;
+  left: 50.28%;
   width: auto;
-  height: 7.6%;
+  height: 10.56%;
   transform: translateX(-50%);
   filter: drop-shadow(0 0 14px rgb(220 235 255 / 0.35)) brightness(0.96);
 }
@@ -188,6 +190,40 @@
 @media (max-width: 640px) {
   .hero {
     height: 160vh;
+  }
+
+  .scene {
+    width: max(100cqw, 100cqh * 1024 / 1536);
+    aspect-ratio: 1024 / 1536;
+  }
+
+  .stage {
+    inset: auto;
+    top: 49%;
+    left: 4%;
+    width: 92%;
+    aspect-ratio: 1672 / 941;
+    transform: none;
+  }
+
+  .vignette {
+    background:
+      linear-gradient(
+        90deg,
+        #000 0%,
+        rgb(0 1 7 / 0.55) 7%,
+        transparent 22%,
+        transparent 78%,
+        rgb(0 1 7 / 0.55) 93%,
+        #000 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgb(0 1 7 / 0.75) 0%,
+        transparent 20%,
+        transparent 72%,
+        rgb(0 1 7 / 0.9) 100%
+      );
   }
 
   .title {

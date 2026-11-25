@@ -7,12 +7,18 @@ import front from '@/assets/hero-front.webp';
 import knight from '@/assets/hero-knight.webp';
 import mid from '@/assets/hero-mid.webp';
 import stage from '@/assets/hero-stage.webp';
+import backPhone from '@/assets/portrait/hero-back.webp';
+import frontPhone from '@/assets/portrait/hero-front.webp';
+import midPhone from '@/assets/portrait/hero-mid.webp';
 import { Ornament } from '@/components/ornament/Ornament';
+import { SceneImage } from '@/components/ui/SceneImage';
 import { site } from '@/content/site';
 import { useHeroMotion } from './useHeroMotion';
 import styles from './Hero.module.css';
 
 const SCENE_SIZES = '(min-aspect-ratio: 16/9) 110vw, 200vh';
+const PHONE_SCENE_SIZES = '165vw';
+const STAGE_SIZES = `(max-width: 640px) 135vw, ${SCENE_SIZES}`;
 
 export function Hero() {
   const rootRef = useRef<HTMLElement>(null);
@@ -24,27 +30,37 @@ export function Hero() {
       <div className={styles.sticky}>
         <div className={styles.scene}>
           <div className={styles.layer} data-depth="0.15">
-            <Image src={back} alt="" fill preload sizes={SCENE_SIZES} />
+            <SceneImage
+              src={back}
+              phone={backPhone}
+              sizes={SCENE_SIZES}
+              phoneSizes={PHONE_SCENE_SIZES}
+              priority
+            />
           </div>
           <div className={styles.fog} />
           <div className={styles.layer} data-depth="0.4">
-            <Image
-              src={stage}
-              alt=""
-              fill
-              preload
-              fetchPriority="high"
-              sizes={SCENE_SIZES}
-              className={styles.stage}
-            />
-            <Image src={knight} alt="" loading="eager" sizes="10vh" className={styles.knight} />
+            <div className={styles.stage}>
+              <Image src={stage} alt="" fill preload fetchPriority="high" sizes={STAGE_SIZES} />
+              <Image src={knight} alt="" loading="eager" sizes="10vh" className={styles.knight} />
+            </div>
           </div>
           <div className={styles.layer} data-depth="0.75">
-            <Image src={mid} alt="" fill loading="eager" sizes={SCENE_SIZES} />
+            <SceneImage
+              src={mid}
+              phone={midPhone}
+              sizes={SCENE_SIZES}
+              phoneSizes={PHONE_SCENE_SIZES}
+            />
           </div>
           <div className={`${styles.fog} ${styles.fogAlt}`} />
           <div className={styles.layer} data-depth="1.2">
-            <Image src={front} alt="" fill loading="eager" sizes={SCENE_SIZES} />
+            <SceneImage
+              src={front}
+              phone={frontPhone}
+              sizes={SCENE_SIZES}
+              phoneSizes={PHONE_SCENE_SIZES}
+            />
           </div>
         </div>
         <div className={styles.vignette} />
