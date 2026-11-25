@@ -102,11 +102,14 @@
   }
 
   .scene {
-    top: auto;
-    bottom: max(220px, 28cqh);
-    width: 230cqw;
-    transform: translateX(-52%);
-    mask-image: linear-gradient(180deg, transparent, #000 22%, #000 80%, transparent);
+    top: 44%;
+    width: max(100cqw, 100cqh * 1024 / 1536);
+    aspect-ratio: 1024 / 1536;
+    mask-image: linear-gradient(180deg, transparent, #000 10%, #000 88%, transparent);
+  }
+
+  .front img {
+    mask-image: none;
   }
 
   .ui {

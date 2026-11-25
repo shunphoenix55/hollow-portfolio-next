@@ -1,16 +1,19 @@
 'use client';
 
-import Image from 'next/image';
 import { useRef } from 'react';
 import front from '@/assets/town-front.webp';
+import frontPhone from '@/assets/portrait/town-front.webp';
+import scenePhone from '@/assets/portrait/town-scene.webp';
 import scene from '@/assets/town-scene.webp';
 import { Ornament } from '@/components/ornament/Ornament';
+import { SceneImage } from '@/components/ui/SceneImage';
 import { useOnceInView } from '@/hooks/useOnceInView';
 import { Dialogue } from './Dialogue';
 import { useTownParallax } from './useTownParallax';
 import styles from './Town.module.css';
 
-const SCENE_SIZES = '(max-width: 640px) 230vw, 100vw';
+const SCENE_SIZES = '100vw';
+const PHONE_SCENE_SIZES = '165vw';
 
 export function Town({ text }: { text: string }) {
   const rootRef = useRef<HTMLElement>(null);
@@ -22,11 +25,25 @@ export function Town({ text }: { text: string }) {
     <section ref={rootRef} className={styles.town} aria-label="Welcome">
       <div className={styles.scene}>
         <div className={styles.layer} data-depth="0.2">
-          {near && <Image src={scene} alt="" fill sizes={SCENE_SIZES} />}
+          {near && (
+            <SceneImage
+              src={scene}
+              phone={scenePhone}
+              sizes={SCENE_SIZES}
+              phoneSizes={PHONE_SCENE_SIZES}
+            />
+          )}
         </div>
         <div className={styles.fog} />
         <div className={`${styles.layer} ${styles.front}`} data-depth="0.7">
-          {near && <Image src={front} alt="" fill sizes={SCENE_SIZES} />}
+          {near && (
+            <SceneImage
+              src={front}
+              phone={frontPhone}
+              sizes={SCENE_SIZES}
+              phoneSizes={PHONE_SCENE_SIZES}
+            />
+          )}
         </div>
       </div>
       <div className={styles.vignette} />
