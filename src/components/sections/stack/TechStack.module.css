@@ -338,6 +338,32 @@
 }
 
 @media (max-width: 640px) {
+  .backdrop {
+    width: max(100cqw, 100cqh * 1024 / 1536);
+    aspect-ratio: 1024 / 1536;
+  }
+
+  .knight,
+  .dust {
+    top: 90.4%;
+  }
+
+  .rock {
+    top: 90.6%;
+  }
+
+  .flash {
+    top: 86%;
+  }
+
+  .slashArc {
+    top: 84%;
+  }
+
+  .dim {
+    background: radial-gradient(70% 60% at 62% 82%, transparent, #000 75%);
+  }
+
   .ball {
     width: 58px;
   }

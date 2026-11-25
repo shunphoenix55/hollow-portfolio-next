@@ -1,7 +1,8 @@
-import Image from 'next/image';
 import type { CSSProperties } from 'react';
+import ruinsPhone from '@/assets/portrait/stack-ruins.webp';
 import ruins from '@/assets/stack-ruins.webp';
 import { MotionSection } from '@/components/ui/MotionSection';
+import { SceneImage } from '@/components/ui/SceneImage';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import type { Tech } from '@/content/stack';
 import { StackIntro } from './StackIntro';
@@ -34,7 +35,7 @@ export function TechStack({ items }: { items: Tech[] }) {
       data-intro="final"
     >
       <div className={styles.backdrop} aria-hidden="true">
-        <Image src={ruins} alt="" fill sizes="(max-width: 640px) 150vw, 150vh" />
+        <SceneImage src={ruins} phone={ruinsPhone} sizes="150vh" phoneSizes="165vw" />
         <StackIntro />
       </div>
       <SectionHeading id="stack-title" title="Tech Stack" rule="medium" className={styles.head} />
