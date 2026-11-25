@@ -3,9 +3,11 @@
 import Image from 'next/image';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import cave from '@/assets/exp-cave.webp';
+import cavePhone from '@/assets/portrait/exp-cave.webp';
 import jump from '@/assets/exp-knight-jump.webp';
 import stand from '@/assets/exp-knight-stand.webp';
 import { HkChoice } from '@/components/ui/HkChoice';
+import { SceneImage } from '@/components/ui/SceneImage';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import type { Job } from '@/content/experience';
 import { useInView } from '@/hooks/useInView';
@@ -87,10 +89,12 @@ export function Experience({ jobs, start }: ExperienceProps) {
           />
           <div className={styles.view}>
             <div className={styles.scene}>
-              <Image
+              <SceneImage
                 src={cave}
-                alt=""
+                phone={cavePhone}
                 sizes="(max-width: 959px) 100vw, 180vh"
+                phoneSizes="100vw"
+                fill={false}
                 className={styles.cave}
               />
               <ol ref={list} className={styles.list}>

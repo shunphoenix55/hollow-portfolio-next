@@ -553,9 +553,44 @@ button.entry:focus-visible {
 }
 
 @media (max-width: 640px) {
+  .head {
+    padding-top: 36px;
+  }
+
+  .scene {
+    min-height: 150vw;
+    padding-bottom: 0;
+  }
+
+  .cave {
+    position: absolute;
+    inset: 0 0 auto;
+  }
+
+  .list {
+    gap: 26px;
+    padding: 20vw 16px 0;
+  }
+
   .xp {
-    --name: var(--type-phone-lead);
-    --meta: var(--type-phone-small);
+    --name: var(--type-phone-body);
+    --meta: var(--type-phone-label);
+    --hook-h: 50px;
+  }
+
+  .entry {
+    min-height: 0;
+    padding-top: calc(var(--hook-h) * 0.32 + 8px);
+    padding-right: 0;
+  }
+
+  .top {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .company {
+    white-space: nowrap;
   }
 
   .dialogueRole {
