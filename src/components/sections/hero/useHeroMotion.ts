@@ -23,7 +23,7 @@ export function useHeroMotion(rootRef: RefObject<HTMLElement | null>) {
     let tx = 0;
     let ty = 0;
     let progress = 0;
-    let inView = true;
+    let drawn = -1;
 
     const measure = () => {
       const span = root.offsetHeight - innerHeight;
@@ -33,6 +33,7 @@ export function useHeroMotion(rootRef: RefObject<HTMLElement | null>) {
       tx += (mx - tx) * 0.08;
       ty += (my - ty) * 0.08;
       const p = progress;
+      drawn = p;
       if (!still) {
         for (const { el, depth } of layers) {
           const lift = -p * depth * 38;
@@ -49,9 +50,8 @@ export function useHeroMotion(rootRef: RefObject<HTMLElement | null>) {
     });
 
     const onScroll = () => {
-      if (!inView) return;
       measure();
-      request();
+      if (progress !== drawn) request();
     };
     const onResize = () => {
       measure();
@@ -62,21 +62,13 @@ export function useHeroMotion(rootRef: RefObject<HTMLElement | null>) {
       my = e.clientY / innerHeight - 0.5;
       request();
     };
-    const io = new IntersectionObserver(([entry]) => {
-      inView = entry.isIntersecting;
-      measure();
-      request();
-    });
-
     measure();
     request();
-    io.observe(root);
     addEventListener('scroll', onScroll, { passive: true });
     addEventListener('resize', onResize);
     if (parallax) root.addEventListener('pointermove', onPointer);
     return () => {
       cancel();
-      io.disconnect();
       removeEventListener('scroll', onScroll);
       removeEventListener('resize', onResize);
       root.removeEventListener('pointermove', onPointer);
