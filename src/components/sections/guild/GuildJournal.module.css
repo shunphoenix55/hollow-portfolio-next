@@ -6,7 +6,7 @@
   align-items: start;
   gap: clamp(32px, 5vw, 80px);
   width: min(1160px, 100% - 48px);
-  margin: calc(-1 * clamp(96px, 16vh, 180px)) auto 0;
+  margin: calc(-1 * clamp(128px, 21vh, 230px)) auto 0;
 }
 
 .index {
@@ -146,7 +146,7 @@
   .journal {
     grid-template-columns: minmax(0, 1fr);
     width: min(680px, 100% - 32px);
-    margin-top: -72px;
+    margin-top: -112px;
   }
 
   .index {
