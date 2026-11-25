@@ -5,7 +5,9 @@ const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) *
 export function slowScrollTo(element: HTMLElement, duration = 1600) {
   const margin = parseFloat(getComputedStyle(element).scrollMarginTop) || 0;
   const start = scrollY;
-  const target = () => scrollY + element.getBoundingClientRect().top - margin;
+  const current = () =>
+    element.isConnected ? element : (element.id && document.getElementById(element.id)) || element;
+  const target = () => scrollY + current().getBoundingClientRect().top - margin;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
     scrollTo({ top: target(), behavior: 'instant' });
     return;
