@@ -28,13 +28,6 @@
   text-shadow: var(--text-shadow-deep);
 }
 
-.groupLabel::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, rgb(255 255 255 / 0.25), transparent);
-}
-
 .items {
   display: grid;
   gap: 2px;
