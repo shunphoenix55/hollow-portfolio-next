@@ -250,7 +250,11 @@
 
   .lead,
   .note {
-    font-size: var(--type-phone-minor);
+    font-size: var(--type-phone-small);
+  }
+
+  .name {
+    font-size: var(--type-phone-lead);
   }
 
   .guildTitle {
@@ -258,8 +262,8 @@
   }
 
   .roll {
-    top: 7%;
-    bottom: 50%;
+    top: max(96px, 13%);
+    bottom: 46%;
     left: 50%;
     width: 60cqw;
     translate: -50% 0;
